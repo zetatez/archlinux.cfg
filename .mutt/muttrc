@@ -1,8 +1,5 @@
 # Lorenzo
 
-## theme
-source ~/.mutt/theme.dracula
-
 ## alias 
 source ~/.mutt/mutt.alias
 

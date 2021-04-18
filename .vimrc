@@ -906,8 +906,7 @@ call plug#end()
 
 """"""
 """""" behavior
-set encoding=utf-8
-scriptencoding utf-8
+set fileencodings=utf8,cp936,gb18030,big5
 set history=10000
 set maxmempattern=10000
 set secure
