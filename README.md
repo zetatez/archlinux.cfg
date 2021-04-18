@@ -16,16 +16,15 @@ gpg --keyserver-options auto-key-retrieve --verify archlinux-version-x86_64.iso.
 
 - boot the live evnvironment
 
+- verify the boot mode, must done !
+```bash
+ls /sys/firmware/efi/efivars
+```
+
 - set keyboard layout
 ```bash
 # available layouts
 ls /usr/share/kbd/keymaps/**/*.map.gz
-
-```
-- verify the boot mode
-```bash
-ls /sys/firmware/efi/efivars
-
 ```
 
 - connect to the internet
@@ -38,59 +37,84 @@ wpa_passphrase 26duju-123C 26duju123 > internet.cfg
 wpa_supplicant -c internet.cfg -i wlan0 &
 dhcpcd &
 ping archlinux.org
-
 ```
 
 - update system clock
 ```bash
 timedatectl set-ntp true
-
 ```
+
+- mirrorlist
+```bash
+vim /etc/pacman.d/mirrorlist
+pacman -Sy
+```
+
 
 - partition disk
 ```bash
-
 /dev/sda
 ->
 /dev/sda1  512M   /boot
-/dev/sda2  all    /
-/dev/sda3  4G     swap
+/dev/sda2  4G     swap
+/dev/sda3  all    /
 
+
+lsblk
+
+parted /dev/sda
+    mktable
+    gpt
+    yes
+    quit
 
 fdisk -l
-fdisk /dev/sda
+cfdisk /dev/sda
 n
 1
-+512M
-
-n
-3
-+4G
++300M
+type: EFI
 
 n
 2
-<CR> all for /
++4G
+type swap
 
-mkfs.fat -F32 /dev/sda1
-mkfs.ext4 /dev/sda2
-mkswap /dev/sda3
-swapon /dev/sda3
+n
+3
+<CR> all for /
+type filesystem
+
+# efi 分区
+# 注意格式化顺序，会吃药的，efi分区最后格式化未vfat
+mkfs.ext4 /dev/sda3
+
+mkfs.vfat /dev/sda1
+
+mkswap -f /dev/sda2
+
+swapon /dev/sda2
+
 
 mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
-mount /dev/sda2 /mnt
+mount /dev/sda3 /mnt
 ```
 
 ### installation
 ```bash
 # change mirrorlist
 pacstrap /mnt base linux linux-firmware
+pacstrap /mnt vim dhcpcd iwd sudo
+
 ```
 
 ### configure the system
 - fstab
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
+cat /mnt/etc/fstab
+# 如果 EFI 分区没有那么未成功
 
 ```
 
@@ -98,6 +122,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ```bash
 vim /mnt/etc/pacman.d/mirrorlist
 add
+Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch
 Server = http://mirrors.163.com/archlinux/$repo/os/$arch
 
 arch-chroot /mnt
@@ -118,11 +143,13 @@ hwclock --systohc --utc
 
 - localization
 ```bash
-# generate /etc/locale.gen by running
-locale-gen
-
 vim /etc/locale.gen
 	# uncomment en_US.UTF-8
+
+export LANG=en_US.UTF-8
+
+# generate /etc/locale.gen by running
+locale-gen
 
 # create the locale.conf file, and set the lang variable accordingly
 vim /etc/locale.conf
@@ -136,13 +163,12 @@ vim /etc/vconsole.conf
 - network confiuration
 ```bash
 vi /etc/hostname
-lorenzo
-
+Arch
 # Add matching entries to hosts(5):
 vi /etc/hosts
 127.0.0.1	localhost
 ::1		localhost
-127.0.1.1	lorenzo.localdomain	lorenzo
+127.0.1.1	Arch.localdomain	Arch
 
 # for github
 199.232.28.133 raw.githubusercontent.com
@@ -172,7 +198,7 @@ passwd lorenzo
 # add root to user lorenzo
 pacman -S sudo
 vim /etc/sudoers
-add
+# uncomment
 %wheel ALL=(ALL)ALL
 ```
 
@@ -180,35 +206,126 @@ add
 ```bash
 # choose and install a linux-capable boot loader. if you have an intel or amd cpu, enable microcode updates in addition.
 
-pacman -S grub efibootmgr intel-ucode os-prober
-grub-mkconfig -o /boot/grub/grub.cfg
+pacman -S grub efibootmgr intel-ucode
+
 uname -m
     # x86_64
+grub-install --target=x86_64-efi --efi-directoryr=/boot --bootloader-id=GRUB
 
-mkdir /boot/grub
-grub-install --target=x86_64-efi --efi-directoryr=/boot
+grub-mkconfig -o /boot/grub/grub.cfg
 
 ```
 
 - netowork
+    - wireless
+    ```bash
+    pacman -S wpa_supplicant netctl wireless_tools 
+
+    # tools
+    pacman -S net-tools inetutils iproute2
+
+    # check, is hotspot is generated
+    ls /etc/netctl
+        examples    hooks    interfaces    26duju-123C
+
+    cat /etc/netctl/26duju-123C
+        Description='Automatically generated profile by wifi-menu'
+        Interface=wlan0
+        Connection=wireless
+        Security=wpa
+        ESSID=26duju-123C
+        IP=dhcp
+        Key=26duju123
+
+    # auto connect to wifi on startup
+    systemctl enable netctl-auto@26duju-123C.service
+
+    # start netctl service, connect to wifi
+    systemctl start netctl-auto@26duju-123C.service
+    ```
+
+    - wire
+    ```bash
+    pacman -S dhcpcd
+
+    # if install dhcpcd fail, try reinstall linux
+    pacman -S linux
+    which dhcpcd
+
+    systemctl enable dhcpcd
+    systemctl start dhcpcd
+    ```
+
+- bluetooth
+
+    1.  [Install](https://wiki.archlinux.org/index.php/Install) the [bluez](https://archlinux.org/packages/?name=bluez) package, providing the Bluetooth protocol stack.
+
+    2.  [Install](https://wiki.archlinux.org/index.php/Install) the [bluez-utils](https://archlinux.org/packages/?name=bluez-utils) package, providing the `bluetoothctl` utility. Alternatively install [bluez-utils-compat](https://aur.archlinux.org/packages/bluez-utils-compat/)AUR to additionally have the [deprecated BlueZ tools](https://wiki.archlinux.org/index.php/Bluetooth#Deprecated_BlueZ_tools).
+
+    3.  The generic Bluetooth driver is the `btusb` kernel module. [Check](https://wiki.archlinux.org/index.php/Kernel_module#Obtaining_information) whether that module is loaded. If it's not, then [load the module](https://wiki.archlinux.org/index.php/Kernel_module#Manual_module_handling).
+
+    4.  [Start/enable](https://wiki.archlinux.org/index.php/Start/enable) `bluetooth.service`.
+
+        **Note:**
+
+        -   By default the bluetooth daemon will only give out bnep0 devices to users that are a member of the `lp` [group](https://wiki.archlinux.org/index.php/Users_and_groups#System_groups). Make sure to add your user to that group if you intend to connect to a bluetooth tether. You can change the group that is required in the file `/usr/share/dbus-1/system.d/bluetooth.conf`.
+        -   Some Bluetooth adapters are bundled with a Wi-Fi card (e.g. [Intel Centrino](https://www.intel.com/content/www/us/en/wireless-products/centrino-advanced-n-6235.html)). These require that the Wi-Fi card is firstly enabled (typically a keyboard shortcut on a laptop) in order to make the Bluetooth adapter visible to the kernel.
+        -   Some Bluetooth cards (e.g. Broadcom) conflict with the network adapter. Thus, you need to make sure that your Bluetooth device gets connected before the network service boot.
+        -   Some tools such as hcitool and hciconfig have been deprecated upstream, and are no longer included in [bluez-utils](https://archlinux.org/packages/?name=bluez-utils). Since these tools will no longer be updated, it is recommended that scripts be updated to avoid using them. If you still desire to use them, install [bluez-utils-compat](https://aur.archlinux.org/packages/bluez-utils-compat/)AUR. See [FS#53110](https://bugs.archlinux.org/task/53110) and [the Bluez mailing list](https://www.spinics.net/lists/linux-bluetooth/msg69239.html) for more information.
+
+
+
+*   **bluetoothctl** — Pairing a device from the shell is one of the simplest and most reliable options.
+    *   **Tip:** To automate bluetoothctl commands, use `echo -e "<command1>\n<command2>\n" | bluetoothctl` or `bluetoothctl -- command`
+
+
+
+
+
 ```bash
-# wire
-pacman -S dhcpcd
-systemctl start dhcpcd
-systemctl enable dhcpcd
+# bluetooth protocl
+pacman -S bluez
 
-# wireless
-pacman -S netctl iw wpa_supplicant
+# bluetoothctl
+pacman -S bluez-utils
 
-# tools
-pacman -S net-tools dnsutils inetutils iproute2
+systemctl enable bluetooth.service
+systemctl start bluetooth.service
+
+## Console
+# bluetoothctl - Pairing a device from the shell is one of the simplest and most reliable options.
+
+# bluetooth for audio
+pacman -S pulseaudio-bluetooth
+# start manually
+pulseaudio -k
+# start
+ulseaudio --start
+
+vim /etc/bluetooth/main.conf
+    [Policy]
+    AutoEnable=true
+
+    [General]
+    DiscoverableTimeout = 0
+
+bluetoothctl
+	select <mac>
+	agent KeyboardOnly
+	default-agent
+	devices
+	power on
+	scan on
+	trust <mac>
+	pair <mac>
+	connect <mac>
 ```
 
 - ssh
 ```bash
 pacman -S openssh
+systemctl enable sshd
 systemctl start sshd
-systemctl enable sshd.service
 
 vi /etc/ssh/sshd_config
 # Permi ... yes
@@ -216,11 +333,9 @@ vi /etc/ssh/sshd_config
 cd
 ssh-keygen
 ```
-- yay
+- git
 ```bash
-git clone https://aur.archlinux.org/yay-git.git
-cd yay
-makepkg -si
+pacman -S git
 ```
 
 ### reboot
@@ -228,118 +343,188 @@ makepkg -si
 exit
 umount -R /mnt
 shutdown now
-# eject moble disk
-# select booting from exist os
+# eject moble disk, modify boot order
 ```
 
-### desktop
+### drivers
 ```bash
 su - lorenzo
+# list drivers
+lspci | grep VGA
 
 # Graphics card
 pacman -S xf86-video-intel
+pacman -S nvidia
+
+# 3D
+pacman -S mesa
 
 # sound card
-pacman -S alsa-utils pulseaudio-alsa
+pacman -S alsa-utils pulseaudio
 
 # touch pane
 pacman -S xf86-input-synaptics
 
-# font
-pacman -S ttf-dejavu wqy-microhei
-
-# input method
-pacman -S fcitx fcitx-im fcitx-googlepinyin fcitx-configtool
-
-# terminal simulator
-pacman -S rxvt-unicode
-
-vim ~/.xinitrc
-add before exec
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-
-# desktop
-# xorg window manage sys
-pacman -S xorg xorg-xinit
-
-pacman -S alacarte
-
-pacman -S firefox
 ```
 
 ### tools
 ```bash
-pacman -S zsh fish task timew ranger git neovim tmux
 
-pacman -S tmux
-locale-gen "en_US.UTF-8"
+```
 
-pacman -S zathura lynx vit cmus evince
+### softwares
+- pacman
+```bash
+# update mirrors list
+# sduo pacman -Sy
+
+# update system
+# pacman -Syyu
+
+# remove package
+# pacman -R
+
+# remove package recursivly
+# pacman -Rsc vim 
+
+```
+
+- softwares
+```bash
+# font
+pacman -S noto-fonts-cjk
+pacman -S nerd-fonts
+pacman -S font-awesome
+pacman -S ttf-dejavu
+pacman -S wqy-microhei
+
+# input method
+pacman -S fcitx fcitx-im fcitx-googlepinyin fcitx-configtool
+
+vim ~/.xinitrc
+# add
+    # -----------------------
+    export GTK_IM_MODULE=fcitx
+    export QT_IM_MODULE=fcitx
+    export XMODIFIERS="@im=fcitx"
+    fcitx &
+    # -----------------------
+
+pacman -S vim neovim
+pacman -S zsh fish task timew ranger git lazygit fzf neovim tmux zathura w3m vit cmus evince mutt
+pacman -S python julia scala sbt
 
 chsh -s /bin/zsh
+
+touch ~/.zshrc
+
+su -
+touch ~/.zshrc
 ```
 
-### note 
+- suckless: dwm, demenu, st, surf
+    - dwm [https://wiki.archlinux.org/index.php/Dwm_(简体中文)]
+    - demenu [https://wiki.archlinux.org/index.php/Dmenu]
+    - dwm [https://zhuanlan.zhihu.com/p/183861786]
 ```bash
-pacman -S vim
+# !!! terminal simulator
+pacman -S rxvt-unicode
 
-pacman -Rsc vim 
-pacman -Q vim
-```
-
-- dwm 
-```bash
+# desktop
+# none root
 cd
-git clone https://git.suckless.org/dwm
-
-cd dwm
-make && make install
-
+git clone https://git.suckless.org/dwm &
+git clone http://git.suckless.org/dmenu &
+git clone https://git.suckless.org/st &
 git clone https://git.suckless.org/surf &
 
-git clone https://git.suckless.org/st
-```
+# dependency
+pacman -S base-devel
+pacman -S alacarte
+pacman -S xorg-server
+pacman -S xorg-apps
+pacman -S xorg-xinit
 
-- root
-```bash
-#!/bin/sh
-#
-# ~/.xinitrc
-#
+wait
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-fcitx &
-```
+cd dwm
+sudo make && make clean install
 
-- lorenzo
-```bash
-#!/bin/sh
-#
-# ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
+cd
+cd dmenu
+sudo make && make clean install
 
-# feh --bg-scale /home/michellgaby/img/arch.png
-conky -x 0 -y 0 -d
+cd
+cd st
+sudo make && make clean install
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-fcitx &
+cd
+cd surf
+sudo make && make clean install
 
+vim ~/.xinitrc
+# -------------------------------
+# show time in dwm
 while true
 do
     xsetroot -name  "$(date -u +"%a %b %d %r")"
     sleep 1s
 done &
 
-#exec i3
 exec dwm
 
+# start dwm manually 
 # exec startx
 ```
 
+
+
+### fonts
+
+
+
+```bash
+# available fonts
+ls -lR /user/share/fonts
+
+
+```
+
+
+
+#### device check
+
+```bash
+# 磁盘检测
+sudo pacman -S smartmontools
+sudo smartctl -A /dev/sda   #硬盘
+sudo smartctl -d sat -A /dev/sdc #usb设备
+
+# cpu 与显卡：
+# 如下两款是目前找到的，最佳的图形化查看 cpu 与显卡信息的软件。
+
+yay -S cpu-x
+yay -S gpu-viewer
+
+# 系统完整信息:
+# 使用 dmidecode 可以完整查看系统绝大部分硬件信息，包括较难得到的内存频率等。
+
+sudo pacman -S dmidecode
+sudo dmidecode
+```
+
+
+
+### Piker
+
+[https://github.com/actionless/pikaur]
+
+```
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/pikaur.git
+cd pikaur
+makepkg -fsri
+
+pikaur -Syu
+pikaur -S google-chrome
+```
