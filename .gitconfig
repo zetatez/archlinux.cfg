@@ -1,0 +1,9 @@
+[user]
+        name = zetatez
+        email = zetatez@icloud.com
+[core]
+        editor = vi
+[merge]
+        tool = vimdiff
+[color]
+        ui = auto

@@ -1,0 +1,1384 @@
+# python
+
+
+# requirements 
+# -------------------------------------------
+snippet requirements "requirements" bwA
+! echo "
+ipython
+xmltodict
+numpy
+pandas
+scipy
+matplotlib
+requests
+pymongo
+python-crontab
+" >> requirements.txt
+endsnippet
+
+# basic
+# -------------------------------------------
+snippet #! "env" bwA
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+$0
+endsnippet
+
+snippet utf8 "code" bwA
+# -*- coding: utf-8 -*-
+
+$0
+endsnippet
+
+snippet docs "docs" bwA
+"""
+File: ${1:filename}.py
+Author: Lorenzo
+Email: zetatez@icloud.com
+Description: ${2:Des}
+"""
+
+$0
+endsnippet
+
+
+# io 
+# -------------------------------------------
+snippet open "open" wA
+with open("${1:1.txt}","${2:w+}", encoding="utf-8") as fh:
+    bf = fh.${3:read()|readline()|readlines()|write("hi")|tell()|seek(-1,1)}
+endsnippet
+
+
+# key words 
+# -------------------------------------------
+snippet imp "import" bwA
+import ${0:module}
+endsnippet
+
+snippet ims "imports" bwA
+import abc, re, os, sys, time, datetime, json
+import pickle
+import collections as co
+import queue
+import bisect
+import array
+import heapq
+import xml
+import copy
+import math, cmath
+import random
+import numpy as np
+import pandas as pd
+import scipy as sc
+import matplotlib as mp
+import matplotlib.pyplot as plt
+import logging
+import requests
+from pprint import pprint as show
+
+random.seed(0)
+
+$0
+endsnippet
+
+snippet fro "from a import b" bwA
+from ${1:package} import ${0:module}
+endsnippet
+
+snippet ass "assert" bwA
+assert ${1:True}
+endsnippet
+
+snippet con "continue" bwA
+continue
+$0
+endsnippet
+
+snippet bre "break" bwA
+break
+$0
+endsnippet
+
+snippet pas "pass" bwA
+pass
+$0
+endsnippet
+
+snippet pri "print" bwA
+print("${1:hello}")
+$0
+endsnippet
+
+snippet exc "exec" bwA
+exec("print('hello')") 
+$0
+endsnippet
+
+snippet rep "repr" bwA
+repr(${1:[1,1,1]})
+endsnippet
+
+snippet eva "eval" bwA
+eval(${1:print('hello')})
+endsnippet
+
+snippet glo "global" bwA
+global ${1:var}
+$0
+endsnippet
+
+snippet yie "yield" bwA
+yield ${1:var}$0
+endsnippet
+
+snippet wit "with" bwA
+with ${1:expr} as ${2:var}:
+    ${0:${VISUAL:pass}}
+endsnippet
+
+snippet awit "async with" bwA
+async with ${1:expr} as ${2:var}:
+    ${0:${VISUAL:pass}}
+endsnippet
+
+snippet fin "finally" bwA
+finally:
+    ${1:pass}
+
+$0
+endsnippet
+
+snippet rang "range" wA
+range(${1:10})$0
+endsnippet
+
+snippet filter "filter" wA
+${1:var} = filter(lambda ${2:vars}: ${3:True}, ${4:range(10)})$0
+endsnippet
+
+snippet lam "lambda" wA
+${1:var} = lambda ${2:vars}: ${0:action}
+endsnippet
+
+snippet ha "hasattr" wA
+hasattr(${1:clsinstance},"${2:attr}")$0
+endsnippet
+
+snippet hs "hash" wA
+hash(${1:"str"})$0
+endsnippet
+
+snippet isi "isinstance" wA
+isinstance(${1:clsinstance},${2:cls})$0
+endsnippet
+
+snippet iss "issubclass" wA
+issubclass(${1:Bcls},${2:Acls})$0
+endsnippet
+
+snippet cal "callable" wA
+callable(${1:sum})$0
+endsnippet
+
+snippet map "map" wA
+map(lambda ${1:x}, ${2:y}: ${3:$1 + $2}, xs, ys)
+endsnippet
+
+snippet iter "iter" wA
+${1:it} = iter(${2:range(10)})
+x = next($1)$0
+endsnippet
+
+# type convert 
+# -------------------------------------------
+snippet int "type convert" bwA
+int(${1:var})
+$0
+endsnippet
+
+snippet float "type convert" bwA
+float(${1:var})
+$0
+endsnippet
+
+snippet long "type convert" bwA
+long(${1:var})
+$0
+endsnippet
+
+snippet complex "type convert" bwA
+conplex(${1:var})
+$0
+endsnippet
+
+snippet str "type convert" bwA
+str(${1:var})
+$0
+endsnippet
+
+snippet tuple "type convert" bwA
+tuple(${1:var})
+$0
+endsnippet
+
+snippet list "type convert" bwA
+list(${1:var})
+$0
+endsnippet
+
+snippet set "type convert" bwA
+set(${1:var})
+$0
+endsnippet
+
+snippet frozenset "type convert" bwA
+frozenset(${1:var})
+$0
+endsnippet
+
+snippet dict "type convert" bwA
+dict(${1:var})
+$0
+endsnippet
+
+snippet ord "type convert" bwA
+ord(${1:var})
+$0
+endsnippet
+
+snippet chr "type convert" bwA
+chr(${1:var})
+$0
+endsnippet
+
+snippet unichr "type convert" bwA
+unichr(${1:var})
+$0
+endsnippet
+
+snippet oct "type convert" bwA
+oct(${1:var})
+$0
+endsnippet
+
+snippet hex "type convert" bwA
+hex(${1:var})
+$0
+endsnippet
+
+# operator 
+# -------------------------------------------
+snippet eq "operator" wA
+== $0
+endsnippet
+
+snippet neq "operator" wA
+!= $0
+endsnippet
+
+snippet geq "operator" wA
+>= $0 
+endsnippet
+
+snippet leq "operator" wA
+<= $0
+endsnippet
+
+snippet gt "operator" wA
+> $0
+endsnippet
+
+snippet lt "operator" wA
+< $0
+endsnippet
+
+snippet geq "operator" wA
+>= $0
+endsnippet
+
+snippet leq "operator" wA
+<= $0
+endsnippet
+
+snippet swap "swap" bwA
+$2, $1 = ${1:x}, ${2:y}
+$0
+endsnippet
+
+
+# control flow
+# -------------------------------------------
+snippet ie "visual if else" bwA
+if ${1:True}:
+    ${2:${VISUAL:pass}}
+else:
+    ${3:pass}
+$0
+endsnippet
+
+snippet if "visual if" bwA
+if ${1:True}:
+    ${0:${VISUAL:pass}}
+endsnippet
+
+snippet el "visual else" bwA
+else:
+    ${0:${VISUAL:pass}}
+
+endsnippet
+
+snippet ef "visual elif" bwA
+elif ${1:True}:
+    ${0:${VISUAL:pass}}
+endsnippet
+
+snippet ter "ternary expression" bwA
+${1:flag} = ${2:True} if ${3:True} else ${4:False}
+$0
+endsnippet
+
+snippet for "for" bwA
+for ${1:item} in ${2:items}:
+    ${3:pass}$0
+endsnippet
+
+snippet ofor "one line for" wA
+for ${1:item} in ${2:items}
+endsnippet
+
+snippet ffor "for for" wA
+for ${1:xs} in ${2:xss} for ${3:x} in ${4:xs} if ${5:True}$0
+endsnippet
+
+snippet enum "enumerate" bwA
+for idx, ${1:v} in enumerate(${2:['a','b','c']}):
+    ${3:pass}$0
+endsnippet
+
+snippet wh "visual while" bwA
+while ${1:False}:
+    ${2:${VISUAL:pass}}
+endsnippet
+
+snippet dwh "dowhile" bwA
+while True:
+    ${1:pass}
+    if ${0:True}:
+	    break
+endsnippet
+
+snippet ewh "visual while else" bwA
+while ${1:False}:
+    ${2:${VISUAL:pass}}
+else:
+    ${3:pass}
+
+$0
+endsnippet
+
+snippet try "visual try except" bwA
+try:
+    ${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+    ${4:raise $3}
+
+$0
+endsnippet
+
+snippet etry "visual try except else" bwA
+try:
+    ${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+    ${4:raise $3}
+else:
+    ${5:pass}
+
+$0
+endsnippet
+
+snippet ftry "visual try except finally" bwA 
+try:
+    ${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+    ${4:raise $3}
+finally:
+    ${5:pass}
+
+${0}
+endsnippet
+
+snippet eftry "visual try except else finally" bwA
+try:
+    ${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+    ${4:raise $3}
+else:
+    ${5:pass}
+finally:
+    ${6:pass}
+
+${0}
+endsnippet
+
+snippet ret "return" bwA
+return ${1:True}
+
+$0
+endsnippet
+
+
+# exception 
+# -------------------------------------------
+snippet eebe "ee: BaseException " bwA
+BaseException	
+endsnippet
+
+snippet eesi "ee: SystemExit" bwA
+SystemExit
+endsnippet
+
+snippet eeki "ee: KeyboardInterrupt" bwA
+KeyboardInterrupt
+endsnippet
+
+snippet eee "ee: Exception" bwA
+Exception
+endsnippet
+
+snippet eesi "ee: StopIteration" bwA
+StopIteration
+endsnippet
+
+snippet eege "ee: GeneratorExit" bwA
+GeneratorExit
+endsnippet
+
+snippet eese "ee: StandardError" bwA
+StandardError
+endsnippet
+
+snippet eeae "ee: ArithmeticError" bwA
+ArithmeticError
+endsnippet
+
+snippet eefpe "ee: FloatingPointError" bwA
+FloatingPointError
+endsnippet
+
+snippet eeofe "ee: OverflowError" bwA
+OverflowError
+endsnippet
+
+snippet eezde "ee: ZeroDivisionError" bwA
+ZeroDivisionError
+endsnippet
+
+snippet eeae "ee: AssertionError" bwA
+AssertionError
+endsnippet
+
+snippet eeae "ee: AttributeError" bwA
+AttributeError
+endsnippet
+
+snippet eeeofe "ee: EOFError" bwA
+EOFError
+endsnippet
+
+snippet eeee "ee: EnvironmentError" bwA
+EnvironmentError
+endsnippet
+
+snippet eeioe "ee: IOError" bwA
+IOError
+endsnippet
+
+snippet eeose "ee: OSError" bwA
+OSError
+endsnippet
+
+snippet eewe "ee: WindowsError" bwA
+WindowsError
+endsnippet
+
+snippet eei "ee: ImportError" bwA
+ImportError
+endsnippet
+
+snippet eele "ee: LookupError" bwA
+LookupError
+endsnippet
+
+snippet eeie "ee: IndexError" bwA
+IndexError
+endsnippet
+
+snippet eeke "ee: KeyError" bwA
+KeyError
+endsnippet
+
+snippet eeme "ee: MemoryError" bwA
+MemoryError
+endsnippet
+
+snippet eene "ee: NameError" bwA
+NameError
+endsnippet
+
+snippet eeule "ee: UnboundLocalError" bwA
+UnboundLocalError
+endsnippet
+
+snippet eere "ee: ReferenceError" bwA
+ReferenceError
+endsnippet
+
+snippet eere "ee: RuntimeError" bwA
+RuntimeError
+endsnippet
+
+snippet eenie "ee: NotImplementedError" bwA
+NotImplementedError
+endsnippet
+
+snippet eese "ee: SyntaxError" bwA
+SyntaxError
+endsnippet
+
+snippet eeie "ee: IndentationError" bwA
+IndentationError
+endsnippet
+
+snippet eete "ee: TabError" bwA
+TabError
+endsnippet
+
+snippet eese "ee: SystemError" bwA
+SystemError
+endsnippet
+
+snippet eete "ee: TypeError" bwA
+TypeError
+endsnippet
+
+snippet eeve "ee: ValueError" bwA
+ValueError
+endsnippet
+
+snippet eeue "ee: UnicodeError" bwA
+UnicodeError
+endsnippet
+
+snippet eeude "ee: UnicodeDecodeError" bwA
+UnicodeDecodeError
+endsnippet
+
+snippet eeuee "ee: UnicodeEncodeError" bwA
+UnicodeEncodeError
+endsnippet
+
+snippet eeute "ee: UnicodeTranslateError" bwA
+UnicodeTranslateError
+endsnippet
+
+snippet eew "ee: Warning" bwA
+Warning
+endsnippet
+
+snippet eedw "ee: DeprecationWarning" bwA
+DeprecationWarning
+endsnippet
+
+snippet eefw "ee: FutureWarning" bwA
+FutureWarning
+endsnippet
+
+snippet eeow "ee: OverflowWarning" bwA
+OverflowWarning
+endsnippet
+
+snippet eepdw "ee: PendingDeprecationWarning" bwA
+PendingDeprecationWarning
+endsnippet
+
+snippet eerw "ee: RuntimeWarning" bwA
+RuntimeWarning
+endsnippet
+
+snippet eesw "ee: SyntaxWarning" bwA
+SyntaxWarning
+endsnippet
+
+snippet eeuw "ee: UserWarning" bwA
+UserWarning
+endsnippet
+
+# snippet 'log ([\w]+) ([\w]+) ' "log_a b" bwA
+# `!p snip.rv = '\\log_' + '{' + match.group(1) + '} ' + match.group(2)`$0
+# endsnippet
+
+
+# function
+# -------------------------------------------
+snippet def "def" bwA
+def ${1:func}(${2:args}):
+    """$1: ${3:docstring for $1}
+	"""
+    ${4:pass}$0
+endsnippet
+
+
+# class
+# -------------------------------------------
+snippet ecl "empty class" bwA
+class ${1:ClassName}(${2:object}):
+    """$1: ${3:docstring for $1}"""
+endsnippet
+
+snippet cl "class" bwA
+class ${1:ClassName}(${2:object}):
+    """$1: ${3:docstring for $1}
+	"""
+    def __init__(self, ${4:arg}):
+        ${5:super($1, self).__init__()}
+        self.$4 = $4
+$0
+endsnippet
+
+snippet mem "def member function" bwA
+def ${1:func}(self, ${2:arg}):
+    """$1: ${3:docstring for $1}
+	"""
+	${4:pass}
+
+$0
+endsnippet
+
+snippet cmem "class method" bwA
+@classmethod
+def ${1:func}(cls, ${2:arg}):
+    """$1: ${3:docstring for $1}
+	"""
+	${4:pass}
+
+$0
+endsnippet
+
+snippet dinit "def init" bwA
+def __init__(self, ${1:arg}):
+	${2:super(${3:clsname} , self).__init__()}
+	self.$4 = $4
+$0
+endsnippet
+
+snippet dstr "def str" bwA
+def __str__(self):
+    return ${1:"class str"}
+$0
+endsnippet
+
+snippet drep "def repr" bwA
+def __repr__(self):
+    return ${1:'repr string'}
+$0
+endsnippet
+
+snippet dver "def version" bwA
+__version__ = '${1:0.0.0}'
+$0
+endsnippet
+
+snippet daut "def author" bwA
+__author__ = '${1:Lorenzo}'
+$0
+endsnippet
+
+snippet dall "def all" bwA
+__all__ = [
+    $module
+] 
+$0
+endsnippet
+
+snippet __ "magic __" wA
+__${1:init}__$0
+endsnippet
+
+snippet . "self" wA
+self.
+endsnippet
+
+snippet main "if name eq main" bwA
+if __name__ == '__main__':
+	${1:pass}$0
+endsnippet
+
+# comprehension
+# -------------------------------------------
+snippet lcp "list comprehension" wA
+[${1:x} for ${2:x} in ${3:${VISUAL:xs}}]${0}
+endsnippet
+
+snippet glcp "guard list comprehension" wA
+[${1:x} for ${2:x} in ${3:${VISUAL:xs}} if ${4:True}]${0}
+endsnippet
+
+snippet dcp "dict comprehension" wA
+{${1:v}: ${2:k} for k, v in ${4:${VISUAL:xs}}.items}${0}
+endsnippet
+
+snippet gdcp "guard dict comprehension" wA
+{${1:v}: ${2:k} for k, v in ${4:${VISUAL:xs}}.items if ${5:True}}${0}
+endsnippet
+
+snippet scp "set comprehension" wA
+{${1:x} for ${2:x} in ${3:${VISUAL:xs}}}${0}
+endsnippet
+
+snippet gscp "guard set comprehension" wA
+{${1:x} for ${2:x} in ${3:${VISUAL:xs}} if ${5:True}}${0}
+endsnippet
+
+
+# sort 
+# -------------------------------------------
+snippet bubblesort "bubble sort" bwA
+def bubble_sort(arr):
+    n = k = len(arr)
+    for i in range(n):
+        flag = True
+        for j in range(1, k):
+            if arr[j-1] > arr[j]:
+                arr[j-1], arr[j] = arr[j], arr[j-1]
+                k = j
+                flag = False
+        if flag:
+            break
+    return arr
+
+$0
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = bubble_sort(arr)
+#     print(arr)
+
+# [6, 8, 0, 5, 1, 4, 9, 2, 3, 7]
+# [6, 0, 5, 1, 4, 8, 2, 3, 7, 9]
+# [0, 5, 1, 4, 6, 2, 3, 7, 8, 9]
+# [0, 1, 4, 5, 2, 3, 6, 7, 8, 9]
+# [0, 1, 4, 2, 3, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet selectsort "select sort" bwA
+def select_sort(arr):
+    n = len(arr)
+    for i in range(0, n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx] :
+                min_idx = j
+        arr[min_idx], arr[i] = arr[i], arr[min_idx]
+    return arr
+
+$0
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = select_sort(arr)
+#     print(arr)
+
+# [5, 0, 2, 4, 8, 6, 3, 1, 7, 9]
+# [0, 5, 2, 4, 8, 6, 3, 1, 7, 9]
+# [0, 1, 2, 4, 8, 6, 3, 5, 7, 9]
+# [0, 1, 2, 4, 8, 6, 3, 5, 7, 9]
+# [0, 1, 2, 3, 8, 6, 4, 5, 7, 9]
+# [0, 1, 2, 3, 4, 6, 8, 5, 7, 9]
+# [0, 1, 2, 3, 4, 5, 8, 6, 7, 9]
+# [0, 1, 2, 3, 4, 5, 6, 8, 7, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
+endsnippet
+
+snippet insertsort "insert sort" bwA
+insert_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        idx = i - 1
+        mark = arr[i]
+        while idx >= 0 and arr[idx] > mark:
+            arr[idx+1] = arr[idx]
+            idx -= 1
+        arr[idx+1] = mark
+        print(arr)
+    return arr
+
+$0
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = insert_sort(arr)
+#     print(arr)
+
+# [2, 1, 4, 3, 5, 8, 0, 6, 7, 9]
+# [1, 2, 4, 3, 5, 8, 0, 6, 7, 9]
+# [1, 2, 4, 3, 5, 8, 0, 6, 7, 9]
+# [1, 2, 3, 4, 5, 8, 0, 6, 7, 9]
+# [1, 2, 3, 4, 5, 8, 0, 6, 7, 9]
+# [1, 2, 3, 4, 5, 8, 0, 6, 7, 9]
+# [0, 1, 2, 3, 4, 5, 8, 6, 7, 9]
+# [0, 1, 2, 3, 4, 5, 6, 8, 7, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet mergesort "merge sort" bwA
+def merge_sort(arr):
+    if len(arr) < 2:
+        return arr
+    m = len(arr) // 2
+    lf, lr = merge_sort(arr[:m]), merge_sort(arr[m:])
+    return merge(lf, lr)
+
+def merge(lf, lr):
+    mer = []
+    while lf and lr:
+        if lf[0] < lr[0]:
+            mer.append(lf.pop(0))
+        else:
+            mer.append(lr.pop(0))
+    return mer + lf + lr
+
+$0
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = merge_sort(arr)
+#     print(arr)
+
+# [7, 3, 8, 2, 0, 5, 9, 6, 4, 1]
+
+# [7, 3, 8, 2, 0]
+# [7, 3]
+# [7]
+# [3]
+
+# [8, 2, 0]
+# [8]
+# [2, 0]
+# [2]
+# [0]
+
+# [5, 9, 6, 4, 1]               
+# [5, 9]                        
+# [5]
+# [9]
+
+# [6, 4, 1]                     
+# [6]
+# [4, 1]
+# [4]
+# [1]
+
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet shellsort "shell sort" bwA
+def shell_sort(arr):
+    n = len(arr)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            temp = arr[i]
+            j = i
+            while j >= gap and arr[j - gap] > temp:
+                arr[j] = arr[j - gap]
+                j -= gap
+            arr[j] = temp
+        gap = gap // 2
+    return arr
+
+$0
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = shell_sort(arr)
+#     print(arr)
+
+# [8, 9, 2, 3, 1, 0, 5, 6, 7, 4]
+# gap: 5
+   1--2--3--4--5--6--7--8--9--10
+# [0, 9, 2, 3, 1, 8, 5, 6, 7, 4] 9 <-> 5
+# [0, 5, 2, 3, 1, 8, 9, 6, 7, 4] 2     6
+# [0, 5, 2, 3, 1, 8, 9, 6, 7, 4] 3     7
+# [0, 5, 2, 3, 1, 8, 9, 6, 7, 4] 1     4
+# [0, 5, 2, 3, 1, 8, 9, 6, 7, 4]
+# gap: 2
+   1--2--3--4--5--6--7--8--9--10
+# [0, 5, 2, 3, 1, 8, 9, 6, 7, 4] 3 <-> 5
+# [0, 3, 2, 5, 1, 8, 9, 6, 7, 4] 2 <-> 1
+# [0, 3, 1, 5, 2, 8, 9, 6, 7, 4] 5     8
+# [0, 3, 1, 5, 2, 8, 9, 6, 7, 4] 2     9
+# [0, 3, 1, 5, 2, 8, 9, 6, 7, 4] 8 <-> 6
+# [0, 3, 1, 5, 2, 6, 9, 8, 7, 4] 9 <-> 7
+# [0, 3, 1, 5, 2, 6, 7, 8, 9, 4] 8 <-> 4
+# [0, 3, 1, 4, 2, 5, 7, 6, 9, 8] 4 <-> 6
+# gap: 1
+   1--2--3--4--5--6--7--8--9--10
+# [0, 3, 1, 4, 2, 5, 7, 6, 9, 8] 3 <-> 1
+# [0, 1, 3, 4, 2, 5, 7, 6, 9, 8] 3     4
+# [0, 1, 3, 4, 2, 5, 7, 6, 9, 8] 4 <-> 2  -> 3 <-> 2
+# [0, 1, 2, 3, 4, 5, 7, 6, 9, 8] 4     5
+# [0, 1, 2, 3, 4, 5, 7, 6, 9, 8] 5     7
+# [0, 1, 2, 3, 4, 5, 7, 6, 9, 8] 7 <-> 6
+# [0, 1, 2, 3, 4, 5, 6, 7, 9, 8] 7     9
+# [0, 1, 2, 3, 4, 5, 6, 7, 9, 8] 9 <-> 8
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet quicksort "quick sort" bwA
+# 平均空间复杂度为 O(nlogn)
+def quick_sort(arr):
+    if len(arr) < 2:
+        return arr
+    lf = lr = []
+    cur = arr[0]
+    for x in arr[1:]:
+        if x < cur:
+            lf.append(x)
+        else:
+            lr.append(x)
+    return quick_sort(lf) + [cur] + quick_sort(lr)
+
+$0
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = quick_sort(arr)
+#     print(arr)
+
+# quick_sort 1
+# [8, 1, 2, 6, 9, 3, 4, 0, 5, 7]
+# [4, 5]                        
+# [3, 4, 5]                     
+# [3, 4, 5, 6, 7]               
+# [2, 3, 4, 5, 6, 7]            
+# [0, 1, 2, 3, 4, 5, 6, 7]      
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# 平均空间复杂度为 O(logn)
+def partition(arr, lidx, ridx):
+    pivot = arr[lidx]
+    while lidx < ridx:
+        while lidx < ridx and arr[ridx] >= pivot:
+            ridx -= 1
+        arr[lidx] = arr[ridx]
+        while lidx < ridx and arr[lidx] <= pivot:
+            lidx += 1
+        arr[ridx] = arr[lidx]
+    arr[lidx] = pivot
+    return lidx
+
+def quick_sort(arr, lidx, ridx):
+    if lidx < ridx:
+        pivotIndex = partition(arr, lidx, ridx)
+        quick_sort(arr, lidx, pivotIndex - 1)
+        quick_sort(arr, pivotIndex + 1, ridx)
+    return arr
+
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+# 	random.shuffle(arr)
+# 	print(arr)
+# 	arr = quick_sort(arr, 0, len(arr)-1)
+# 	print(arr)
+
+# quick_sort 2
+# [2, 1, 0, 9, 5, 7, 3, 6, 8, 4]
+# [0, 1, 2, 9, 5, 7, 3, 6, 8, 4]
+# [0, 1, 2, 9, 5, 7, 3, 6, 8, 4]
+# [0, 1, 2, 4, 5, 7, 3, 6, 8, 9]
+# [0, 1, 2, 3, 4, 7, 5, 6, 8, 9]
+# [0, 1, 2, 3, 4, 6, 5, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet heapsort "heap sort" bwA
+# 大根堆 [从小到大排列]
+# arr nums: n
+# lastnode: n-1
+# cur node: i
+# parent node: floor((i-1)/2)
+# left  child: 2i+1
+# right child: 2i+2
+
+# swap arr 
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
+    return
+
+# adjust heap at node i
+def heapify(arr, i, n):
+    lchild = 2 * i + 1
+    rchild = 2 * i + 2
+    maxi = i
+    if lchild < n and arr[lchild] > arr[maxi]: 
+        maxi = lchild
+    if rchild < n and arr[rchild] > arr[maxi]:
+        maxi = rchild
+    if maxi != i:
+        swap(arr, maxi, i)
+        heapify(arr, maxi, n)                  # recursion 
+    return
+
+# buil heap: max on the top
+def built_heap(arr, n):
+    for i in range((n-1-1)//2, -1, -1):        # lastnode=n-1, floor((n-1-1)/2) = (n-1-1)//2
+       heapify(arr, i, n)
+
+# heap sort
+def heap_sort(arr):
+    n = len(arr)
+    built_heap(arr, n)
+    for i in range(n-1, -1, -1):
+        swap(arr, 0, i)
+        heapify(arr, 0, i)
+    return arr 
+
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = heap_sort(arr)
+#     print(arr)
+
+# [5, 9, 6, 2, 4, 8, 7, 0, 1, 3]
+# builted heap: [9, 5, 8, 2, 4, 6, 7, 0, 1, 3]
+# [8, 5, 7, 2, 4, 6, 3, 0, 1, 9]
+# [7, 5, 6, 2, 4, 1, 3, 0, 8, 9]
+# [6, 5, 3, 2, 4, 1, 0, 7, 8, 9]
+# [5, 4, 3, 2, 0, 1, 6, 7, 8, 9]
+# [4, 2, 3, 1, 0, 5, 6, 7, 8, 9]
+# [3, 2, 0, 1, 4, 5, 6, 7, 8, 9]
+# [2, 1, 0, 3, 4, 5, 6, 7, 8, 9]
+# [1, 0, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet countingsort "counting sort" bwA
+def counting_sort(arr, N):
+    bucket = [0] * N
+    for x in arr:
+        bucket[x] += 1
+    i = 0
+    for k in range(N):
+        while bucket[k] > 0:
+            arr[i] = k
+            bucket[k] -= 1
+            i += 1
+    return arr
+
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = counting_sort(arr, 20)
+#     print(arr)
+
+# [9, 8, 7, 3, 5, 0, 1, 2, 6, 4]
+# [9, 8, 7, 3, 5, 0, 1, 2, 6, 4]
+# [0, 8, 7, 3, 5, 0, 1, 2, 6, 4]
+# [0, 1, 7, 3, 5, 0, 1, 2, 6, 4]
+# [0, 1, 2, 3, 5, 0, 1, 2, 6, 4]
+# [0, 1, 2, 3, 5, 0, 1, 2, 6, 4]
+# [0, 1, 2, 3, 4, 0, 1, 2, 6, 4]
+# [0, 1, 2, 3, 4, 5, 1, 2, 6, 4]
+# [0, 1, 2, 3, 4, 5, 6, 2, 6, 4]
+# [0, 1, 2, 3, 4, 5, 6, 7, 6, 4]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 4]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+snippet bucketsort "bucket sort" bwA
+def insert_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        idx = i - 1
+        mark = arr[i]
+        while idx >= 0 and arr[idx] > mark:
+            arr[idx+1] = arr[idx]
+            idx -= 1
+        arr[idx+1] = mark
+        print(arr)
+    return arr
+
+def bucket_sort(arr, defaultBucketSize = 5):
+    maxVal, minVal = max(arr), min(arr)
+    bucketSize = defaultBucketSize
+    bucketCount = (maxVal - minVal) // bucketSize + 1
+    buckets = []
+
+    for i in range(bucketCount):
+        buckets.append([])
+
+    for x in arr:
+        buckets[(x - minVal) // bucketSize].append(x)
+    arr.clear()
+
+    for bucket in buckets:
+        print(arr)
+        insert_sort(bucket)
+        arr.extend(bucket)
+    return arr 
+
+# if __name__ == '__main__':
+#     import random
+#     arr = list(range(10))
+#     random.shuffle(arr)
+#     print(arr)
+#     arr = bucket_sort(arr, 20)
+#     print(arr)
+
+# [9, 7, 4, 5, 1, 3, 8, 6, 2, 0]
+# []
+# [7, 9, 4, 5, 1, 3, 8, 6, 2, 0]
+# [4, 7, 9, 5, 1, 3, 8, 6, 2, 0]
+# [4, 5, 7, 9, 1, 3, 8, 6, 2, 0]
+# [1, 4, 5, 7, 9, 3, 8, 6, 2, 0]
+# [1, 3, 4, 5, 7, 9, 8, 6, 2, 0]
+# [1, 3, 4, 5, 7, 8, 9, 6, 2, 0]
+# [1, 3, 4, 5, 6, 7, 8, 9, 2, 0]
+# [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+endsnippet
+
+
+# logging 
+# -------------------------------------------
+snippet cclog "class Logging" bwA
+import xmltodict
+import logging
+
+class Logging(logging.Logger):
+    def __init__(self, logType='service'):
+        super(Logging, self).__init__(self)
+        self.__logType = logType
+        self.setLevel('DEBUG')
+        self.__setFileHandler()
+
+    def __setFileHandler(self):
+        path = os.path.join(BASE_DIR, '/tmp/logs/', self.__logType)
+        if not os.path.exists(path):
+            os.makedirs(path)
+        logFilePath = os.path.join(path, datetime.now().date().strftime('%Y-%m-%d.log'))
+        fh = logging.FileHandler(logFilePath)
+        fh.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
+        self.addHandler(fh)
+
+# if __name__ == "__main__":
+#     log = Logging(logType='app_runtime')
+#     log.info("this is a info")
+#     log.debug("this is a debug")
+#     log.warning("this is a warning")
+#     log.error("this is a error")
+#     log.critical('this is a critical')
+
+endsnippet
+
+snippet lgi "logging info" bwA
+${1:log}.info('${2:message}')
+$0
+endsnippet
+
+snippet lgd "logging debug" bwA
+${1:log}.debug('${2:message}')
+$0
+endsnippet
+
+snippet lgw "logging warning" bwA
+${1:log}.warning('${2:message}')
+$0
+endsnippet
+
+snippet lge "logging error" bwA
+${1:log}.error('${2:message}')
+$0
+endsnippet
+
+snippet lgc "logging critical" bwA
+${1:log}.critical('${2:message}')
+$0
+endsnippet
+
+
+# mail
+# -------------------------------------------
+snippet ccmail "class Mail" bwA
+import xmltodict
+import email
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+
+class MailConfig(object):
+    def __init__(self):
+        self.__config = self.__loadConfiguration()
+        self.__mail_host = self.__config.get("mail_host", None)
+        self.__mail_sender = self.__config.get("mail_sender", None)
+        self.__mail_license = self.__config.get("mail_license", None)
+        self.__mail_receivers = self.__config.get("mail_receivers", None).split(';')
+
+    def __loadConfiguration(self):
+        configPath = os.path.join(BASE_DIR, '.config/myconfig.xml')
+        config = dict()
+        with open(configPath, 'r', encoding='utf8') as fp:
+            xml = fp.read()
+        config = dict(xmltodict.parse(xml).get('confgi').get('mail'))
+        return config
+
+    @property
+    def config(self):
+        return self.__config
+
+    def __str__(self):
+        return str(self.__config)
+
+    @property
+    def mail_host(self):
+        return self.__mail_host
+
+    @property
+    def mail_sender(self):
+        return self.__mail_sender
+
+    @property
+    def mail_license(self):
+        return self.__mail_license
+
+    @property
+    def mail_receivers(self):
+        return self.__mail_receivers
+
+	@mail_receivers.setter
+    def mail_receivers(self, str='fincompleteness@163.com;zetatez@icloud.com'):
+        self.__mail_receivers = str.split(';')
+
+class Msg(object):
+    def __init__(self):
+        self.subject = "subject"
+        self.body = "body goes here"
+
+class Mail(object):
+    def __init__(self, msg):
+        assert isinstance(msg, Msg)
+        self.__mconfig = MailConfig()
+        self.mail_host = self.__mconfig.mail_host
+        self.mail_sender = self.__mconfig.mail_sender
+        self.mail_license = self.__mconfig.mail_license
+        self.mail_receivers = self.__mconfig.mail_receivers
+        self.stp = smtplib.SMTP()
+        self.stp.connect(self.mail_host, 25)
+        # self.stp.set_debuglevel(1)
+        self.stp.ehlo()
+        self.stp.login(self.mail_sender, self.mail_license)
+        self.__compose(msg)
+        self.stp.sendmail(self.mail_sender, self.mail_receivers, self.mail.as_string())
+        self.stp.quit()
+
+    def __compose(self, msg):
+        self.mail = MIMEMultipart()
+        self.mail["From"] = "zero<" + self.mail_sender + ">"
+        self.mail["To"] = ''.join([y.split("@")[0] + "<" + y + ">;" for y in self.mail_receivers])
+        self.mail["Subject"] = Header(msg.subject, 'utf-8')
+        self.mail.attach(MIMEText(msg.body, "plain", "utf-8"))
+
+# if __name__ == "__main__":
+#     # --- MailConfig
+#     mailConfig = MailConfig()
+#     print(mailConfig.config)
+#     print(mailConfig.mail_sender)
+
+#     # --- Msg
+#     msg = Msg()
+#     mail = Mail(msg)
+endsnippet
+
+
+# packaging 
+# -------------------------------------------
+snippet pkgsetup "pkgsetup" bwA
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="evolving",
+    version="0.0.1",
+    author="Lorenzo",
+    author_email="zetatez@icloud.com",
+    description="api",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/zetatez/${1:evolving}',
+    packages=setuptools.find_packages(),
+    install_requires=["requests"],
+    classifiers=[
+    "Programming Language :: Python :: 3.8",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.8',
+)
+# python setup.py sdist bdist_wheel
+# twine upload dist/*
+
+endsnippet
+
+
+# session
+# -------------------------------------------
+snippet headers "headers" bwA
+HEADERS = {"Accept-Encoding": "gzip, deflate, sdch", "User-Agent": ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36")}
+$0
+endsnippet
+
+

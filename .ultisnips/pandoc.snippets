@@ -1,0 +1,985 @@
+# Markdown
+
+# -----------------------------------------
+global !p
+texMathZones = ['texMathZone' + x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z', 'AmsA', 'AmsB', 'AmsC', 'AmsD', 'AmsE', 'AmsF', 'AmsG', 'AmsAS', 'AmsBS', 'AmsCS', 'AmsDS', 'AmsES', 'AmsFS', 'AmsGS' ]]
+texIgnoreMathZones = ['texMathText']
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+ignore = texIgnoreMathZoneIds[0]
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+		return first != ignore
+	except StopIteration:
+		return False
+endglobal
+
+# basic
+# -----------------------------------------
+snippet toc "toc" bwA
+
+[toc]
+
+endsnippet
+
+snippet h1s "h1s" bwA
+# ${1:h1-1} $0
+# ${2:h1-2}
+# ${3:h1-3}
+endsnippet
+
+snippet h2s "h2s" bwA
+## ${1:h2-1} $0
+## ${2:h2-2}
+## ${3:h2-3}
+endsnippet
+
+snippet h3s "h3s" bwA
+### ${1:h3-1} $0
+### ${2:h3-2}
+### ${3:h3-3}
+endsnippet
+
+snippet h4s "h4s" bwA
+#### ${1:h4-1} $0
+#### ${2:h4-2}
+#### ${3:h4-3}
+endsnippet
+
+snippet h5s "h5s" bwA
+##### ${1:h5-1} $0
+##### ${2:h5-2}
+##### ${3:h5-3}
+endsnippet
+
+snippet h6s "h6s" bwA
+###### ${1:h6-1} $0
+###### ${2:h6-2}
+###### ${3:h6-3}
+endsnippet
+
+snippet uls "un-ordered list" bwA
+- ${1:item 1}
+- ${2:item 2}
+- ${3:item 3}
+$0
+endsnippet
+
+snippet ols "ordered list" bwA
+1. ${1:item 1}
+1. ${2:item 2}
+1. ${3:item 3}
+$0
+endsnippet
+
+snippet tls "task list" bwA
+- [x] ${1:task 1}
+- [ ] ${2:task 2}
+- [ ] ${3:task 3}
+endsnippet
+
+snippet - "expand - to - $0" bw
+- ${0}
+endsnippet
+
+
+# code block
+# -----------------------------------------
+snippet ``` "lang" bw
+\`\`\`${1}
+${0:${VISUAL}}
+\`\`\`
+endsnippet
+
+snippet ```l "lang" bwA
+\`\`\`${1:lang}
+${2:code}
+\`\`\`
+endsnippet
+
+snippet ```b "lang bash" bwA
+\`\`\`bash
+${1:bash code}
+\`\`\`
+endsnippet
+
+snippet ```p "lang python" bwA
+\`\`\`python
+${1:python code}
+\`\`\`
+endsnippet
+
+snippet ```h "lang html" bwA
+\`\`\`html
+<!DOCTYPE html>
+${1:html code}
+\`\`\`
+endsnippet
+
+snippet ```x "lang xml" bwA
+\`\`\`xml
+<${1:tag}>${2:tag value}</$1>
+$0
+\`\`\`
+endsnippet
+
+
+# table
+# -----------------------------------------
+# 11 20tb - gen 11x20 tabular 
+snippet '(?<!\\)([0-9]+)\ ([0-9]+)tb' "new table" rbA
+$1`!p 
+x=match.group(1)
+y=match.group(2)
+row1="|   /	"
+row2="|   -:   ".center(7)
+rowi="|   R	"
+for i in range(1, int(y)):
+  row1+="|" + ("C" + str(i)).center(7)
+  row2+="|" + ":-:".center(7)
+  rowi+="|" + "-".center(7)
+row1+="|\n"
+row2+="|\n"
+rowi+="|\n"
+out=row1+row2+int(x)*rowi
+snip.rv=out
+`
+$1
+endsnippet
+
+snippet tb2 "1 x 2 table" bwA
+|	/	|   ${1:C1}   |
+|	${2:R1}   |   $0	 |
+endsnippet
+
+snippet tb3 "1 x 3 table" bwA
+|	/	|   ${1:C1}   |   ${2:C2}   |
+|	${3:R1}   |   $0	 |   -	|
+endsnippet
+
+snippet tb4 "1 x 4 table" bwA
+|	/	|   ${1:C1}   |   ${2:C2}   |	${3:C3}   |
+|	${4:R1}   |   $0	 |   -	|   -	 |
+endsnippet
+
+#
+# footnotes
+#
+snippet cfn "cite a footnote" bwA
+[^${1:footnote name}]$0
+endsnippet
+
+snippet dfn "define a footnote" bwA
+[^${1:footnote name}]: ${2:note goes here}
+endsnippet
+
+#
+# horizontal rules
+#
+snippet --- "horizontal rules" bwA
+---
+
+$0
+endsnippet
+
+
+# span elements
+# -----------------------------------------
+snippet <. "direct link" iwA
+<http://www.$1.com>$0
+endsnippet
+
+snippet [[ "inline link" iwA
+[${1:text}](http://${2:address})$0
+endsnippet
+
+snippet [" "inline link with title" iwA
+[${1:text}](http://${2:address} "${3:title}")
+endsnippet
+
+snippet [r "reference link" bwA
+[${1:text}][${2:linkid}]$0
+endsnippet
+
+snippet [d "define reference link" bwA
+[${1:linkid}][http://${2:}.com]
+endsnippet
+
+snippet [i "internal link" iwA
+[${1:text}](# ${2:section}})$0
+endsnippet
+
+snippet [m "mail to" iwA
+[${1:zetatez}@$2{icloud.com}]($1)$0
+endsnippet
+
+snippet !i "img link" bwA
+![${2:img text}](${1:/path/to/img.jpg})
+endsnippet
+
+snippet !" "img link" bwA
+![${2:img text}](${1:/path/to/img.jpg} "${2:optional title}")
+endsnippet
+
+snippet !l "img link" bwA
+![${2:img text}](https://www.${1:zybuluo.com/static/img/logo.png})
+endsnippet
+
+snippet ~2 "Strikethrough" iA
+~~${1:Strikethrough}~~
+endsnippet
+
+snippet *1 "emphasis italic" iA
+*${1:italic}*
+endsnippet
+
+snippet *2 "emphasis bold" iA
+**${1:bold}**
+endsnippet
+
+snippet *3 "emphasis bold and italic" iA
+***${1:bold and italic}***
+endsnippet
+
+snippet _1 "emphasis italic" iA
+_${1:italic}_
+endsnippet
+
+snippet _2 "emphasis bold" iA
+__${1:bold}__
+endsnippet
+
+snippet _3 "emphasis bold and italic" iA
+___${1:bold}___
+endsnippet
+
+snippet `1 "inline code" iA
+\`${1:ls -l}\`$0
+endsnippet
+
+snippet :: "emoji" iA
+:${1:happy}:$0
+endsnippet
+
+snippet == "highlight" iA
+==${1:highlight}==$0
+endsnippet
+
+snippet subb "sub" iwA
+~${1:sub}~$0
+endsnippet
+
+snippet supp "sup" iwA
+^${1:sub}^$0
+endsnippet
+
+
+# html
+# -----------------------------------------
+snippet <tag "tag" iA
+<${1:tag} class="${2:class value}"</$1>
+$0
+endsnippet
+
+snippet <u "under line" iA
+<u>${1:under line}</u>$0
+endsnippet
+
+snippet <s "Strikethrough" iA
+<s>${1:Strikethrough}</s>$0
+endsnippet
+
+snippet <abbr "abbr" iwA
+<abbr title="${1:Hyper Text Markup Language}">${2:HTML}</abbr>$0
+endsnippet
+
+snippet <green "style green" iwA
+<span style="color:green">${1:text in green}</span>$0
+endsnippet
+
+snippet <red "style red" iwA
+<span style="color:red">${1:text in red}</span>$0
+endsnippet
+
+snippet <blue "style blue" iwA
+<span style="color:blue">${1:text in blue}</span>$0
+endsnippet
+
+snippet ssub "sub" iwA
+<sub>${1:sub}</sub>$0
+endsnippet
+
+snippet ssup "sup" iwA
+<sup>${1:sup}</sup>$0
+endsnippet
+
+snippet <iframe "iframe" iwA
+<iframe>${1:iframe}</iframe>$0
+endsnippet
+
+snippet <blockquote "blockquote" iwA
+<blockquote>${1:blockquote}</blockquote>$0
+endsnippet
+
+snippet kbd "key board" iwA
+<kbd>${1:Ctrl}</kbd>$ $0
+endsnippet
+
+snippet embv "embed a video" iwA
+<audio src="${1:path to the audio file}.mp4" />$0
+endsnippet
+
+snippet emba "embed a audio" iwA
+<audio src="${1:path to the audio file}.mp3" />$0
+endsnippet
+
+snippet -- "comment" iw
+<!-- ${1:comment goes here} -->$0
+endsnippet
+
+
+# symbol
+# -----------------------------------------
+# times
+snippet atti "&times" iwA
+&times;$0
+endsnippet
+
+# divide
+snippet atdi "&divide" iwA
+&divide;$0
+endsnippet
+
+# &frac34
+snippet at34 "&frac34" iwA
+&frac34;$0
+endsnippet
+
+# frac14
+snippet at14 "&frac14" iwA
+&frac14;$0
+endsnippet
+
+# X&sup2
+snippet atXs2 "&X&sup2" iwA
+${1:x}&sup2;$0
+endsnippet
+
+# Y&sup3
+snippet ats3 "&Y&sup3" iwA
+${1:x}&sup3;$0
+endsnippet
+
+# lt
+snippet atlt "&lt" iwA
+&lt;
+endsnippet
+
+# gt
+snippet atgt "&gt" iwA
+&gt;
+endsnippet
+
+# pound
+snippet atpo "&pound" iwA
+&pound;
+endsnippet
+
+# euro
+snippet ateu "&euro" iwA
+&euro;
+endsnippet
+
+# &
+snippet atat "&" iwA
+&$0
+endsnippet
+
+# copy
+snippet atco "&copy" iwA
+&copy;
+endsnippet
+
+# uml
+snippet atum "&uml" iwA
+&uml;
+endsnippet
+
+# trade
+snippet attra "&trade" iwA
+&trade;
+endsnippet
+
+# iexcl
+snippet atie "&iexcl" iwA
+&iexcl;
+endsnippet
+
+# amp
+snippet atam "&amp" iwA
+&amp;
+endsnippet
+
+# yen
+snippet atye "&yen" iwA
+&yen;
+endsnippet
+
+# reg
+snippet atre "&reg" iwA
+&reg;
+endsnippet
+
+# plusmn
+snippet atpl "&plusmn" iwA
+&plusmn;
+endsnippet
+
+# para
+snippet atpa "&para" iwA
+&para;$0
+endsnippet
+
+# sect
+snippet atse "&sect" iwA
+&sect;$0
+endsnippet
+
+# brvbar
+snippet atbr "&brvbar" iwA
+&brvbar;$0
+endsnippet
+
+# macr
+snippet atma "&macr" iwA
+&macr;$0
+endsnippet
+
+# laquo
+snippet atla "&laquo" iwA
+&laquo;$0
+endsnippet
+
+# middot
+snippet atmd "&middot" iwA
+&middot;$0
+endsnippet
+
+# &ordm
+snippet ator "&25&ordm" iwA
+${1:25}&ordm;$0
+endsnippet
+
+# quot
+snippet atqu "&quot" iwA
+&quot;$0
+endsnippet
+
+# apos
+snippet atap "&apos" iwA
+&apos;$0
+endsnippet
+
+# raquo
+snippet atra "&raquo" iwA
+&raquo;$0
+endsnippet
+
+
+# charts
+# -----------------------------------------
+snippet seq. "mermaid sequence" bwA
+\`\`\`mermaid
+sequenceDiagram
+	Alice->>Bob: Hello Bob, how are you?
+	alt is sick
+	Bob->>Alice: Not so good :(
+	else is well
+	Bob->>Alice: Feeling fresh like a daisy
+	end
+	opt Extra response
+	Bob->>Alice: Thanks for asking
+	end
+	$0
+\`\`\`
+endsnippet
+
+snippet flow. "mermaid flow" bwA
+\`\`\`mermaid
+graph LR
+A[Hard edge] -->B(Round edge)
+	B --> C{Decision}
+	C -->|One| D[Result one]
+	C -->|Two| E[Result two]
+	$0
+\`\`\`
+endsnippet
+
+snippet gantt. "mermaid gantt" bwA
+\`\`\`mermaid
+	gantt
+	dateFormat  YYYY-MM-DD
+	title Adding GANTT diagram functionality to mermaid
+
+	section A section
+	Completed task			:done,	des1, 2014-01-06,2014-01-08
+	Active task			   :active,  des2, 2014-01-09, 3d
+	Future task			   :		 des3, after des2, 5d
+	Future task2			  :		 des4, after des3, 5d
+
+	section Critical tasks
+	Completed task in the critical line :crit, done, 2014-01-06,24h
+	Implement parser and jison		  :crit, done, after des1, 2d
+	Create tests for parser			 :crit, active, 3d
+	Future task in critical line		:crit, 5d
+	Create tests for renderer		   :2d
+	Add to mermaid					  :1d
+
+	section Documentation
+	Describe gantt syntax			   :active, a1, after des1, 3d
+	Add gantt diagram to demo page	  :after a1  , 20h
+	Add another diagram to demo page	:doc1, after a1  , 48h
+
+	section Last section
+	Describe gantt syntax			   :after doc1, 3d
+	Add gantt diagram to demo page	  : 20h
+	Add another diagram to demo page	: 48h
+	$0
+\`\`\`
+endsnippet
+
+snippet cd. "mermaid class diagram" bwA
+\`\`\`mermaid
+classDiagram
+	Animal <|-- Duck
+	Animal <|-- Fish
+	Animal <|-- Zebra
+	Animal : +int age
+	Animal : +String gender
+	Animal: +isMammal()
+	Animal: +mate()
+	class Duck{
+		+String beakColor
+		+swim()
+		+quack()
+	}
+	class Fish{
+		-int sizeInFeet
+		-canEat()
+	}
+	class Zebra{
+		+bool is_wild
+		+run()
+	}
+	$0
+\`\`\`
+endsnippet
+
+snippet sd. "mermaid state diagram" bwA
+\`\`\`mermaid
+stateDiagram
+	[*] --> Still
+	Still --> [*]
+
+	Still --> Moving
+	Moving --> Still
+	Moving --> Crash
+	Crash --> [*]
+	$0
+\`\`\`
+endsnippet
+
+snippet pie. "mermaid pie diagram" bwA
+\`\`\`mermaid
+pie
+	title Pie Chart
+	"Dogs" : 386
+	"Cats" : 85
+	"Rats" : 150 
+	$0
+\`\`\`
+endsnippet
+
+
+# math
+# -----------------------------------------
+context "math()"
+snippet law "law"
+S_{T}=S_{0}\int_T e^{r(t)}du
+endsnippet
+
+snippet mk "math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "math" wA
+$$
+$1
+$$ $0
+endsnippet
+
+context "math()"
+snippet / "fraction" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
+context "math()"
+snippet // "fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
+# //	  ->  \frac{}{}
+
+context "math()"
+snippet '([\w\*\^\_\\\%\!]+|\([^(\)]+\)|\[[^\[\]]+\]|\\frac\{.*\}\{.*\}|\{[^(\\frac\{.*\}\{.*\})]*\})/' "fraction" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+# 3/	  ->  \frac{3}{}
+# 4\pi^2/	 ->  \frac{4\pi^2}{}
+# (1 + 2 + 3)/  ->  \frac{1 + 2 + 3}{}
+# (1+(2+3)/)  ->  (1 + \frac{2+3}{})
+# (1 + (2+3))/  ->  \frac{1 + (2+3)}{}
+
+context "math()"
+snippet '^.*\)/' "() fraction" wr
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+  if stripped[i] == ')': depth += 1
+  if stripped[i] == '(': depth -= 1
+  if depth == 0: break;
+  i -= 1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
+endsnippet
+# you can use it by first select­ing some text, then pressing Tab, typing / and pressing Tab again
+
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wr
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+context "math()"
+snippet '([A-Za-z0-9])_([\S]+) ' "auto subscript 1" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2).strip()`} 
+endsnippet
+# type x1_12324 tap -> x1_{1234} .
+
+context "math()"
+snippet '([A-Za-z0-9])\^([\S]+) ' "auto supscript 1" wrA
+`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2).strip()`} 
+endsnippet
+# type x1^12324 tap -> x1^{1234} .
+
+context "math()"
+snippet sympy "sympy block " w
+sympy $1 sympy$0
+endsnippet
+# sympy Tab expands to sympy | sympy, and sympy 1 + 1 sympy Tab expands to 2
+
+context "math()"
+snippet 'sym(.*)sym' "evaluate sympy" wr
+`!p
+from sympy import *
+x, y, z, t = symbols('x y z t')
+k, m, n = symbols('k m n', integer=True)
+f, g, h = symbols('f g h', cls=Function)
+init_printing()
+snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
+	.replace('^', '**') \
+	.replace('{', '(') \
+	.replace('}', ')') + ')')
+`
+endsnippet
+
+context "math()"
+snippet '(Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|alpha|beta|gamma|delta|epsilon|zet|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|varepsilon|vartheta|varkappa|varpi|varrho|varsigma|varphi|imath|hbar|ell|mho|Re|Im|aleph|wp|clearpage|pagebreak|max|min|sup|inf|limsup|liminf|ker|exp|lg|deg|Pr|det|hom|arg|dim|infty|sin|cos|tan|sec|csc|cot|arcsin|arccos|arctan|sinh|cosh|tanh|forall|exists|empty|emptyset|varnothing|inn|ni|notin|subset|subseteq|supset|supseteq|cap|bigcap|cup|bigcup|biguplus|sqsubset|susubseteq|sqsupset|sqsupseteq|sqcap|sqcup|bigsqcup|sum|prod|coprod|lnot|land|lor|lneg|wedge|bigwedge|vee|bigvee|smallsetminus|iff|setminus|oplus|bigoplus|otimes|bigotimes|bigodot|boxplus|boxtimes|times|div|ciro|cdot|bullet|dots|cdots|vdots|ddots|nabala|triangle|Box|Diamond|diamondsuit|heartsuit|copyright|vfill|hfill|\#|\$|\%|\^|\&|\_|\{|\}|\~|\\) ' "functions" rwA
+`!p snip.rv = '\\' + match.group(1) + ' '`$0
+endsnippet
+# Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega
+# alpha|beta|gamma|delta|epsilon|zet|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega
+# varepsilon|vartheta|varkappa|varpi|varrho|varsigma|varphi
+# imath|hbar|ell|mho|Re|Im|aleph|wp
+# clearpage|pagebreak
+# max|min|sup|inf|limsup|liminf|ker|exp|lg|deg|Pr|det|hom|arg|dim|infty|infty
+# sin|cos|tan|sec|csc|cot|arcsin|arccos|arctan|sinh|cosh|tanh
+# forall/exists/empty/emptyset/varnothing/in/ni/notin/subset/subseteq/supset/supseteq/cap/bigcap/cup/bigcup/biguplus/sqsubset/susubseteq/sqsupset/sqsupseteq/sqcap/sqcup/bigsqcup/sum/prod/coprod
+# lnot|land|lor|lneg|wedge|bigwedge|vee|bigvee|smallsetminus|iff|iff
+# oplus|bigoplus|otimes|bigotimes|bigodot|boxplus|boxtimes|times|div|ciro|cdot|bullet|dots|cdots|vdots|ddots|nabala|triangle|Box|Diamond|diamondsuit|heartsuit
+# copyright|vfill|hfill
+# \#|\$|\%|\^|\&|\_|\{|\}|\~|\\
+
+context "math()"
+snippet lim "lim" iw
+\lim_{n=1}^{n=\infty} $0
+endsnippet
+
+context "math()"
+snippet lims "limsup" iwA
+\limsup $0
+endsnippet
+
+context "math()"
+snippet limi "liminf" iwA
+\liminf $0
+endsnippet
+
+context "math()"
+snippet int "integral" iw
+\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
+endsnippet
+
+context "math()"
+snippet 'log ([\w]+) ([\w]+) ' "log_a b" rwA
+`!p snip.rv = '\\log_' + '{' + match.group(1) + '} ' + match.group(2)`$0
+endsnippet
+
+snippet '(title|textsubscript|textsupscript|textrm|textsf|texttt|textmd|textbf|textup|textit|textsl|textsc|emph) ([^\.]+)\.' "math" rwA
+`!p snip.rv = '\\' + match.group(1) + '{' + match.group(2) + '} '`$0
+endsnippet
+# title\textsubscript\textsupscript
+# \textrm\textsf\texttt\textmd\textbf\textup\textit\textsl\textsc\emph
+
+context "math()"
+snippet '(mathnormal|mathbb|mathbf|mathrm|mathit|mathtt|mathcal|mathrak|boldsymbol) ([\S]+) ' "math font" rwA
+`!p snip.rv = '\\' + match.group(1) + '{' + match.group(2) + '} '`$0
+endsnippet
+# \mathnormal\mathbb\mathbf\mathrm\mathit\mathtt\mathcal\mathrak\boldsymbol
+
+context "math()"
+snippet '(bar|acute|check|grave|breve|hat|tilde|vec|dot|ddot|partial) ([\S]+) ' "å" rwA
+`!p snip.rv = '\\' + match.group(1) + ' ' + match.group(2) + ' '`
+endsnippet
+# \bar\acute\check\grave\breve\hat\tilde\vec\dot\ddot\partial
+
+context "math()"
+snippet '(tiny|scriptsize|footnotesize|small|normalsize|large|Large|LARGE|huge|Huge)\.([^\.]+)\. ' "font size" rwA
+`!p snip.rv = '\{\\' + match.group(1) + ' ' + match.group(2) + '\} '`$0
+endsnippet
+# \tiny\scriptsize\footnotesize\small\normalsize\large\Large\LARGE\huge\Huge
+
+context "math()"
+snippet 'color\.(\w+)\.([^\.]+)\.' "color" rwA
+`!p snip.rv = '{\\color' + '{' + match.group(1) + '} ' + match.group(2) + '} '`$0
+endsnippet
+
+context "math()"
+snippet 'pmod ([\w]+) ' "mod(m)" rwA
+`!p snip.rv = '\\pmod{' + match.group(1) + '}'`$0
+endsnippet
+
+context "math()"
+snippet '([\S]+) bmod ([\S]+)' "a mod b" rwA
+`!p snip.rv = match.group(1) + ' \\bmod ' + match.group(1)`$0
+endsnippet
+
+context "math()"
+snippet 'sqrt ([\S]+) ([\S]+) ' "sqrt" rwA
+`!p
+if match.group(1) == '2':
+	snip.rv = '\\sqrt' + '{' + match.group(2) + '}'
+else:
+	snip.rv = '\\sqrt' + '[' + match.group(1) + ']' + '{' + match.group(2) + '}'
+`$0
+endsnippet
+
+context "math()"
+snippet '(left|right|liftright|longleft|longright|longleftright|hockleft|hockright|up|down|updown|ne|se|sw|nw|Left|Right|Liftright|Leftright|Longleft|Longright|Longleftright|Up|Down|Updown) arrow ' "arrow" rwA
+`!p snip.rv = '\\' + match.group(1) + 'arrow' + ' '`$0
+endsnippet
+
+context "math()"
+snippet '(to|gets|mapsto|longmapsto)\.' "to gets mapsto longmapsto" rwA
+`!p snip.rv = '\\' + match.group(1) + ' '`$0
+endsnippet
+
+context "math()"
+snippet '(left|right|up|down)\.(left|right|up|down)' "harpoon" rwA
+`!p snip.rv = '\\' + match.group(1) + 'harpoon' + match.group(2) `$0
+endsnippet
+
+context "math()"
+snippet "(\[|\(|\{|\<|\.|\||\\)(\]|\)|\}|\>|\.|\||\\)([^\.]+)\." "parenthesis" rwA
+`!p
+snip.rv = '\\left' + match.group(1) + ' ' + match.group(3) + ' \\right ' + match.group(2)
+`$0
+endsnippet
+# []something.-> \left[ something \right]
+# ()something.-> \left( something \right)
+# {}something.-> \left{ something \right}
+# <>something.-> \left< something \right>
+# [.something.-> \left[ something \right.
+
+context "math()"
+snippet "(ceil|floor|angle)([^\.]+)\." "parenthesis" rwA
+`!p
+snip.rv = '\\left \\l' + match.group(1) + ' ' + match.group(2) + ' \\right \\r' + match.group(1)
+`$0
+endsnippet
+
+context "math()"
+snippet () "left( right)" iA
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+context "math()"
+snippet {} "left{ right}" i
+\left\\{ ${1:${VISUAL}} \right\\} $0
+endsnippet
+
+context "math()"
+snippet || "left| right|" i
+\left| ${1:${VISUAL}} \right| $0
+endsnippet
+
+context "math()"
+snippet <> "leftangle rightangle" iA
+\left<${1:${VISUAL}} \right>$0
+endsnippet
+
+snippet bbox "box"
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
+endsnippet
+
+context "math()"
+snippet pmat "pmat" iA
+\begin{pmatrix} $1 \end{pmatrix} $0
+endsnippet
+
+context "math()"
+snippet bmat "bmat" iA
+\begin{bmatrix} $1 \end{bmatrix} $0
+endsnippet
+
+context "math()"
+snippet conj "conjugate" iA
+\overline{$1}$0
+endsnippet
+
+context "math()"
+snippet sum "sum" w
+\sum_{n=${1:1}}^{${2:\infty}} ${3:a_n z^n}
+endsnippet
+
+context "math()"
+snippet taylor "taylor" w
+\sum_{${1:k}=${2:0}}^{${3:\infty}} ${4:c_$1} (x-a)^$1 $0
+endsnippet
+
+context "math()"
+snippet prod "product" w
+\prod_{${1:n=${2:1}}}^{${3:\infty}} ${4:${VISUAL}} $0
+endsnippet
+
+context "math()"
+snippet __ "subscript" iA
+_{$1}$0
+endsnippet
+
+context "math()"
+snippet ^^ "subscript" iA
+^{$1}$0
+endsnippet
+
+context "math()"
+snippet ooo "\infty" iA
+\infty
+endsnippet
+
+context "math()"
+snippet xx "cross" iA
+\times 
+endsnippet
+
+context "math()"
+snippet ** "cdot" iA
+\cdot 
+endsnippet
+
+context "math()"
+snippet normm "norm" iA
+\|$1\|$0
+endsnippet
+
+context "math()"
+snippet invv "inverse" iA
+^{-1}
+endsnippet
+
+context "math()"
+snippet comm "complement" iA
+^{c}
+endsnippet
+
+context "math()"
+snippet tt "text" iA
+\text{$1}$0
+endsnippet
+
+context "math()"
+snippet vecc "v vector" iA
+\begin{pmatrix} ${1:x}_${2:1}\\\\ \vdots\\\\ $1_${2:n} \end{pmatrix}
+endsnippet
+
+context "math()"
+snippet r0+ "R0+" iA
+\\R_0^+
+endsnippet
+
+context "math()"
+snippet r0- "R0-" iA
+\\R_0^-
+endsnippet
+
+
+# math cross reference
+# -----------------------------------------
+snippet \l "lables" iwA
+\label{${1:lable name}}$0
+endsnippet
+
+snippet \r "ref" iwA
+\label{${1:label name}}$0
+endsnippet
+
+# markdown cite
+# -----------------------------------------
+snippet ncite "make a cite" iwA
+[^${1:brief citation name}]: ${2:full citation name}
+$0
+endsnippet
+# make a norm citation
+
+snippet \ncite "cite" iwA
+[^${1:brief citation name}]$0
+endsnippet
+# use a norm citation
+
+snippet lcite "cite link" iwA
+[${1:num}]: http://${2:google.com}
+$0
+endsnippet
+# make a link citation
+
+snippet \lcite "cite" iwA
+[${1:text}][^${1:link num}]$0
+endsnippet
+# use a link citation
+
+# tricks
+# -----------------------------------------
+snippet !right "right alignment" bwA
+${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
+endsnippet
+

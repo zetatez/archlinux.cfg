@@ -1,0 +1,114 @@
+# json
+
+snippet [ "start a list" iA
+[
+	{
+		"${1:key}": "${2:val}",$3
+	}$0
+]
+endsnippet
+
+snippet { "start a block" iA
+{
+	"${1:key}": "${2:val}",$3
+}$0
+endsnippet
+
+snippet }, "start a block" iA
+},
+{
+	"${1:key}": "${2:val}",$3
+}$0
+endsnippet
+
+snippet ",," "start a new tag" irA
+,
+"${1:key}": "${2:val}",$0
+endsnippet
+
+
+# -------------------------------------------
+# For vim plug: vimspector: .vimspector.json
+# -------------------------------------------
+snippet clang "c/cpp lang" bwA
+{
+	"configurations": {
+		"Launch": {
+			"adapter": "vscode-cpptools",
+			"configuration": {
+				"request": "launch",
+				"program": "${1:<path to binary>}",
+				"args": [ ${2: ...} ],
+				"cwd": "${3:<working directory>}",
+				"environment": [ ${4:...} ],
+				"externalConsole": true,
+				"MIMode": "${5:<lldb or gdb>}"
+			}
+		},
+		"Attach": {
+			"adapter": "vscode-cpptools",
+			"configuration": {
+				"request": "attach",
+				"program": "$1",
+				"MIMode": "$5"
+			}
+		}
+	}
+}
+endsnippet
+
+snippet golang "go lang" bwA
+{
+	"configurations": {
+		"run": {
+			"adapter": "vscode-go",
+			"configuration": {
+				"request": "launch",
+				"program": "${1:${fileDirname}}",
+				"mode": "debug",
+				"dlvToolPath": "$HOME/go/bin/dlv"
+			}
+		}
+	}
+}$0
+endsnippet
+
+snippet pylang "go lang" bwA
+{
+	"configurations": {
+		"{1:<name>: Launch}": {
+			"adapter": "debugpy",
+			"configuration": {
+				"name": "$1",
+				"type": "python",
+				"request": "launch",
+				"cwd": "${2:<working directory>}",
+				"python": "${3:/usr/local/bin/python3}",
+				"stopOnEntry": true,
+				"console": "externalTerminal",
+				"debugOptions": [],
+				"program": "${4:<path to main python file>}"
+			}
+		}
+		...
+	}
+}
+endsnippet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

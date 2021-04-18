@@ -1,0 +1,628 @@
+# sh
+
+# date
+# -------------------------------------------
+snippet date "env sh" bwA
+date +"${1:%Y-%m-%d %H:%M:%S"}
+$0
+endsnippet
+
+# key words
+# -------------------------------------------
+snippet #! "env sh" bwA
+#!/usr/bin/env ${1:sh}
+
+$0
+endsnippet
+
+snippet sou "source file" wA
+source ${1:${VISUAL:file.sh}}
+$0
+endsnippet
+
+snippet echo "echo" wA
+echo "${1:hi}"
+$0
+endsnippet
+
+snippet var "var" wA
+${1:var}=${2:0}
+$0
+endsnippet
+
+snippet ronly "readonly" wA
+readonly ${1:${VISUAL:var}}
+$0
+endsnippet
+
+snippet macexpr "expr in mac" wA
+${1:var}=$((${2:1+1}))
+$0
+endsnippet
+
+snippet expr "expr" wA
+${1:var}=\`expr ${2:2 \\* 3}\`
+$0
+endsnippet
+
+snippet tou "touch" wA
+touch ${1:file}
+$0
+endsnippet
+
+snippet read "read x" wA
+read ${1:var}
+$0
+endsnippet
+
+snippet ` "cmd replace" wA
+\`${1:ls -l}\`$0
+endsnippet
+
+snippet IF "IFS" bwA
+IFS_ORIG=$IFS
+IFS=$'${1::}'
+for ${2:var} in a:b:c:d ; do ${4:echo "$var"}; done
+
+IFS=IFS_ORIG
+unset IFS_ORIG
+$0
+endsnippet
+
+# decimal computation
+# -------------------------------------------
+snippet dec "decimal computation" wA
+${1:PI=3.141592654}
+${2:var}=$(bc << EOF
+scale = 4
+${3:x=$PI*4**2}
+${4:x + x}
+EOF
+)
+endsnippet
+
+snippet odec "one line decimal computation" wA
+${1:var}=$(echo "scale=4; ${2:3.141592654 / 4}" | bc)
+endsnippet
+
+# var replace
+# -------------------------------------------
+snippet r= "return word if var is empty or unset, and set var=word" wA
+${var:=word}
+endsnippet
+
+snippet r- "return word if var is empty or unset, this not change the value of var" wA
+${var:-word}
+endsnippet
+
+snippet r+ "return word if var is already defined, this not change the value of var" wA
+${var:+word}
+endsnippet
+
+snippet r? "raise message to stderr if var is empty or unset" wA
+${var:?message}
+endsnippet
+
+# bool: and or not
+# -------------------------------------------
+snippet and "&& and and" wA
+&& $0
+endsnippet
+
+snippet or "|| or or" wA
+|| $0
+endsnippet
+
+snippet not "or" wA
+! $0
+endsnippet
+
+snippet aa "-a and" wA
+-a $0
+endsnippet
+
+snippet oo "-o or" wA
+-o $0
+endsnippet
+
+# num test
+# -------------------------------------------
+snippet eq "eq" wA
+[[ $${1:var1} == $${2:var2} ]]
+endsnippet
+
+snippet ne "ne" wA
+[[ $${1:var1} != $${2:var2} ]]
+endsnippet
+
+snippet gt "gt" wA
+[[ $${1:var1} > $${2:var2} ]]
+endsnippet
+
+snippet lt "lt" wA
+[[ $${1:var1} < $${2:var2} ]]
+endsnippet
+
+snippet ge "ge" wA
+[[ $${1:var1} >= $${2:var2} ]]
+endsnippet
+
+snippet le "le" wA
+[[ $${1:var1} <= $${2:var2} ]]
+endsnippet
+
+# num test
+# -------------------------------------------
+snippet teq "eq" wA
+[[ $${1:var1} -eq $${2:var2} ]]
+endsnippet
+
+snippet tne "ne" wA
+[[ $${1:var1} -ne $${2:var2} ]]
+endsnippet
+
+snippet tgt "gt" wA
+[[ $${1:var1} -gt $${2:var2} ]]
+endsnippet
+
+snippet tlt "lt" wA
+[[ $${1:var1} -lt $${2:var2} ]]
+endsnippet
+
+snippet tge "ge" wA
+[[ $${1:var1} -ge $${2:var2} ]]
+endsnippet
+
+snippet tle "le" wA
+[[ $${1:var1} -le $${2:var2} ]]
+endsnippet
+
+# str test
+# -------------------------------------------
+snippet seq "str test eq" wA
+[[ $${1:var1} = $${2:var2} ]]
+endsnippet
+
+snippet sne "str test ne" wA
+[[ $${1:var1} != $${2:var2} ]]
+endsnippet
+
+snippet sliz "str test str len is 0" wA
+[[ -z $${1:var} ]]
+endsnippet
+
+snippet slin "str test str len is not 0" wA
+[[ -n $${1:var} ]]
+endsnippet
+
+snippet sie "str test str is empty" wA
+[[ ! $${1:var} ]]
+endsnippet
+
+# file test
+# -------------------------------------------
+snippet fb "is file a block dev" wA
+[[ -b ${1:file} ]]
+endsnippet
+
+snippet fc "is file a char dev" wA
+[[ -c ${1:file} ]]
+endsnippet
+
+snippet fd "is a folder" wA
+[[ -d ${1:folder} ]]
+endsnippet
+
+snippet fsgid "is file has set SGID bit" wA
+[[ -g ${1:file} ]]
+endsnippet
+ 
+snippet fsuid "is file has set SUID bit" wA
+[[ -u ${1:file} ]]
+endsnippet
+
+snippet fk "is file has set sticky bit" wA
+[[ -k ${1:file} ]]
+endsnippet
+
+snippet fp "is file support FIFO" wA
+[[ -p ${1:file} ]]
+endsnippet
+
+snippet fe "is file exist" wA
+[[ -e ${1:file} ]]
+endsnippet
+
+snippet fs "is file exist and at least one char" wA
+[[ -s ${1:file} ]]
+endsnippet
+
+snippet fr "is file readable" wA
+[[ -r ${1:file} ]]
+endsnippet
+
+snippet fw "is file writeable" wA
+[[ -w ${1:file} ]]
+endsnippet
+
+snippet fx "is file exec able" wA
+[[ -x ${1:file} ]]
+endsnippet
+
+snippet ff "is a file exist and is a normal file" wA
+[[ -f ${1:file} ]]
+endsnippet
+
+snippet fO "is file exist and belong to cur user" wA
+[[ -O ${1:file} ]]
+endsnippet
+ 
+snippet fG "is file exist and belong to the same group of cur user" wA
+[[ -G ${1:file} ]]
+endsnippet
+
+
+# string
+# -------------------------------------------
+snippet slen "string len" wA
+${#${1:var}}
+endsnippet
+
+snippet ssli "string slice" wA
+${${1:var:0:4}}
+endsnippet
+
+# arr
+snippet arr "array" bwA
+${1:arr}=(${2:var1 var2 var3})
+$1[${3:idx}]=1
+echo $($1[$3])
+$0
+endsnippet
+
+snippet alen "arr len" wA
+len=${#${1:arr}[*]}
+$0
+endsnippet
+
+# snippet alen "arr len" wA
+# len=${#${1:arr}[@]}
+# $0
+# endsnippet
+
+# printf
+# -------------------------------------------
+snippet printf "printf" wA
+printf "${1:%-10s %-8s %-4.2f}" ${2:string string 3.1415}
+$0
+endsnippet
+
+# control flow
+# -------------------------------------------
+snippet cbl "{} cur shell run block code, can not isolate env" wA
+{ $1 ;}$0
+endsnippet
+
+snippet sbl "() sub shell run block code, can isolate env" wA
+( $1 )$0
+endsnippet
+
+snippet are "arithmetic evaluation, can use c style operator ++ -- ! ~ << >> & | && || **" wA
+(( ${1:expression} ))$0
+endsnippet
+
+snippet coe "condition expressions" wA
+[[ ${1:expression} ]]$0
+endsnippet
+
+snippet if "visual if" bwA
+if ${1:[[ true ]]}
+then
+	${2:${VISUAL::}}
+$0
+fi
+endsnippet
+
+snippet el "visual else" bwA
+else
+	${1:${VISUAL::}}
+$0
+endsnippet
+
+snippet ef "visual elif" bwA
+elif ${1:[[ true ]]}
+then
+	${2:${VISUAL::}}
+$0
+endsnippet
+
+snippet oif "one line if" wA
+if ${1:[[ true ]]}; then ${2:${VISUAL:echo "hi"}}; fi
+endsnippet
+
+snippet for "for" bwA
+for ${1:var} in ${2:vars}; do
+	${3:${VISUAL::}}
+done
+$0
+endsnippet
+
+snippet cfor "c for" bwA
+for ((${1:i};${2:$1<10};${3:$1++}))
+do
+	${3:${VISUAL::}}
+done
+$0
+endsnippet
+
+snippet mcfor "multi-var c for" bwA
+for ((${1:i}=1, ${2:j}=${3:10}; ${4:$2>0}; ${5:$1++}, ${6:$2--}))
+do
+	${7:${VISUAL::}}
+done
+$0
+endsnippet
+
+snippet ofor "one line for" bwA
+for ${1:var} in $${2:vars}; do ${3:echo "hi"} done
+endsnippet
+
+snippet ocfor "one line c for" bwA
+for ((${1:i};${2:$1<10};${3:$1++})); do ${3:${VISUAL::}}: done
+$0
+endsnippet
+
+snippet omcfor "one line multi-var c for" bwA
+for ((${1:i}=1, ${2:j}=${3:10}; ${4:$2>0}; ${5:$1++}, ${6:$2--})); do ${7:${VISUAL::}}; done
+$0
+endsnippet
+
+snippet wh "while" bwA
+while ${1:[[ false ]]}
+do
+	${0:${VISUAL::}}
+done
+endsnippet
+
+snippet owh "one line while" bwA
+while ${1:[[ false ]]}; do ${0:${VISUAL::}}; done
+$0
+endsnippet
+
+snippet unt "until" bwA
+until ${1:[[ false ]]}
+do
+	${0:${VISUAL::}}
+done
+endsnippet
+
+snippet ount "one line until" bwA
+until ${1:[[ false ]]}; do ${0:${VISUAL::}}; done
+$0
+endsnippet
+
+snippet case "case" bwA
+case $${1:var} in
+	${2:1})
+		${4:echo "hi"}
+		;;
+	${3:2|3})
+		${5:echo "hi"}
+		;;
+	*)
+		echo "not match"
+		;;
+esac
+endsnippet
+
+snippet ocase "one line case" bwA
+case $${1:var} in ${2:1}) ${4:echo "hi"};; ${3:2|3}) ${5:echo "hi"};; *) echo "not match" ;; esac
+$0
+endsnippet
+
+snippet sele "select" wA
+select ${1:var} in ${2:vars}
+do
+	${3:echo "hi"}
+done
+$0
+endsnippet
+
+snippet osele "one line select" wA
+select ${1:var} in ${2:vars} ; do ${3:echo "hi"} ; done
+$0
+endsnippet
+
+# 可跳出多层循环
+snippet brea "break" wA
+if ${1:[[ true ]]}
+then
+	break${2: 1}
+fi
+$0
+endsnippet
+
+# 可跳过多层循环
+snippet conti "continue" wA
+if ${1:[[ true ]]}
+then
+	continue${2: 1}
+fi
+$0
+endsnippet
+
+# parallel
+# -------------------------------------------
+snippet para "parallel" wA
+${1:sleep 7} &
+${1:sleep 4} &
+
+wait
+endsnippet
+
+
+# function
+# -------------------------------------------
+snippet args "args" bwA
+echo "script name		  : \$0"
+echo "arg 1				: \$1"
+echo "arg 2				: \$2"
+echo "arg 3				: \$3"
+echo "args num			 : \$#"
+echo "args str whole	   : \$*"
+echo "args str separate	: \$@"
+echo "exit status		  : \$?"
+echo "PID				  : \$\$"
+echo "last PID			 : \$!"
+$0
+endsnippet
+
+snippet ia "iter args" bwA
+for ${1:arg} in "$@"
+do
+	${2:${VISUAL:echo "$arg"}}
+done
+
+# or shift \$3 -> \$2 -> \$1 -> del
+while [ -n "\$1" ]
+do
+	echo "\$1"
+	shift
+done
+
+$0
+endsnippet
+
+snippet func "function" bwA
+${1:func}() {
+	${2:${VISUAL:echo "hi"}}
+	echo "value" 
+}
+
+# $1$0
+endsnippet
+
+snippet afunc "arg function" bwA
+${1:func}() {
+	${2:${VISUAL:echo "hi \$1 \$2"}}
+	echo "value" 
+}
+
+# $1 \$arg1 \$arg2$0
+endsnippet
+
+snippet exit "exit" wA
+exit ${1:0
+# 0			success
+# 1			error 
+# 2			not a suitable shell cmd
+# 126		  cmd can not be exec
+# 127		  cmd not found
+# 128		  not a valid cmd
+# 128 + x	  signal relative error
+# 130		  ctrl - c
+# 255		  unknown status code 
+} 
+endsnippet
+
+snippet opts "getopts" bwA
+while getopts :ab:cd opt
+do
+	case "$opt" in
+		a) echo "found the -a option"  ;;
+		b) echo "found the -b option, with value $OPTARG" ;;
+		c) echo "found the -c option"  ;;
+		d) echo "found the -d option"  ;;
+		*) echo "unknown option: $opt" ;;
+	esac
+done
+
+shift $[ $OPTIND - 1 ]
+
+count=1
+for param in "$@"
+do
+	echo "parameter $count: $param"
+	count=$[ $count + 1 ]
+done
+
+$0
+# ./0.sh -a -b test1 -d test2 test3 test4
+# found the -a option
+# found the -b option
+	# with parameter test1
+# found the -d option
+	# parameter 1: test2
+	# parameter 2: test3
+	# parameter 3: test4
+
+$0
+endsnippet
+
+# redirect
+# -------------------------------------------
+snippet rio "redirect input and output, combine stdout and stderr" bwA
+cat < ${1:input.txt} >> ${1:0.log} 2>&1 
+$0
+endsnippet
+
+snippet eof "eof" wA
+<< EOF
+	${1:${VISUAL:ls -l}}
+EOF
+$0
+endsnippet
+
+snippet hole "redirect to black hole" wA
+${1:${VISUAL:ls -la}} > /dev/null
+$0
+endsnippet
+
+snippet title "add title to the begin of the file" wA
+file=${1:file.txt}"
+title="${2:title goes here}"
+echo $title | cat - $1 > $1.new
+$0
+endsnippet
+
+# data processing
+# -------------------------------------------
+# basic 
+snippet pp "processing" wA
+< ${1:${VISUAL:file.txt}} | tr '[:upper:]' '[:lower:]' | grep -i "word" | grep -oE "\w+" | sort | uniq -c | sort -nr | head -n 10
+$0
+endsnippet
+
+
+snippet epath "echo path" wA
+echo $PATH | tr : '\n' | sort
+endsnippet
+
+
+
+
+# csv
+# -------------
+
+
+
+# json
+# -------------
+
+
+# curl
+# -------------
+snippet curl "curl" wA
+curl -s https://${1:www.baidu.com}
+$0
+endsnippet
+
+# seq -f "line %g" 10
+
+
+
+
+
+
+
+

@@ -1,0 +1,76 @@
+# ---
+# --- basic
+# ---
+set -g default-shell /bin/zsh
+set -g default-terminal "screen-256color"
+set -g history-limit 10000
+set -g set-titles off                                            # turn off default window  title
+set -g base-index 1                                              # window start from 1 
+set -g pane-base-index 1                                         # panel start form 1 
+
+# ---
+# --- prefix: ctrl-a
+# ---
+set -g prefix C-a                                                # use ctrl-a instead ctrl-b
+unbind C-b
+
+# ---
+# --- interactive with vim
+# ---
+setw -g mode-keys vi                                             # copy-mode
+bind Escape copy-mode                                            # enter copy mode with esc
+bind -T copy-mode-vi v send-keys -X begin-selection              # v to select 
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel    # y to copy 
+
+# ---
+# --- mouse on
+# ---
+set-option -g mouse on
+
+# ---
+# --- session
+# ---
+bind C-s new-session                                             # <C-B><C-C>
+
+# ---
+# --- window
+# ---
+bind w new-window -c "#{pane_current_path}"
+unbind p
+unbind n
+bind -r C-, previous-window                                      # select previous window <
+bind -r C-. next-window                                          # select next window     >
+
+# ---
+# --- window manage 
+# ---
+unbind '"'
+unbind %
+bind -  split-window -v            # split current window horizontally
+bind =  split-window -h            # split current window vertically
+
+# ---
+# --- pane navigation in vi mode
+# ---
+bind -r h select-pane -L          # <C-B>h move left
+bind -r j select-pane -D          # <C-B>j move down
+bind -r k select-pane -U          # <C-B>k move up
+bind -r l select-pane -R          # <C-B>l move right
+bind x swap-pane -D               # <C-B>x swap current pane with the next one
+bind X swap-pane -U               # <C-B>X swap current pane with the previous one
+
+# ---
+# --- pane resizing
+# ---
+bind -r ^h resize-pane -L 7        # <C-B>H
+bind -r ^j resize-pane -D 5        # <C-B>J
+bind -r ^k resize-pane -U 5        # <C-B>K
+bind -r ^l resize-pane -R 7        # <C-B>L
+
+# ---
+# --- tips 
+# ---
+bind m command-prompt "split-window -v  'exec man %%'"
+
+
+
