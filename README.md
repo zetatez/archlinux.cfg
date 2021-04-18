@@ -480,13 +480,19 @@ exec dwm
 
 
 ### fonts
-
-
-
 ```bash
+pacman -S wqy-microhei
+pacman -S wqy-microhei-lite
+pacman -S wqy-bitmapfont
+pacman -S wqy-zenhei
+pacman -S ttf-arphic-ukai
+pacman -S ttf-arphic-uming
+pacman -S adobe-source-han-sans-cn-fonts
+pacman -S adobe-source-han-serif-cn-fonts
+pacman -S noto-fonts-cjk
+
 # available fonts
 ls -lR /user/share/fonts
-
 
 ```
 
