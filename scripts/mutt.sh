@@ -13,7 +13,6 @@ mkdir ~/.mutt
 ln ~/archlinux.cfg/.mutt/muttrc ~/.mutt/muttrc
 ln ~/archlinux.cfg/.mutt/signature ~/.mutt/signature
 ln ~/archlinux.cfg/.mutt/mutt.alias ~/.mutt/mutt.alias
-ln ~/archlinux.cfg/.mutt/theme.dracula ~/.mutt/theme.dracula
 ln ~/archlinux.cfg/.fetchmailrc ~/.fetchmailrc
 ln ~/archlinux.cfg/.msmtprc ~/.msmtprc
 ln ~/archlinux.cfg/.procmailrc ~/.procmailrc
