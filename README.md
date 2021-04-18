@@ -527,4 +527,9 @@ makepkg -fsri
 
 pikaur -Syu
 pikaur -S google-chrome
+
+pikaur -s mate-power-manager
+
+
+
 ```
