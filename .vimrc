@@ -931,7 +931,7 @@ set relativenumber
 set showcmd
 set noshowmode
 set ruler
-set scrolloff=3
+" set scrolloff=3
 " set list
 " set listchars=tab:\.\ ,trail:<
 set showmatch
