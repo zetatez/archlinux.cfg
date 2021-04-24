@@ -1,0 +1,15 @@
+# lorenzo
+
+MAILDIR=$HOME/mail
+DEFAULT=$MAILDIR/inbox
+VERBOSE=off
+LOGFILE=/tmp/procmaillog
+
+# 垃圾扔进黑洞
+# :0
+# * ^From: webmaster@st\.zju\.edu\.cn
+# /dev/null    					
+
+# 其他邮件 扔入 收件箱
+:0:
+inbox/

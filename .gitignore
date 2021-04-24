@@ -1,0 +1,23 @@
+
+.local
+
+.ssh*
+.ssh/
+
+.emacs.d/
+.emacs.d/
+
+.vim/
+.nvim/
+.cache/
+
+.config/dconf/
+.config/fcitx/
+.config/google-chrome/
+.config/gtk-3.0/
+.config/mimeapps.list/
+.config/pikaur.conf/
+.config/pulse/
+.config/TabNine/
+.config/"Code - OSS"/
+.config/sogoupinyin/

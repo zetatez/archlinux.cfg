@@ -1,0 +1,92 @@
+txn:
+  type: interval
+  before: 
+  after: {"id":0,"start":"20210120T044456Z","tags":["leaning timewarriar"]}
+txn:
+  type: interval
+  before: {"id":1,"start":"20210120T044456Z","tags":["leaning timewarriar"]}
+  after: 
+  type: interval
+  before: 
+  after: {"id":1,"start":"20210120T044456Z","end":"20210120T044512Z","tags":["leaning timewarriar"]}
+txn:
+  type: interval
+  before: 
+  after: {"id":0,"start":"20210120T044823Z"}
+txn:
+  type: config
+  before: 
+  after: exclusions.monday = >1:30 <7:30 12:30-13:00
+txn:
+  type: config
+  before: 
+  after: exclusions.tuesday = >1:30 <7:30 12:30-13:00
+txn:
+  type: config
+  before: 
+  after: exclusions.wednesday = >1:30 <7:30 12:30-13:00
+txn:
+  type: config
+  before: 
+  after: exclusions.thursday = >1:30 <7:30 12:30-13:00
+txn:
+  type: config
+  before: 
+  after: exclusions.friday = >1:30 <7:30 12:30-13:00
+txn:
+  type: config
+  before: 
+  after: exclusions.saturday = >2:30 <9:30 12:30-13:00
+txn:
+  type: config
+  before: 
+  after: exclusions.sunday = >2:30 <7:30 12:30-13:00
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+txn:
+  type: config
+  before: exclusions.monday = >1:30 <7:30 12:30-13:00
+  after: exclusions.monday = <7:30 12:30-13:00 >23:30
+txn:
+  type: config
+  before: exclusions.tuesday = >1:30 <7:30 12:30-13:00
+  after: exclusions.tuesday = <7:30 12:30-13:00 >23:30
+txn:
+  type: config
+  before: exclusions.wednesday = >1:30 <7:30 12:30-13:00
+  after: exclusions.wednesday = <7:30 12:30-13:00 >23:30
+txn:
+  type: config
+  before: exclusions.thursday = >1:30 <7:30 12:30-13:00
+  after: exclusions.thursday = <7:30 12:30-13:00 >23:30
+txn:
+  type: config
+  before: exclusions.friday = >1:30 <7:30 12:30-13:00
+  after: exclusions.friday = <7:30 12:30-13:00 >23:30
+txn:
+  type: config
+  before: exclusions.saturday = >2:30 <9:30 12:30-13:00
+  after: exclusions.saturday = <9:30 12:30-13:00 >23:30
+txn:
+  type: config
+  before: exclusions.sunday = >2:30 <7:30 12:30-13:00
+  after: exclusions.sunday = <9:30 12:30-13:00 >23:30

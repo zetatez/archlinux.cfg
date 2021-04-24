@@ -1,0 +1,2442 @@
+# go snippet
+
+# hello world
+# -------------------------------------------
+snippet hello  "hello world" bwA
+package main
+
+import (
+	"os"
+	"log"
+	"fmt"
+)
+
+func init() {
+	log.SetOutput(os.Stdout)
+}
+
+func main() {
+	fmt.Println("hello world!")
+	log.Println("logging..")
+
+	$0
+}
+endsnippet
+
+snippet //  "//" bwA
+// $0
+endsnippet
+
+snippet /*  "/*" bwA
+/*
+$0
+*/
+$0
+endsnippet
+
+snippet /.  "/*" bwA
+/*
+$1
+*/
+$0
+endsnippet
+
+snippet pk  "package" bwA
+package ${1:main}
+
+$0
+endsnippet
+
+snippet todo  "// TODO: " wA
+// TODO: $0
+endsnippet
+
+# symbols
+# > >= < <= == !=
+snippet gt/ ">" wA
+> $0
+endsnippet
+
+snippet ge/ ">=" wA
+>= $0
+endsnippet
+
+snippet lt/ "<" wA
+< $0
+endsnippet
+
+snippet le/ "<=" wA
+<= $0
+endsnippet
+
+snippet eq/ "==" wA
+== $0
+endsnippet
+
+snippet ne/ "!=" wA
+!= $0
+endsnippet
+
+# and or
+snippet and/ "&" wA
+&$0
+endsnippet
+
+snippet or/ "|" wA
+|$0
+endsnippet
+
+priority 2
+snippet "andd" "&&" irA
+&&$0
+endsnippet
+
+snippet "orr" "||" irA
+||$0
+endsnippet
+
+snippet "ppp|pluss" "+" irA
+ + $0
+endsnippet
+
+snippet "mm|minuss" "mm" irA
+ - $0
+endsnippet
+
+snippet "xx|mutiplyy" "xx" irA
+*$0
+endsnippet
+
+priority 1
+snippet "ddd" "/" irA
+/$0
+endsnippet
+
+snippet "rrr" "%" irA
+%$0
+endsnippet
+
+snippet "hh|hatt" "^" irA
+^$0
+endsnippet
+
+snippet "uu" "_" irA
+_$0
+endsnippet
+
+# key words
+# -------------------------------------------
+snippet bts "basic types" bwA
+${1:/* 
+# basic types
+bool    string    byte      error       rune
+int     int8      int16     int32       int64
+uint    uint8     uint16    uint32      uint64       uintptr
+float   float32   float64   complex64   complex128
+
+# functions
+make    new       len       cap         append       copy   close   delete
+complex real      imag
+panic   recover
+*/}
+endsnippet
+
+snippet ipt "import" bwA
+import "${1:fmt}"
+$0
+endsnippet
+
+snippet ct "continue" bwA
+continue$0
+endsnippet
+
+snippet bk "break" bwA
+break$0
+endsnippet
+
+snippet rt "return" bwA
+return ${1:${VISUAL:msg}}$0
+endsnippet
+
+snippet "fp|fmt" "fmt.Println" brA
+fmt.Println(${1:${VISUAL:"pass"}})
+$0
+endsnippet
+
+snippet fs "fmt.Sprintf(...)" bwA
+fmt.Sprintf("%${1:s}", ${2:msg})
+$0
+endsnippet
+
+snippet lb "label" bwA
+${1:LOOP}: ${2: for i < 20 kvs{
+	if i == 10 {
+		i += 1
+		goto $1
+	}
+}}
+$0
+endsnippet
+
+snippet gl "goto" bwA
+goto ${1:label}$0
+endsnippet
+
+# variables
+# -------------------------------------------
+snippet === "v := value" wA
+ := $0
+endsnippet
+
+snippet vv "var" bwA
+var ${1:x} ${2:type}$0
+endsnippet
+
+snippet =v "var =" bwA
+var ${1:x} =  ${2:value}$0
+endsnippet
+
+snippet sv "var string" bwA
+var ${1:x} string$0
+endsnippet
+
+snippet iv "var int" bwA
+var ${1:x} int64$0
+endsnippet
+
+snippet fv "var float" bwA
+var ${1:x} float64$0
+endsnippet
+
+snippet bv "var bool" bwA
+var ${1:x} bool$0
+endsnippet
+
+# var pointer
+snippet pv "pointer var" bwA
+var p${1:x} *${2:type}$0
+endsnippet
+
+snippet "isnil|isnull" "is null point" brA
+if ${1:ptr} != nil {
+	${2:fmt.Println("$1 is not null")}
+}
+$0
+endsnippet
+
+snippet swp "swap" bwA
+${1:x}, ${2:y} = $2, $1
+$0
+endsnippet
+
+# constant
+snippet cc "const" bwA
+const ${1:pi} ${2:float} = ${3:3.141592654}$0
+endsnippet
+
+# map
+snippet mp "map" bwA
+var ${1:m} map[${2:int}]${3:string}
+$1 = make(map[$2]$3)
+$0${4:// or
+$1 := map[$2]$3{}}
+endsnippet
+
+snippet amp "assign map" bwA
+${1:m} := map[${2:int}]${3:string}{${4:1:"one", 2:"two"}}$0
+endsnippet
+
+snippet dmp "delete elem of map" bwA
+delete(${1:m}, ${2:key})
+$0
+endsnippet
+
+# range
+# -------------------------------------------
+snippet rar "range arr" bwA
+for ${1:idx}, ${2:val} := range ${3:arr}{
+	${4:fmt.Println($1, $2)}
+}
+$0
+endsnippet
+
+snippet rmp "range map" bwA
+for ${1:key}${2:, ${3:val}} := range ${4:kvs}{
+	${5:fmt.Println($1, $3)}
+}
+$0
+endsnippet
+
+snippet rcs "range chars" bwA
+for ${1:key}, ${2:val} := range ${3:chars} {
+	${4:fmt.Println($1, $2)}
+}
+$0
+endsnippet
+
+# iota
+# -------------------------------------------
+snippet iot "iota: when const appaer, iota will be 0" bwA
+const {
+	${1:v1} = iota
+	${2:v2}
+	${3:${4:v3}
+	${5:v314=3.14}
+	${6:v4} = iota}
+}
+$0
+endsnippet
+
+# array
+# -------------------------------------------
+snippet ar "arr var" bwA
+var ${1:arr} [${2:4}]${3:type}
+$0
+endsnippet
+
+snippet aar "agsign arr var" bwA
+var ${1:arr} = [${2:4|...}]${3:type}${4:{1,2,3,4}}
+$0
+endsnippet
+
+snippet mar "multi-dim arr var" bwA
+var ${1:arrs} [${2:2}][${3:10}]${4:type}
+$0
+endsnippet
+
+snippet amar "agsign multi-dim arr var" bwA
+var ${1:arrs} = [][]${2:type}${3:{{1,2},{3,4},{5,6}}}
+$0
+endsnippet
+
+# slice
+# -------------------------------------------
+snippet ss "define slice, null slice, difault value is nil" bwA
+${1:sl} := ${2:sls}[${3:3:7}]
+$0
+endsnippet
+
+snippet dsl "define slice, null slice, difault value is nil" bwA
+var ${1:sl} []${2:type}
+${3:$1 := make([]$2, 0)
+3:$1 := []$2{}}
+$0
+endsnippet
+
+snippet dmsl "define a multi slice, ie a slice of slice" bwA
+var ${1:msl} [][]${2:type}
+$0
+endsnippet
+
+snippet mss "make slice" bwA
+${1:sl} := make([]${2:type}, ${3:len, capacity})
+$0
+endsnippet
+
+snippet msl "make slice" bwA
+var ${1:sl} []${2:type} = make([]$2, ${3:len, capacity})
+$0
+endsnippet
+
+snippet '([\S]+)\.(len|cap)'  "slice .len .cap" rwA
+`!p snip.rv = match.group(2)`.(`!p snip.rv = match.group(1)`)$0
+endsnippet
+
+snippet apd "slice append: sl = append(sl, value)" bwA
+${1:sl} = append(${4:$1}, ${2:value})
+$3$0
+endsnippet
+
+
+# control flow
+# -------------------------------------------
+snippet ie "visual if else" bwA
+if ${1:true} {
+	${2:${VISUAL:fmt.Println("if")}}
+} else {
+	${3:fmt.Println("else")}
+}
+$0
+endsnippet
+
+snippet if "visual if" bwA
+if ${1:true} {
+	${1:${VISUAL:fmt.Println("if")}}
+}
+$0
+endsnippet
+
+snippet el "visual else" bwA
+else {
+	${1:${VISUAL:fmt.Println("else")}}
+}$0
+endsnippet
+
+snippet ef "visual elif" bwA
+else if ${1:True} {
+	${1:${VISUAL:fmt.Println("else if")}}
+}$0
+endsnippet
+
+snippet ok "if !ok { ... }" bwA
+if !ok {
+	${1:${VISUAL:fmt.Println("pass")}}
+}$0
+endsnippet
+
+snippet terexp "ternary expression" wA
+if ${1:true} { ${2:${VISUAL:fmt.Println("if")}} } else { ${3:fmt.Println("else")} }
+$0
+endsnippet
+
+snippet swi "switch" wA
+var $1 int = 0
+switch ${1:val} {
+	case ${2:val1}:
+		${3:fmt.Println("case 1")}
+	case ${4:val2}:
+		${5:fmt.Println("case 2")}
+	default:
+		${6:fmt.Println("default")}
+}
+endsnippet
+
+snippet tswi "type switch" bwA
+switch t := ${1:var}.(type){
+	case ${2:type1}:
+		${3:fmt.Println("case 1 $2")}
+	case ${4:type2}:
+		${5:fmt.Println("case 2 $4")}
+	default:
+		${6:fmt.Println("default")}
+}
+$0
+endsnippet
+
+snippet "cs|case" "case ...:" brA
+case ${1:val}:
+	${2:${VISUAL:fmt.Println("pass")}}
+$0
+endsnippet
+
+snippet dft "case: default: ..." bwA
+default:
+	${0:${VISUAL:fmt.Println("pass")}}
+endsnippet
+
+snippet ft "fallthrough" wA
+fallthrough $0
+endsnippet
+
+snippet for "for ... { ... }" bwA
+for ${1} {
+	${2:${VISUAL:fmt.Println("pass")}}
+}
+$0
+endsnippet
+
+snippet cfor "c for" bwA
+for ${1:i :=1}; ${2:i <= 10}; ${3:i++} {
+	${4:fmt.Println("pass")}$0
+}
+endsnippet
+
+snippet wl "while for" bwA
+for ${1:i <= 10} {
+	${2:fmt.Println("pass")}$0
+}
+endsnippet
+
+snippet afor "array range for" bwA
+for ${1:idx}, ${2:v} := range ${3:nums} {
+	${4:${VISUAL:fmt.Println("pass")}}$0
+}
+endsnippet
+
+snippet mfor "map range for" bwA
+for ${1:key}${2:, ${3:val}} := range ${4:kvs}{
+	${5:fmt.Println($1, $3)}
+}
+$0
+endsnippet
+
+snippet ofor "one line for" bwA
+for ${1:i :=1}; ${2:i <= 10}; ${3:i++} { ${4:fmt.Println("pass")} }$0
+endsnippet
+
+snippet ff "for for" bwA
+for ${1:i :=1; i <= 10; i++} {
+	for ${2:j :=1; j <= 10; j++} {
+		${3:fmt.Println("pass")} }
+	}
+	${4:fmt.Println("pass")} }$0
+}
+endsnippet
+
+# function
+# -------------------------------------------
+snippet initf "func init" bwA
+func init() {
+	${1:fmt.Println("init before main")}
+}
+endsnippet
+
+snippet mainf "func main() { ... }" bwA
+func main() {
+	${1:${VISUAL:fmt.Println("pass")}}$0
+}
+endsnippet
+
+snippet fc "function" bwA
+func ${1:funcName}(${2:var1 type1, var2 type2}) ${3:returnType} {
+	var res $3
+	${4:// pass}
+	return res
+}
+endsnippet
+
+snippet mfc "multi-return function" bwA
+func ${1:funcName}(${2:var1 type1, var2 type2}) (${3:returnType1}, ${4:returnType2}) {
+	var res1 $3
+	var res2 $4
+	${5:// pass}
+
+	return res1, res2
+}
+endsnippet
+
+# variadic functions can be called with any number of trailing arguments.
+snippet vfc "variadic function" bwA
+func ${1:funcName}(args ...${2:int}) ${3:int} {
+	var ${4:res} $3
+	for _, val:= range args {
+		${5:res += val}
+	}
+	return $4
+}
+
+${5:// args := []int{1, 2, 3, 4}
+// funcName(args...)
+// funcName(1,2)
+// funcName(1,2,3)
+}$0
+endsnippet
+
+snippet afc "anonymous function: fn := func() { ... }" bwA
+${1:afunc} := func() { ${2:${VISUAL}} }
+${0}
+endsnippet
+
+snippet byfc "arg be passed by function" bwA
+func ${1:funcName}(f func(${2:int, int}) ${3:int}, ${4:v int}) ${5:int} {
+	${6:res := f(v)}}
+	return ${7:res}
+}
+endsnippet
+
+# arguments be passed by reference
+snippet byr "arg be passed by reference" bwA
+func ${1:funcName}(iptr *${2:int}) {
+	${3:*iptr = 0}
+}
+$0
+endsnippet
+
+snippet tfc "TestFunction func" bwA
+func Test${1:FuncName}(${2:t *testing.T}, ${3:val Type}) {
+	${4:${VISUAL:fmt.Println("pass")}}
+}
+$0
+endsnippet
+
+# recursion
+# -------------------------------------------
+snippet recur "recursion function" bwA
+func ${1:frac}(n, ${2:int}) ${3:int} {
+${4:	if n == 0 {
+		return 1
+	}}
+	return ${5:n * $1(n-1)}
+}
+$0
+endsnippet
+
+# closures
+# -------------------------------------------
+snippet closures "closures" bwA
+${1:package main
+
+import "fmt"
+
+// function intSeq return a anonymously function which is defined in intSeq
+func intSeq() func() int {
+	i := 0
+	// anonymously func capture the value of i on each call
+	return func() int {
+		i++
+		return i
+	}
+}
+
+func main() {
+	nextInt := intSeq()
+	fmt.Println(nextInt())
+	fmt.Println(nextInt())
+	
+	newNextInt := intSeq()
+	fmt.Println(newNextInt())
+}
+
+/* the out put is
+1
+2
+1
+*/}
+$0
+endsnippet
+
+# interface
+# -------------------------------------------
+snippet itf "interface" bwA
+type ${1:InterfaceName} interface {${2:
+	${3:func1}() float64
+	${4:func2}() float64
+}}
+$0
+endsnippet
+
+snippet helpinte "interface" bwA
+type ${1:interfaceName} interface {
+	${2:func1}() float64
+	${3:func2}() float64
+}
+
+type ${4:classA} struct {
+${5:	r float64
+	d float64
+}}
+
+type ${6:classB} struct {
+${7:	r float64
+}}
+
+// To implement an interface, we need to implement all the methods in the interface. 
+func (a $4) $2() float64 {
+	return a.r
+}
+func (a $4) $3() float64 {
+	return a.d
+}
+
+// To implement an interface, we need to implement all the methods in the interface. 
+func (b $6) $2() float64 {
+	return b.r 
+}
+func (b $6) $3() float64 {
+	return b.r 
+}
+
+func callTheInterfce(x $1) {
+	fmt.Println(x)
+	fmt.Println(x.$2())
+	fmt.Println(x.$3())
+}
+${8:
+/*
+a := $4{r: 1.1, d:1.0}
+b := $6{r: 1.1}
+
+callTheInterfce(a)
+callTheInterfce(b)
+*
+/}
+$0
+endsnippet
+
+
+# structure
+# -------------------------------------------
+snippet dtp "type aliasType type" bwA
+type ${1:aliasType} ${2:mytype}
+$0
+endsnippet
+
+snippet tps "type aliasType string" bwA
+type ${1:aliasType} string
+$0
+endsnippet
+
+snippet tpf "type aliasType float64" bwA
+type ${1:aliasType} float64
+$0
+endsnippet
+
+snippet stru "struct var" bwA
+type ${1:Novel} struct {${2:
+	${3:title string}
+	${4:author string}
+	${5:subject string}
+	${6:id int}
+}}
+$0
+endsnippet
+
+snippet "mb|mtd|method" "method: func (arg type) f(...) returnType { ... }" brwA
+func (${1:arg} ${2:*type}) ${3:f}(${4:var1 type1, var2 type2}) ${5:returnType} {
+	var ${6:ret} $5
+	${0:${VISUAL:fmt.Println("pass")}}
+	return $6
+}
+endsnippet
+
+snippet helpst "struct var" bwA
+type ${1:Novel} struct {
+	${2:title string}
+	${3:author string}
+	${4:subject string}
+	${5:id int}
+}
+
+${0:
+/*
+var novel Novel
+// or
+novel := Novel{title: "title", author: 'author', subject: "subject", id: 0}
+
+var pnovel *Novel
+pnovel = &novel 
+
+novel.title = "title"
+novel.author = "author"
+novel.subject = "subject"
+novel.id = 0 
+
+pnovel.title = "title"
+pnovel.author = "author"
+pnovel.subject = "subject"
+pnovel.id = 0 
+*/
+}
+endsnippet
+
+# methods
+snippet helpmethod "struct's methods, treat struct as class" bwA
+type ${1:circle} struct {
+	${2:r float}
+}
+
+// methods can be defined for either pointer or value receiver types:
+// by reference
+func (c *$1) ${3:area() float {
+	return 3.14 * c.r * c.r
+}}
+
+// by val
+func (c $1) ${4:perim() float {
+	return 2 * 3.14 * c.r 
+}}
+
+${5:
+/* useage:
+c := $1{r: 1.8}
+fmt.Println("area: ", c.area())
+fmt.Println("perim:", c.perim())
+*/}
+$0
+endsnippet
+
+# error
+# -------------------------------------------
+snippet helperr "errors" bwA
+import (
+	"errors"
+)
+${1:
+// case 1: buildin error package
+func fun(arg int) (int, error) {
+	if arg == 0 {
+		return -1, errors.New("arg can not be 0")
+	}
+	return 1/arg, nil
+}}
+
+${2:
+// case 2: define a error strut with methods, like error class
+// struct argError, like class
+type argError struct {
+	arg  int
+	prob string
+}
+
+// method of the struct argError, like the member function of the class
+func (e *argError) Error() string {
+	return fmt.Sprintf("%d - %s", e.arg, e.prob)
+}}
+
+$0
+endsnippet
+
+snippet errn "errors.New" bwA
+errors.New("${1:arg can not be zero!}")$0
+endsnippet
+
+snippet ep "error panic" bwA
+if err != nil { panic(${1:err}) }${0}
+endsnippet
+
+snippet eh "error handle and return" bwA
+if err != nil {
+	fmt.Println(err)
+}
+${0}
+endsnippet
+
+snippet ewp "errors.Wrap" bwA
+errors.Wrap(${1:err}, "${2:message}")
+endsnippet
+
+snippet ewf "errors.Wrapf" bwA
+errors.Wrapf(${1:err}, "${2:message %v}", ${3:args...})
+endsnippet
+
+snippet ree "return error" bwA
+if err != nil {
+	return err
+}
+${0}
+endsnippet
+
+snippet rewp "error return wrap" bwA
+if err != nil {
+	return errors.Wrap(err, "${1:message}")
+}
+${0}
+endsnippet
+
+snippet rewf "error return wrapf" bwA
+if err != nil {
+	return errors.Wrapf(err, "${1:message %v}", ${2:args...})
+}
+${0}
+endsnippet
+
+snippet ler "error with log.Fatal(err)" bwA
+if err != nil {
+	log.Fatal(err)
+}
+${0}
+endsnippet
+
+snippet mree "multiple return when error" bwA
+if err != nil {
+	return ${1:nil}, ${2:err}
+}
+${0}
+endsnippet
+
+snippet mrewp "multiple return when error wrap" bwA
+if err != nil {
+	return nil, errors.Wrap(err, "${1:message}")
+}
+${0}
+endsnippet
+
+snippet mrewf "multiple return when error wrapf" bwA
+if err != nil {
+	return nil, errors.Wrapf(err, "${1:message %v}", ${2:args...})
+}
+${0}
+endsnippet
+
+snippet ii "if inline error" bwA
+if ${1:v}, err := ${2:os.Open(file)}; err != nil {
+	${0:${VISUAL:fmt.Println("pass")}}
+}
+endsnippet
+
+# goroutine
+# -------------------------------------------
+# goroutine: goroutine is a lightweight thread of execution
+snippet go "goroutine: goroutine is a lightweight thread of execution" bwA
+go ${1:funcName}(${2:arg1, arg2, ...})$0
+endsnippet
+
+snippet ago "anonymous goroutine: go func() { ... }()" bwA
+go func(${1:arg string}) {
+	${2:${VISUAL:fmt.Println("pass")}}
+}(${3:"arg"})
+$0
+endsnippet
+
+snippet helpgo "goroutine, run function in synchronously" bwA
+${1:
+# goroutine function way
+func f(msg string) {
+	for i := 0; i < 3; i++ {
+		fmt.Println(msg, i)
+	}
+}
+go f("from function")}
+
+${2:
+# goroutine anonymous function way
+go func(msg string) {
+	fmt.Println(msg)
+}("from anonymous function")}
+$0
+endsnippet
+
+# channels
+# -------------------------------------------
+# channels; channels are the pipes that connect concurrent goroutines. You can send values into channels from one goroutine and receive those values into another goroutine.
+# receive msg <- "msg"
+# send    msg <- "msg"
+snippet cn "bi channel" bwA
+var ${1:msg} chan ${2:interface{}}
+$1 := make(chan $2)
+$0
+endsnippet
+
+snippet recn "receive channel" bwA
+var ${1:rec_msg} <-chan ${2:interface{}}
+$1 := make(<-chan $2)
+$0
+endsnippet
+
+snippet secn "send channel" bwA
+var ${1:sen_msg} chan<- ${2:interface{}}$0
+$1 := make(chan<- $2)
+$0
+endsnippet
+
+snippet helpch "channels are the pipes that connect concurrent goroutines" bwA
+${1:
+// create a channel
+messages := make(chan string)
+
+// send a value into a channel, and send it to the goroutine
+go func() { messages <- "ping" }()
+
+// receives a value from a channel
+msg := <-messages
+fmt.Println(msg)
+}
+$0
+endsnippet
+
+# channel buffering
+# -------------------------------------------
+# By default channels are unbuffered, meaning that they will only accept sends (chan <-) if there is a corresponding receive (<- chan) ready to receive the sent value. 
+# Buffered channels accept a limited number of values without a corresponding receiver for those values.
+snippet cb "channel buffer" bwA
+${1:msg} := make(chan ${2:string}, ${3:8})
+$0
+endsnippet
+
+snippet helpcb "channel buffer" bwA
+${1:
+// make a channel of strings buffering up to 2 values
+msg := make(chan string, 2)
+
+msg <- "buffered"
+msg <- "channel"
+
+fmt.Println(<-msg)
+fmt.Println(<-msg)
+}
+$0
+endsnippet
+
+# channel directions
+# -------------------------------------------
+snippet dch "channel directions" bwA
+// f function accepts one channel for receives (pings) and a second for sends (pongs)
+// receive: <-chan string
+// send:    chan<- string
+func ${1:f}(pings <-chan string, pongs chan<- string) {
+	msg := <-pings
+	${2:// processing}
+	pongs <- msg
+}
+$0
+endsnippet
+
+snippet helpdch "channel directions" bwA
+${1:
+// ping function only accepts a channel for sending values
+// chan<- string	channel for send
+func ping(pings chan<- string, msg string) {
+	pings <- msg
+}
+
+// pong function accepts one channel for receives (pings) and a second for sends (pongs).
+// receive: <-chan string
+// send:    chan<- string
+func pong(pings <-chan string, pongs chan<- string) {
+	msg := <-pings
+	pongs <- msg
+}
+
+pings := make(chan string, 1)
+pongs := make(chan string, 1)
+
+ping(pings, "passed message")
+pong(pings, pongs)
+fmt.Println(<-pongs)
+
+// note; 
+// "passed message"
+// -> function ping: channel pings to send
+// -> function pong: receive and send
+}
+
+$0
+endsnippet
+
+# channel synchronization
+# -------------------------------------------
+snippet sch "channel synchronization" bwA
+${1:
+func worker(done chan bool) {
+	fmt.Print("working...")
+	time.Sleep(time.Second)
+	fmt.Println("done")
+	done <- true
+}
+
+// create channel: note 1 is not a bool
+done := make(chan bool, 1)
+
+// send it to the goroutine, then it will be syn
+go worker(done)
+
+# block until we receive a notification from worker on the channel
+<-done}
+$0
+endsnippet
+
+# select
+# -------------------------------------------
+# select: select lets you wait on multiple channel operations.
+# combining goroutines and channels with select is a powerful feature of Go
+snippet sel "for select" bwA
+select {
+	case ${1:${1:result} := }<- ${2:channel}:
+		${3:${VISUAL:fmt.Println("pass")}}
+	$0
+}
+endsnippet
+
+snippet sf "for select" bwA
+for {
+	select {
+		case ${2:${1:result} := }<- ${3:channel}:
+			${4:${VISUAL:fmt.Println("pass")}}$0
+	}
+}
+endsnippet
+
+snippet sc "select case" bwA
+case ${1:${2:var} := }<-${3:channel}:
+	${4:${VISUAL:fmt.Println("pass")}}$0
+endsnippet
+
+snippet sout "select case time out" bwA
+case <- time.After(${1:1} * time.Second):
+	${2:fmt.Println("timeout 1")}
+$0
+endsnippet
+
+# timeout: timeouts are important for programs that connect to external resources or that otherwise need to bound execution time. 
+# implementing timeouts in go is easy and elegant thanks to channels and select
+snippet helpti "timeout" bwA
+${1:
+c1 := make(chan string, 1)
+go func() {
+	time.Sleep(2 * time.Second)
+	c1 <- "result 1"
+}()
+
+select {
+case res := <- c1:
+	fmt.Println(res)
+case <- time.After(1 * time.Second):
+	fmt.Println("timeout 1")
+}
+// timeout 1
+// result 2
+}
+endsnippet
+
+snippet helpsel "select: select lets you wait on multiple channel operations" bwA
+${1:
+c1 := make(chan string)
+c2 := make(chan string)
+
+go func() {
+	time.Sleep(1 * time.Second)
+	c1 <- "one"
+}()
+
+go func() {
+	time.Sleep(2 * time.Second)
+	c2 <- "two"
+}()
+
+// use select to await both channels simultaneously, printing each one as it arrives
+for i := 0; i < 2; i++ {
+	select {
+	case msg1 := <-c1:
+		fmt.Println("received", msg1)
+	case msg2 := <-c2:
+		fmt.Println("received", msg2)
+	}
+}}
+$0
+endsnippet
+
+# non-blocking channel operations
+# -------------------------------------------
+# basic sends and receives on channels are blocking.
+# however, we can use select with a default clause to implement non-blocking sends, receives, and even non-blocking multi-way selects.
+snippet nbch "non-blocking channel operations" bwA
+${1:
+messages := make(chan string)
+signals := make(chan bool)
+
+select {
+case msg := <-messages:
+	fmt.Println("received message", msg)
+default:
+	fmt.Println("no message received")
+}
+
+msg := "hi"
+select {
+case messages <- msg:
+	fmt.Println("sent message", msg)
+default:
+	fmt.Println("no message sent")
+}
+
+select {
+case msg := <-messages:
+	fmt.Println("received message", msg)
+case sig := <-signals:
+	fmt.Println("received signal", sig)
+default:
+	fmt.Println("no activity")
+}}
+$0
+endsnippet
+
+# close channel
+# -------------------------------------------
+snippet cch "close channel" bwA
+jobs := make(chan int, ${1:5})
+done := make(chan bool)
+
+go func() {
+	for {
+		j, more := <-jobs
+		if more {
+			fmt.Println("received job", j)
+		} else {
+			fmt.Println("received all jobs")
+			done <- true
+			return
+		}
+	}
+}()
+
+for j := 1; j <= ${2:3}; j++ {
+	jobs <- j
+	fmt.Println("sent job", j)
+}
+
+close(jobs)
+fmt.Println("sent all jobs")
+<-done
+$0
+endsnippet
+
+snippet roch "range over channel" bwA
+queue := make(chan string, ${1:2})
+${2:
+queue <- "one"
+queue <- "two"
+}
+close(queue)
+
+# Because we closed the channel above, the iteration terminates after receiving the 2 elements.
+for elem := range queue {
+	${3:fmt.Println(elem)}
+}
+
+${4:
+/* get
+one
+two
+*/
+}
+
+$0
+endsnippet
+
+
+# rate limiting
+# -------------------------------------------
+# Rate limiting is an important mechanism for controlling resource utilization and maintaining quality of service. 
+# Go elegantly supports rate limiting with goroutines, channels, and tickers.
+snippet helpratel "rate limiting" bwA
+${1:
+requests := make(chan int, 5)
+for i := 1; i <= 5; i++ {
+	requests <- i
+}
+close(requests)
+
+// this limiter channel will receive a value every 200 milliseconds
+limiter := time.Tick(200 * time.Millisecond)
+
+// By blocking on a receive from the limiter channel before serving each request, 
+// We limit ourselves to 1 request every 200 milliseconds.
+for req := range requests {
+	<-limiter
+	fmt.Println("request", req, time.Now())
+}
+
+// request 1 2012-10-19 00:38:18.687438 +0000 UTC
+// request 2 2012-10-19 00:38:18.887471 +0000 UTC
+// request 3 2012-10-19 00:38:19.087238 +0000 UTC
+// request 4 2012-10-19 00:38:19.287338 +0000 UTC
+// request 5 2012-10-19 00:38:19.487331 +0000 UTC}
+
+${2:
+// We may want to allow short bursts of requests in our rate limiting scheme while preserving the overall rate limit. 
+// We can accomplish this by buffering our limiter channel. 
+
+// This burstyLimiter channel will allow bursts of up to 3 events. 
+burstyLimiter := make(chan time.Time, 3)
+
+// Fill up the channel
+for i := 0; i < 3; i++ {
+	burstyLimiter <- time.Now()
+}
+
+// Every 200 milliseconds we’ll try to add a new value to burstyLimiter, up to its limit of 3.
+go func() {
+	for t := range time.Tick(200 * time.Millisecond) {
+		burstyLimiter <- t
+	}
+}()
+
+// Now simulate 5 more incoming requests.
+// The first 3 of these will benefit from the burst capability of burstyLimiter.
+burstyRequests := make(chan int, 5)
+for i := 1; i <= 5; i++ {
+	burstyRequests <- i
+}
+close(burstyRequests)
+
+for req := range burstyRequests {
+	<-burstyLimiter
+	fmt.Println("request", req, time.Now())
+}
+
+// request 1 2012-10-19 00:38:20.487578 +0000 UTC
+// request 2 2012-10-19 00:38:20.487645 +0000 UTC
+// request 3 2012-10-19 00:38:20.487676 +0000 UTC
+// request 4 2012-10-19 00:38:20.687483 +0000 UTC
+// request 5 2012-10-19 00:38:20.887542 +0000 UTC}
+$0
+endsnippet
+
+# atomic counters
+# -------------------------------------------
+# The primary mechanism for managing state in Go is communication over channels. 
+# We saw this for example with worker pools. 
+# Here we’ll look at using the sync/atomic package for atomic counters accessed by multiple goroutines.
+snippet helpatomic "atomic counters" bwA
+// import "sync"
+// import "sync/atomic"
+
+var ops uint64
+var wg sync.WaitGroup
+
+// To atomically increment the counter we use AddUint64, giving it the memory address of our ops counter with the & syntax.
+for i := 0; i < ${1:50}; i++ {
+	wg.Add(1)
+
+	go func() {
+		for c := 0; c < ${2:1000}; c++ {
+
+			atomic.AddUint64(&ops, 1)
+		}
+		wg.Done()
+	}()
+}
+
+wg.Wait()
+
+${3:fmt.Println("ops:", ops)}$0
+endsnippet
+
+# mutex: exclusive lock
+# -------------------------------------------
+# We can use a mutex to safely access data across multiple goroutines.
+snippet helpmutex "mutex: exclusive lock controler, maker sure only on goroutines is runing" bwA
+${1:
+// import"fmt"
+// import"math/rand"
+// import"sync"
+// import"sync/atomic"
+// import"time"}
+
+// This mutex will synchronize access to state
+var mutex = &sync.Mutex{}
+
+${2:
+var state = make(map[int]int)
+
+// We’ll keep track of how many read and write operations we do
+var readOps uint64
+var writeOps uint64
+
+// Here we start 100 goroutines to execute repeated reads against the state, once per millisecond in each goroutine.
+// For each read we pick a key to access, 
+// Lock() the mutex to ensure exclusive access to the state, read the value at the chosen key,
+// Unlock() the mutex, and increment the readOps count.
+for r := 0; r < 100; r++ {
+	go func() {
+		total := 0
+		for {
+			key := rand.Intn(5)
+			mutex.Lock()
+			total += state[key]
+			mutex.Unlock()
+			atomic.AddUint64(&readOps, 1)
+
+			// wait a bit between reads
+			time.Sleep(time.Millisecond)
+		}
+	}()
+}
+
+// We’ll start 10 goroutines to simulate writes, using the same pattern we did for reads.
+for w := 0; w < 10; w++ {
+	go func() {
+		for {
+			key := rand.Intn(5)
+			val := rand.Intn(100)
+			mutex.Lock()
+			state[key] = val
+			mutex.Unlock()
+			atomic.AddUint64(&writeOps, 1)
+			time.Sleep(time.Millisecond)
+		}
+	}()
+}
+
+# Let the 10 goroutines work on the state and mutex for a second.
+time.Sleep(time.Second)
+
+// Take and report final operation counts
+readOpsFinal := atomic.LoadUint64(&readOps)
+fmt.Println("readOps:", readOpsFinal)
+writeOpsFinal := atomic.LoadUint64(&writeOps)
+fmt.Println("writeOps:", writeOpsFinal)
+
+// With a final lock of state, show how it ended up
+mutex.Lock()
+fmt.Println("state:", state)
+mutex.Unlock()
+}
+$0
+endsnippet
+
+# stateful goroutines
+# -------------------------------------------
+# Use built-in synchronization features of goroutines and channels to achieve exclusive lock
+snippet sg "stateful goroutines"  bwA
+${1:
+// import "fmt"
+// import "math/rand"
+// import "sync/atomic"
+// import "time"}
+
+${2:
+type readOp struct {
+	key  int
+	resp chan int
+}
+
+type writeOp struct {
+	key  int
+	val  int
+	resp chan bool
+}
+
+var readOps uint64
+var writeOps uint64
+
+reads := make(chan readOp)
+writes := make(chan writeOp)
+
+// This goroutine repeatedly selects on the reads and writes channels, responding to requests as they arrive.
+go func() {
+	var state = make(map[int]int)
+	for {
+		select {
+		case read := <-reads:
+			read.resp <- state[read.key]
+		case write := <-writes:
+			state[write.key] = write.val
+			write.resp <- true
+		}
+	}
+}()
+
+// Starts 100 goroutines to issue reads to the state-owning goroutine via the reads channel. 
+// Each read requires constructing a readOp, sending it over the reads channel, and the receiving the result over the provided resp channel.
+for r := 0; r < 100; r++ {
+	go func() {
+		for {
+			read := readOp{
+				key:  rand.Intn(5),
+				resp: make(chan int)}
+			reads <- read
+			<-read.resp
+			atomic.AddUint64(&readOps, 1)
+			time.Sleep(time.Millisecond)
+		}
+	}()
+}
+
+// start 10 writes
+for w := 0; w < 10; w++ {
+	go func() {
+		for {
+			write := writeOp{
+				key:  rand.Intn(5),
+				val:  rand.Intn(100),
+				resp: make(chan bool)}
+			writes <- write
+			<-write.resp
+			atomic.AddUint64(&writeOps, 1)
+			time.Sleep(time.Millisecond)
+		}
+	}()
+}
+
+// Let the goroutines work for a second
+time.Sleep(time.Second)
+
+// capture and report the op counts
+readOpsFinal := atomic.LoadUint64(&readOps)
+fmt.Println("readOps:", readOpsFinal)
+
+writeOpsFinal := atomic.LoadUint64(&writeOps)
+fmt.Println("writeOps:", writeOpsFinal)
+}
+
+$0
+endsnippet
+
+# std lib: sort
+# -------------------------------------------
+snippet "gsort" "go sort: inplace sort" brA
+${1:vals} := [${2:int|string|...}]${3:{4,3,6}}
+sort.${4:Ints|Strings|...}($1)
+
+${5:
+fmt.Println($1)
+isSorted := sort.IntsAreSorted(vals)
+fmt.Println(isSorted)
+}
+endsnippet
+
+snippet helpsort "go sort: inplace sort" bwA
+// import "fmt"
+// import "sort"
+
+strs := []string{"c", "a", "b"}
+sort.Strings(strs)
+fmt.Println("Strings:", strs)
+
+ints := []int{7, 2, 4}
+sort.Ints(ints)
+fmt.Println("Ints:   ", ints)
+
+s := sort.IntsAreSorted(ints)
+fmt.Println("Sorted: ", s)
+
+$0
+endsnippet
+
+# use go sort on our own type
+# in order to use go sort on our own type, we need implement sort.Interface: Len, Swap, Less
+snippet sbf "sort by function" bwA
+type ${1:byLength} []${2:string}
+
+// We need to implement sort.Interface - Len, Less, and Swap - on our type so we can use the sort package’s generic Sort function
+func (s $1) Len() int {
+	return len(s)
+}
+func (s $1) Less(i, j int) bool {
+	return len(s[i]) < len(s[j])
+}
+func (s $1) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+${3:val$1} := []$2${4:{"peach", "banana", "kiwi"}}
+
+sort.Sort($1($3))
+
+${5:fmt.Println($3)}
+$0
+endsnippet
+
+# panic
+# -------------------------------------------
+snippet pn "panic" bwA
+panic("${1:msg}")
+$0
+endsnippet
+
+# A panic typically means something went unexpectedly wrong. 
+# Mostly we use it to fail fast on errors that shouldn’t occur during normal operation, 
+# or that we aren’t prepared to handle gracefully.
+snippet "pc|panic" "panic: pc or panic both work" brA
+panic("${1:a problem}")
+
+${2:_, err := os.Create("/tmp/file")}
+if ${3:err != nil} {
+	panic(err)
+}
+$0
+endsnippet
+
+# defer
+# -------------------------------------------
+snippet dfr "defer: defer func() {...}" bwA
+defer ${1:fun}(${2:var1 type1, var2 type2})
+$0
+endsnippet
+
+snippet adfr "anonymous defer: defer func() {...}" bwA
+defer func() {
+	${1:${VISUAL:fmt.Println("pass")}}
+}()
+$0
+endsnippet
+
+snippet rdf "defer recover" bwA
+defer func() {
+	if err := recover(); err != nil {
+		${1:${VISUAL:fmt.Println("pass")}}
+	}
+}()
+$0
+endsnippet
+
+
+snippet helpdefer "defer example" bwA
+${1:
+func createFile(p string) *os.File {
+	fmt.Println("creating")
+	f, err := os.Create(p)
+	if err != nil {
+		panic(err)
+	}
+	return f
+}
+
+func writeFile(f *os.File) {
+	fmt.Println("writing")
+	fmt.Fprintln(f, "data")
+
+}
+
+func closeFile(f *os.File) {
+	fmt.Println("closing")
+	err := f.Close()
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+f := createFile("/tmp/defer.txt")
+defer closeFile(f)
+writeFile(f)
+
+// creating
+// writing
+// closing
+}
+$0
+endsnippet
+
+# collection functions
+# -------------------------------------------
+# perform function on collections of data
+snippet cfs "collection fuctions" bwA
+${1:
+func Index(vs []string, t string) int {
+	for i, v := range vs {
+		if v == t {
+			return i
+		}
+	}
+	return -1
+}
+
+func Include(vs []string, t string) bool {
+	return Index(vs, t) >= 0
+}
+
+func Any(vs []string, f func(string) bool) bool {
+	for _, v := range vs {
+		if f(v) {
+			return true
+		}
+	}
+	return false
+}
+
+func All(vs []string, f func(string) bool) bool {
+	for _, v := range vs {
+		if !f(v) {
+			return false
+		}
+	}
+	return true
+}
+
+func Filter(vs []string, f func(string) bool) []string {
+	vsf := make([]string, 0)
+	for _, v := range vs {
+		if f(v) {
+			vsf = append(vsf, v)
+		}
+	}
+	return vsf
+}
+
+func Map(vs []string, f func(string) string) []string {
+	vsm := make([]string, len(vs))
+	for i, v := range vs {
+		vsm[i] = f(v)
+	}
+	return vsm
+}}
+
+${2:
+var strs = []string{"peach", "apple", "pear", "plum"}
+
+fmt.Println(Index(strs, "pear"))
+fmt.Println(Include(strs, "grape"))
+fmt.Println(Any(strs, func(v string) bool { return strings.HasPrefix(v, "p") }))
+fmt.Println(All(strs, func(v string) bool { return strings.HasPrefix(v, "p") }))
+fmt.Println(Filter(strs, func(v string) bool { return strings.Contains(v, "e") }))
+fmt.Println(Map(strs, strings.ToUpper))
+}
+
+$0
+endsnippet
+
+
+# std lib
+# -------------------------------------------
+# -------------------------------------------
+# std lib: log
+# -------------------------------------------
+snippet lgpr "log.Println(...)" bwA
+log.Println("${1:${VISUAL}}")
+endsnippet
+
+snippet lgfa "log.Fatal(...)" bwA
+log.Fatal("${1:${VISUAL}}")
+endsnippet
+
+snippet lgpa "log.Panic(...)" bwA
+log.Panic("${1:${VISUAL}}")
+endsnippet
+
+# std lib: json
+# -------------------------------------------
+snippet helpjson "parsing json" bwA
+package main
+
+import (
+	"encoding/json"
+	"io/ioutil"
+	"fmt"
+)
+
+type ${1:LUT} struct {
+	${2:Table_name} ${3:string}
+	${4:Time}	   ${5:string}
+}
+/* json file like
+[
+    {"table_name":"t_meta_app_system_info",        "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_app_system_db_map",      "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_db_info",                "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_env_info",               "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_middleware_cluster_info","time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_middleware_server_info", "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_monitor_system_info",    "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_mysql_cluster_info",     "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_mysql_server_info",      "time":"2021-01-01 12:01:01"},
+    {"table_name":"t_meta_user_info",              "time":"2021-01-01 12:01:01"}
+]
+*/
+
+func load_$1(file string) []$1 {
+	fh, err := ioutil.ReadFile(file)
+	if err != nil { panic(err) }
+
+	var ${6:lut} []$1
+	json.Unmarshal([]byte(fh), &$6)
+
+	return $6
+}
+
+func main() {
+	file := "./lut.json"
+
+	lut := load_$1(file)
+
+	fmt.Println("Struct is:", lut)
+	for idx, v := range $6 {
+		fmt.Println(idx, v.$2, v.$4)
+	}
+}
+
+$0
+endsnippet
+
+# std lib: strings
+# -------------------------------------------
+snippet helpstring "string functions: some example of" bwA
+${1:
+fmt.Println("Contains:  ", strings.Contains("test", "es"))
+fmt.Println("Count:	 ", strings.Count("test", "t"))
+fmt.Println("HasPrefix: ", strings.HasPrefix("test", "te"))
+fmt.Println("HasSuffix: ", strings.HasSuffix("test", "st"))
+fmt.Println("Index:	 ", strings.Index("test", "e"))
+fmt.Println("Join:	  ", strings.Join([]string{"a", "b"}, "-"))
+fmt.Println("Repeat:	", strings.Repeat("a", 5))
+fmt.Println("Replace:   ", strings.Replace("foo", "o", "0", -1))
+fmt.Println("Replace:   ", strings.Replace("foo", "o", "0", 1))
+fmt.Println("Split:	 ", strings.Split("a-b-c-d-e", "-"))
+fmt.Println("ToLower:   ", strings.ToLower("TEST"))
+fmt.Println("ToUpper:   ", strings.ToUpper("test"))
+fmt.Println()
+
+fmt.Println("Len:	   ", len("hello"))
+fmt.Println("Char:	  ", "hello"[1])}
+$0
+endsnippet
+
+# std lib: regular expressions
+# -------------------------------------------
+snippet reg "regular expressions" bwA
+${1:
+ismatched, _ := regexp.MatchString("p([a-z]+)ch", "peach")
+fmt.Println(matched)}
+
+${2:
+r, _ := regexp.Compile("p([a-z]+)ch")
+fmt.Println(r.MatchString("peach"))}
+$0
+endsnippet
+
+snippet helpreg "regular expressions" bwA
+${1:
+// import "bytes"
+// import "regexp"
+
+match, _ := regexp.MatchString("p([a-z]+)ch", "peach")
+fmt.Println(match)
+
+r, _ := regexp.Compile("p([a-z]+)ch")
+
+fmt.Println(r.MatchString("peach"))
+fmt.Println(r.FindString("peach punch"))
+fmt.Println(r.FindStringIndex("peach punch"))
+fmt.Println(r.FindStringSubmatch("peach punch"))
+fmt.Println(r.FindStringSubmatchIndex("peach punch"))
+fmt.Println(r.FindAllString("peach punch pinch", -1))
+fmt.Println(r.FindAllStringSubmatchIndex("peach punch pinch", -1))
+fmt.Println(r.FindAllString("peach punch pinch", 2))
+fmt.Println(r.Match([]byte("peach")))
+
+r = regexp.MustCompile("p([a-z]+)ch")
+fmt.Println(r)
+fmt.Println(r.ReplaceAllString("a peach", "<fruit>"))
+
+in := []byte("a peach")
+out := r.ReplaceAllFunc(in, bytes.ToUpper)
+fmt.Println(string(out))
+}
+$0
+endsnippet
+
+
+# code block
+# -------------------------------------------
+# -------------------------------------------
+snippet cron "crontab" bwA
+${1:
+// import "github.com/robfig/cron"
+c := cron.New()
+c.AddFunc("* * * * * *", func() { fmt.Println("Every miniute on the half hour") })
+
+c.Start()
+
+${2:// }
+
+c.Stop()
+}
+
+$0
+endsnippet
+
+snippet helpcron "crontab" bwA
+${1:
+package main
+
+import (
+	"fmt"
+	"time"
+	"github.com/robfig/cron"
+)
+
+func main() {
+	c := cron.New()
+	c.AddFunc("* * * * * *", func() { fmt.Println("Every miniute on the half hour") })
+
+	c.Start()
+
+	i := 1
+	for i <= 5 {
+		i++
+		time.Sleep(time.Second * 1)
+	}
+
+	c.Stop()
+}}
+
+$0
+endsnippet
+
+
+# std lib: math
+# -------------------------------------------
+# -------------------------------------------
+snippet mathpi "math.Pi float64" iwA
+math.Pi
+endsnippet
+
+snippet mathinf "math.Inf(sign int) float64" iwA
+math.Inf(${1:sign})$0
+endsnippet
+
+snippet mathisinf "math.IsInf(x float64, sign int) boo" iwA
+math.IsInf(${1:x}, ${2:sign})
+endsnippet
+
+snippet mathisnan "math.IsNaN(x float64) (is bool" iwA
+math.IsNaN(${1:x})$0
+endsnippet
+
+snippet mathnan "math.NaN() float64" iwA
+math.NaN()$0
+endsnippet
+
+snippet mathceil "math.Ceil(x float64) float64" iwA
+math.Ceil(${1:x})$0
+endsnippet
+
+snippet mathfloor "math.Floor(x float64) float64" iwA
+math.Floor(${1:x})$0
+endsnippet
+
+snippet mathround "math.Round(x float64) float64" iwA
+math.Round(${1:x})$0
+endsnippet
+
+snippet mathtrunc "math.Trunc(x float64) float64" iwA
+math.Trunc(${1:x})$0
+endsnippet
+
+snippet mathmax "math.Max(x, y float64) float64" iwA
+math.Max(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathmin "math.Min(x, y float64) float64" iwA
+math.Min(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathmod "math.Mod(x, y float64) float64" iwA
+math.Mod(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathremainder "math.Remainder(x, y float64) float64" iwA
+math.Remainder(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathabs "math.Abs(x float64) float64" iwA
+math.Abs(${1:x})$0
+endsnippet
+
+snippet mathcopysign "math.Copysign(x, y float64) float64" iwA
+math.Copysign(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathsin "math.Sin(x float64) float64" iwA
+math.Sin(${1:x})$0
+endsnippet
+
+snippet mathcos "math.Cos(x float64) float64" iwA
+math.Cos(${1:x})$0
+endsnippet
+
+snippet mathcosh "math.Cosh(x float64) float64" iwA
+math.Cosh(${1:x})$0
+endsnippet
+
+snippet mathsinh "math.Sinh(x float64) float64" iwA
+math.Sinh(${1:x})$0
+endsnippet
+
+snippet mathsqrt "math.Sqrt(x float64) float64" iwA
+math.Sqrt(${1:x})$0
+endsnippet
+
+snippet mathcbrt "math.Cbrt(x float64) float6: returns the cube root of x" iwA
+math.Cbrt(${1:x})$0
+endsnippet
+
+snippet mathtan "math.Tan(x float64) float64" iwA
+math.Tan(${1:x})$0
+endsnippet
+
+snippet mathtanh "math.Tanh(x float64) float64" iwA
+math.Tanh(${1:x})$0
+endsnippet
+
+snippet mathacos "math.Acos(x float64) float64" iwA
+math.Acos(${1:x})$0
+endsnippet
+
+snippet mathasin "math.Asin(x float64) float64" iwA
+math.Asin(${1:x})$0
+endsnippet
+
+snippet mathatan "math.Atan(x float64) float64" iwA
+math.Atan(${1:x})$0
+endsnippet
+
+snippet mathasinh "math.Asinh(x float64) float64" iwA
+math.Asinh(${1:x})$0
+endsnippet
+
+snippet mathacosh "math.Acosh(x float64) float64" iwA
+math.Acosh(${1:x})$0
+endsnippet
+
+snippet mathatanh "math.Atanh(x float64) float64" iwA
+math.Atanh(${1:x})$0
+endsnippet
+
+snippet mathpow "math.Pow(x, y float64) float64" iwA
+math.Pow(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathpow10 "math.Pow10(n int) float64" iwA
+math.Pow10(${1:n})
+endsnippet
+
+snippet mathexp "math.Exp(x float64) float64" iwA
+math.Exp(${1:x})$0
+endsnippet
+
+snippet mathlog "math.Log(x float64) float64" iwA
+math.Log(${1:x})$0
+endsnippet
+
+snippet mathdim "math.Dim(x float64, y float64) float64: math.Max(x-y, 0)" iwA
+math.Dim(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathhypot "math.Hypot(x float64, y float64) float64" iwA
+math.Hypot(${1:x}, ${2:y})$0
+endsnippet
+
+snippet mathgama "math.Gama(x float64) float64" iwA
+math.Gama(${1:x})$0
+endsnippet
+
+snippet matherf "func Erf(x float64) float64" iwA
+math.Erf(${1:x})$0
+endsnippet
+
+
+# std lib: sync
+# -------------------------------------------
+# Cond
+snippet ncd "func NewCond(l Locker) *Cond" iwA
+sync.NewCond(${1:locker})$0
+endsnippet
+
+snippet bcd "func (c *Cond) Broadcast()" iwA
+${1:cond}.Broadcast()$0
+endsnippet
+
+snippet scd "func (c *Cond) Signal()" iwA
+${1:cond}.Signal()$0
+endsnippet
+
+snippet wcd "func (c *Cond) Wait()" iwA
+${1:cond}.Wait()$0
+endsnippet
+
+# Map
+snippet dma "func (m *Map) Delete(key interface{})" iwA
+${1:mp}.Delete(${2:key})$0
+endsnippet
+
+snippet lma "func (m *Map) Load(key interface{}) (value interface{}, ok bool)" iwA
+${1:mp}.Load(${2:key})$0
+endsnippet
+
+snippet ladma "func (m *Map) LoadAndDelete(key interface{}) (value interface{}, loaded bool)" iwA
+${1:mp}.LoadAndDelete(${2:key})$0
+endsnippet
+
+snippet losma "func (m *Map) LoadOrStore(key, value interface{}) (actual interface{}, " iwA
+${1:mp}.LoadOrStore(${2:key}, ${3:val})$0
+endsnippet
+
+snippet rma "func (m *Map) Range(f func(key, value interface{}) bool)" iwA
+${1:mp}.Range(${2:f}, ${3:func})$0
+endsnippet
+
+snippet sma "func (m *Map) Store(key, value interface{})" iwA
+${1:mp}.Store(${2:f}, ${3:val})$0
+endsnippet
+
+# Pool
+snippet gpo "func (p *Pool) Get() interface{}" iwA
+${1:pool}.Get()$0
+endsnippet
+
+snippet ppo "func (p *Pool) Put(x interface{})" iwA
+${1:pool}.Put()$0
+endsnippet
+
+# Once
+snippet odo "func (o *Once) Do(f func())" iwA
+${1:once}.Do(${2:fun})$0
+endsnippet
+
+# Mutex
+snippet lmu "func (m *Mutex) Lock()" iwA
+${1:mtex}.Lock()$0
+endsnippet
+
+snippet umu "func (m *Mutex) Unlock()" iwA
+${1:mtex}.Unlock()$0
+endsnippet
+
+# RWMutex
+snippet lrm "func (rw *RWMutex) Lock()" iwA
+${1:rwmutex}.Lock()$0
+endsnippet
+
+snippet rrm "func (rw *RWMutex) RLock()" iwA
+${1:rwmutex}.RLock()$0
+endsnippet
+
+snippet rlrm "func (rw *RWMutex) RLocker() Locker" iwA
+${1:rwmutex}.RLocker()$0
+endsnippet
+
+snippet rurm "func (rw *RWMutex) RUnlock()" iwA
+${1:rwmutex}.RUnlock()$0
+endsnippet
+
+snippet urm "func (rw *RWMutex) Unlock()" iwA
+${1:rwmutex}.Unlock()$0
+endsnippet
+
+# WaitGroup
+snippet vwg "var wg sync.WaitGroup" bwA
+var ${2:wg} sync.WaitGroup$0
+$1$0
+endsnippet
+
+snippet awg "wg.Add(1)" bwA
+${2:wg}.Add(1)
+$1$0
+endsnippet
+
+snippet dwg "defer wg.Done" bwA
+defer ${2:wg}.Done()
+$1$0
+endsnippet
+
+snippet wwg "wg.Wait()" bwA
+${2:wg}.Wait()
+$1$0
+endsnippet
+
+snippet helpwg "WaitGroup" bwA
+// waitGroup
+func worker(id int, wg *sync.WaitGroup) {
+	// done when return
+	defer wg.Done()
+
+	fmt.Printf("Worker %d starting\n", id)
+
+	${1:time.Sleep(time.Second)}
+
+	fmt.Printf("Worker %d done\n", id)
+}
+
+// WaitGroup is used to wait for all the goroutines launched here to finish
+var wg sync.WaitGroup
+
+for i := 1; i <= ${2:5}; i++ {
+	wg.Add(1)
+	go worker(i, &wg)
+}
+
+// Block until the WaitGroup counter goes back to 0
+wg.Wait()
+
+$0
+endsnippet
+
+snippet helpwp "worker pools" bwA
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Println("worker", id, "started  job", j)
+		time.Sleep(time.Second)
+		${3:// }
+		fmt.Println("worker", id, "finished job", j)
+
+		results ${4:<- j * 2}
+	}
+}
+
+const numJobs = ${1:5}
+jobs := make(chan int, numJobs)
+results := make(chan int, numJobs)
+
+for w := 1; w <= ${2:3}; w++ {
+	go worker(w, jobs, results)
+}
+
+# send 5 jobs and then close that channel to indicate that is the all work we have
+for j := 1; j <= numJobs; j++ {
+	jobs <- j
+}
+close(jobs)
+
+for a := 1; a <= numJobs; a++ {
+	<-results
+}
+
+$0
+endsnippet
+
+
+
+
+
+
+
+
+
+
+
+
+snippet std "imports" bwA
+${1:# Standard Libarary
+- archive
+	- tar					Package tar implements access to tar archives.
+	- zip					Package zip provides support for reading and writing ZIP archives.
+- bufio						Package bufio implements buffered I/O. It wraps an io.Reader or io.Writer object, creating another object (Reader or Writer) that also implements the interface but provides buffering and some help for textual I/O.
+- builtin					Package builtin provides documentation for Go's predeclared identifiers.
+- bytes						Package bytes implements functions for the manipulation of byte slices.
+- cmd	
+- addr2line					Addr2line is a minimal simulation of the GNU addr2line tool, just enough to support pprof.
+	- api					Binary api computes the exported API of a set of Go packages.
+	- asm					Asm, typically invoked as “go tool asm”, assembles the source file into an object file named for the basename of the argument source file with a .o suffix.
+	- buildid				Buildid displays or updates the build ID stored in a Go package or binary.
+	- cgo					Cgo enables the creation of Go packages that call C code.
+	- compile				Compile, typically invoked as “go tool compile,” compiles a single Go package comprising the files named on the command line.
+	- cover					Cover is a program for analyzing the coverage profiles generated by 'go test -coverprofile=cover.out'.
+	- dist					Dist helps bootstrap, build, and test the Go distribution.
+	- doc					Doc (usually run as go doc) accepts zero, one or two arguments.
+	- fix					Fix finds Go programs that use old APIs and rewrites them to use newer ones.
+	- go					Go is a tool for managing Go source code.
+	- gofmt					Gofmt formats Go programs.
+	- link					Link, typically invoked as “go tool link”, reads the Go archive or object for a package main, along with its dependencies, and combines them into an executable binary.
+	- nm					Nm lists the symbols defined or used by an object file, archive, or executable.
+	- objdump				Objdump disassembles executable files.
+	- pack					Pack is a simple version of the traditional Unix ar tool.
+	- pprof					Pprof interprets and displays profiles of Go programs.
+	- test2json				Test2json converts go test output to a machine-readable JSON stream.
+	- trace					Trace is a tool for viewing trace files.
+	- vet					Vet examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string.
+- compress	
+	- bzip2					Package bzip2 implements bzip2 decompression.
+	- flate					Package flate implements the DEFLATE compressed data format, described in RFC 1951.
+	- gzip					Package gzip implements reading and writing of gzip format compressed files, as specified in RFC 1952.
+	- lzw					Package lzw implements the Lempel-Ziv-Welch compressed data format, described in T. A. Welch, “A Technique for High-Performance Data Compression”, Computer, 17(6) (June 1984), pp 8-19.
+	- zlib					Package zlib implements reading and writing of zlib format compressed data, as specified in RFC 1950.
+- container	
+	- heap					Package heap provides heap operations for any type that implements heap.Interface.
+	- list					Package list implements a doubly linked list.
+	- ring					Package ring implements operations on circular lists.
+- context					Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
+- crypto					Package crypto collects common cryptographic constants.
+	- aes					Package aes implements AES encryption (formerly Rijndael), as defined in U.S. Federal Information Processing Standards Publication 197.
+	- cipher				Package cipher implements standard block cipher modes that can be wrapped around low-level block cipher implementations.
+	- des					Package des implements the Data Encryption Standard (DES) and the Triple Data Encryption Algorithm (TDEA) as defined in U.S. Federal Information Processing Standards Publication 46-3.
+	- dsa					Package dsa implements the Digital Signature Algorithm, as defined in FIPS 186-3.
+	- ecdsa					Package ecdsa implements the Elliptic Curve Digital Signature Algorithm, as defined in FIPS 186-3.
+	- ed25519				Package ed25519 implements the Ed25519 signature algorithm.
+	- elliptic				Package elliptic implements several standard elliptic curves over prime fields.
+	- hmac					Package hmac implements the Keyed-Hash Message Authentication Code (HMAC) as defined in U.S. Federal Information Processing Standards Publication 198.
+	- md5					Package md5 implements the MD5 hash algorithm as defined in RFC 1321.
+	- rand					Package rand implements a cryptographically secure random number generator.
+	- rc4					Package rc4 implements RC4 encryption, as defined in Bruce Schneier's Applied Cryptography.
+	- rsa					Package rsa implements RSA encryption as specified in PKCS #1 and RFC 8017.
+	- sha1					Package sha1 implements the SHA-1 hash algorithm as defined in RFC 3174.
+	- sha256				Package sha256 implements the SHA224 and SHA256 hash algorithms as defined in FIPS 180-4.
+	- sha512				Package sha512 implements the SHA-384, SHA-512, SHA-512/224, and SHA-512/256 hash algorithms as defined in FIPS 180-4.
+	- subtle				Package subtle implements functions that are often useful in cryptographic code but require careful thought to use correctly.
+	- tls					Package tls partially implements TLS 1.2, as specified in RFC 5246, and TLS 1.3, as specified in RFC 8446.
+	- x509	                Generates root_ios.go.
+		- pkix				Package pkix contains shared, low level structures used for ASN.1 parsing and serialization of X.509 certificates, CRL and OCSP.
+- database	
+	- sql					Package sql provides a generic interface around SQL (or SQL-like) databases.
+		- driver			Package driver defines interfaces to be implemented by database drivers as used by package sql.
+- debug	
+	- dwarf					Package dwarf provides access to DWARF debugging information loaded from executable files, as defined in the DWARF 2.0 Standard at http://dwarfstd.org/doc/dwarf-2.0.0.pdf
+	- elf					Package elf implements access to ELF object files.
+	- gosym					Package gosym implements access to the Go symbol and line number tables embedded in Go binaries generated by the gc compilers.
+	- macho					Package macho implements access to Mach-O object files.
+	- pe					Package pe implements access to PE (Microsoft Windows Portable Executable) files.
+	- plan9obj				Package plan9obj implements access to Plan 9 a.out object files.
+- embed						Package embed provides access to files embedded in the running Go program.
+	- encoding				Package encoding defines interfaces shared by other packages that convert data to and from byte-level and textual representations.
+	- ascii85				Package ascii85 implements the ascii85 data encoding as used in the btoa tool and Adobe's PostScript and PDF document formats.
+	- asn1					Package asn1 implements parsing of DER-encoded ASN.1 data structures, as defined in ITU-T Rec X.690.
+	- base32				Package base32 implements base32 encoding as specified by RFC 4648.
+	- base64				Package base64 implements base64 encoding as specified by RFC 4648.
+	- binary				Package binary implements simple translation between numbers and byte sequences and encoding and decoding of varints.
+	- csv					Package csv reads and writes comma-separated values (CSV) files.
+	- gob					Package gob manages streams of gobs - binary values exchanged between an Encoder (transmitter) and a Decoder (receiver).
+	- hex					Package hex implements hexadecimal encoding and decoding.
+	- json					Package json implements encoding and decoding of JSON as defined in RFC 7159.
+	- pem					Package pem implements the PEM data encoding, which originated in Privacy Enhanced Mail.
+	- xml					Package xml implements a simple XML 1.0 parser that understands XML name spaces.
+- errors					Package errors implements functions to manipulate errors.
+- expvar					Package expvar provides a standardized interface to public variables, such as operation counters in servers.
+- flag						Package flag implements command-line flag parsing.
+- fmt						Package fmt implements formatted I/O with functions analogous to C's printf and scanf.
+- go	
+	- ast					Package ast declares the types used to represent syntax trees for Go packages.
+	- build					Package build gathers information about Go packages.
+		- constraint		Package constraint implements parsing and evaluation of build constraint lines.
+	- constant				Package constant implements Values representing untyped Go constants and their corresponding operations.
+	- doc					The headscan command extracts comment headings from package files; it is used to detect false positives which may require an adjustment to the comment formatting heuristics in comment.go.
+	- format				Package format implements standard formatting of Go source.
+	- importer				Package importer provides access to export data importers.
+	- parser				Package parser implements a parser for Go source files.
+	- printer				Package printer implements printing of AST nodes.
+	- scanner				Package scanner implements a scanner for Go source text.
+	- token					Package token defines constants representing the lexical tokens of the Go programming language and basic operations on tokens (printing, predicates).
+	- types					The gotype command, like the front-end of a Go compiler, parses and type-checks a single Go package.
+- hash						Package hash provides interfaces for hash functions.
+	- adler32				Package adler32 implements the Adler-32 checksum.
+	- crc32					Package crc32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.
+	- crc64					Package crc64 implements the 64-bit cyclic redundancy check, or CRC-64, checksum.
+	- fnv					Package fnv implements FNV-1 and FNV-1a, non-cryptographic hash functions created by Glenn Fowler, Landon Curt Noll, and Phong Vo.
+	- maphash				Package maphash provides hash functions on byte sequences.
+- html						Package html provides functions for escaping and unescaping HTML text.
+	- template				Package template (html/template) implements data-driven templates for generating HTML output safe against code injection.
+- image						Package image implements a basic 2-D image library.
+	- color					Package color implements a basic color library.
+		- palette			Package palette provides standard color palettes.
+	- draw					Package draw provides image composition functions.
+	- gif					Package gif implements a GIF image decoder and encoder.
+	- jpeg					Package jpeg implements a JPEG image decoder and encoder.
+	- png					Package png implements a PNG image decoder and encoder.
+- index	
+	- suffixarray			Gen generates sais2.go by duplicating functions in sais.go using different input types.
+- io						Package io provides basic interfaces to I/O primitives.
+	- fs					Package fs defines basic interfaces to a file system.
+	- ioutil				Package ioutil implements some I/O utility functions.
+- log						Package log implements a simple logging package.
+	- syslog				Package syslog provides a simple interface to the system log service.
+- math						Package math provides basic constants and mathematical functions.
+	- big					Package big implements arbitrary-precision arithmetic (big numbers).
+	- bits					Package bits implements bit counting and manipulation functions for the predeclared unsigned integer types.
+	- cmplx					Package cmplx provides basic constants and mathematical functions for complex numbers.
+	- rand					Package rand implements pseudo-random number generators.
+- mime						Package mime implements parts of the MIME spec.
+	- multipart				Package multipart implements MIME multipart parsing, as defined in RFC 2046.
+	- quotedprintable		Package quotedprintable implements quoted-printable encoding as specified by RFC 2045.
+- net						Package net provides a portable interface for network I/O, including TCP/IP, UDP, domain name resolution, and Unix domain sockets.
+	- http					Package http provides HTTP client and server implementations.
+	cgi						Package cgi implements CGI (Common Gateway Interface) as specified in RFC 3875.
+		- cookiejar		 	Package cookiejar implements an in-memory RFC 6265-compliant http.CookieJar.
+		- fcgi				Package fcgi implements the FastCGI protocol.
+		- httptest			Package httptest provides utilities for HTTP testing.
+		- httptrace			Package httptrace provides mechanisms to trace the events within HTTP client requests.
+		- httputil			Package httputil provides HTTP utility functions, complementing the more common ones in the net/http package.
+		- pprof				Package pprof serves via its HTTP server runtime profiling data in the format expected by the pprof visualization tool.
+	- mail					Package mail implements parsing of mail messages.
+		- rpc				Package rpc provides access to the exported methods of an object across a network or other I/O connection.
+	- jsonrpc				Package jsonrpc implements a JSON-RPC 1.0 ClientCodec and ServerCodec for the rpc package.
+	- smtp					Package smtp implements the Simple Mail Transfer Protocol as defined in RFC 5321.
+	- textproto				Package textproto implements generic support for text-based request/response protocols in the style of HTTP, NNTP, and SMTP.
+	- url					Package url parses URLs and implements query escaping.
+- os						Package os provides a platform-independent interface to operating system functionality.
+	- exec					This is a test program that verifies that it can read from descriptor 3 and that no other descriptors are open.
+	- signal				Package signal implements access to incoming signals.
+	- user					Package user allows user account lookups by name or id.
+- path						Package path implements utility routines for manipulating slash-separated paths.
+	- filepath				Package filepath implements utility routines for manipulating filename paths in a way compatible with the target operating system-defined file paths.
+- plugin					Package plugin implements loading and symbol resolution of Go plugins.
+- reflect					Package reflect implements run-time reflection, allowing a program to manipulate objects with arbitrary types.
+- regexp					Package regexp implements regular expression search.
+	- syntax				Package syntax parses regular expressions into parse trees and compiles parse trees into programs.
+- runtime					mkduff generates duff_*.s.
+	- cgo					Package cgo contains runtime support for code generated by the cgo tool.
+	- debug					Package debug contains facilities for programs to debug themselves while they are running.
+	- metrics				Package metrics provides a stable interface to access implementation-defined metrics exported by the Go runtime.
+	- msan	
+	- pprof					Package pprof writes runtime profiling data in the format expected by the pprof visualization tool.
+	- race					Package race implements data race detection logic.
+	- trace					Package trace contains facilities for programs to generate traces for the Go execution tracer.
+- sort						Package sort provides primitives for sorting slices and user-defined collections.
+- strconv					Package strconv implements conversions to and from string representations of basic data types.
+- strings					Package strings implements simple functions to manipulate UTF-8 encoded strings.
+- sync						Package sync provides basic synchronization primitives such as mutual exclusion locks.
+	- atomic				Package atomic provides low-level atomic memory primitives useful for implementing synchronization algorithms.
+- syscall					mkasm.go generates assembly trampolines to call library routines from Go.
+	- js					Package js gives access to the WebAssembly host environment when using the js/wasm architecture.
+- testing					Package testing provides support for automated testing of Go packages.
+	- fstest				Package fstest implements support for testing implementations and users of file systems.
+	- iotest				Package iotest implements Readers and Writers useful mainly for testing.
+	- quick					Package quick implements utility functions to help with black box testing.
+- text	
+	- scanner				Package scanner provides a scanner and tokenizer for UTF-8-encoded text.
+	- tabwriter				Package tabwriter implements a write filter (tabwriter.Writer) that translates tabbed columns in input into properly aligned text.
+	- template				Package template implements data-driven templates for generating textual output.
+	- parse					Package parse builds parse trees for templates as defined by text/template and html/template.
+- time						Package time provides functionality for measuring and displaying time.
+	- tzdata				This program generates zipdata.go from $GOROOT/lib/time/zoneinfo.zip.
+- unicode					Package unicode provides data and functions to test some properties of Unicode code points.
+	- utf16					Package utf16 implements encoding and decoding of UTF-16 sequences.
+	- utf8					Package utf8 implements functions and constants to support text encoded in UTF-8.
+- unsafe					Package unsafe contains operations that step around the type safety of Go programs.
+
+# Other packages
+These packages are part of the Go Project but outside the main Go tree. They are developed under looser compatibility requirements than the Go core. Install them with "go get".
+- benchmarks                benchmarks to measure Go as it is developed.
+- blog                      blog.golang.org's implementation.
+- build                     build.golang.org's implementation.
+- crypto                    additional cryptography packages.
+- debug                     an experimental debugger for Go.
+- image                     additional imaging packages.
+- mobile                    experimental support for Go on mobile platforms.
+- net                       additional networking packages.
+- perf                      packages and tools for performance measurement, storage, and analysis.
+- pkgsite                   home of the pkg.go.dev website.
+- review                    a tool for working with Gerrit code reviews.
+- sync                      additional concurrency primitives.
+- sys                       packages for making system calls.
+- text                      packages for working with text.
+- time                      additional time packages.
+- tools                     godoc, goimports, gorename, and other tools.
+- tour                      tour.golang.org's implementation.
+- exp                       experimental and deprecated packages (handle with care; may change without warning). }
+endsnippet
+
+
+snippet helolog "example of log" bwA
+package main
+
+import (
+	"github.com/natefinch/lumberjack"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+)
+
+var sugarLogger *zap.SugaredLogger
+
+func InitLogger() {
+
+	encoder := getEncoder()
+	writeSyncer := getLogWriter()
+	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+
+	// zap.AddCaller()  添加将调用函数信息记录到日志中的功能。
+	logger := zap.New(core, zap.AddCaller())
+	sugarLogger = logger.Sugar()
+}
+
+func getEncoder() zapcore.Encoder {
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder // 修改时间编码器
+
+	// 在日志文件中使用大写字母记录日志级别
+	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	// NewConsoleEncoder 打印更符合人们观察的方式
+	return zapcore.NewConsoleEncoder(encoderConfig)
+}
+
+func getLogWriter() zapcore.WriteSyncer {
+	lumberJackLogger := &lumberjack.Logger{
+		Filename:   "./test.log",
+		MaxSize:    10,
+		MaxBackups: 5,
+		MaxAge:     30,
+		Compress:   false,
+	}
+	return zapcore.AddSync(lumberJackLogger)
+}
+
+func main() {
+	InitLogger()
+	sugarLogger.Info("this is info message")
+	sugarLogger.Infof("this is %s, %d", "aaa", 1234)
+	sugarLogger.Error("this is error message")
+	sugarLogger.Info("this is info message")
+}
+
+endsnippet
+
+
+
+
+
+
+
+
+
+
+

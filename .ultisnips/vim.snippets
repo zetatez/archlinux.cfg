@@ -1,0 +1,75 @@
+# vim
+
+snippet sec "section" bwA
+""""""
+"""""" ${1:New Section}: ${2:Hints}
+$0
+
+endsnippet
+
+snippet " "new line comment"
+" $0
+endsnippet
+
+snippet .. "new line comment" iA
+
+" $0
+endsnippet
+
+snippet set "set" bwA
+set $0
+endsnippet
+
+snippet let "let" bwA
+let ${1:g/a}:$2 = $0
+endsnippet
+
+snippet imp "vioremap" bwA
+inoremap $0
+endsnippet
+
+snippet nmp "nnoremap" bwA
+nnoremap $0
+endsnippet
+
+snippet vmp "vnoremap" bwA
+vnoremap $0
+endsnippet
+
+snippet cmp "vcoremap" bwA
+cnoremap $0
+endsnippet
+
+snippet mp "noremap" bwA
+noremap $0
+endsnippet
+
+snippet auc "autocmd" bwA
+autocmd $0
+endsnippet
+
+snippet leader "leader" wA
+<LEADER>$0
+endsnippet
+
+snippet esc "esc" iA
+<ESC>$0
+endsnippet
+
+snippet cr. "cr" iA
+<CR>$0
+endsnippet
+
+snippet tab. "tab" iA
+<TAB>$0
+endsnippet
+
+snippet c- "c-x" iA
+<C-$1>$0
+endsnippet
+
+snippet plug "vim-plug" bwA
+Plug '$1'
+endsnippet
+
+

@@ -1,0 +1,68 @@
+2021-04-23 00:32:48,306 - INFO - **** INITIALISING NEW VIMSPECTOR SESSION ****
+2021-04-23 00:32:48,306 - INFO - API is: 
+2021-04-23 00:32:48,306 - INFO - VIMSPECTOR_HOME = /home/lorenzo/.vim/plugged/vimspector
+2021-04-23 00:32:48,306 - INFO - gadgetDir = /home/lorenzo/.vim/plugged/vimspector/gadgets/linux
+2021-04-23 00:32:48,307 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,307 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,307 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,307 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,528 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,528 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,529 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,529 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,564 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,565 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,565 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,565 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,601 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,602 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,602 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,602 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,637 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,638 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,638 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,638 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,674 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,675 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,675 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,675 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,710 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,711 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,711 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,711 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,747 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,748 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,748 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,749 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,784 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,785 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,785 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,785 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,821 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,822 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,822 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,822 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,858 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,858 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,859 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,859 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,894 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,895 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,895 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,895 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,931 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,932 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,932 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,932 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:48,967 - INFO - User requested start debug session with {}
+2021-04-23 00:32:48,968 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,968 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:48,968 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:49,004 - INFO - User requested start debug session with {}
+2021-04-23 00:32:49,005 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:49,005 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:49,005 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.
+2021-04-23 00:32:49,041 - INFO - User requested start debug session with {}
+2021-04-23 00:32:49,042 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:49,042 - DEBUG - Reading configurations from: None
+2021-04-23 00:32:49,042 - INFO - User Msg: Unable to find any debug configurations. You need to tell vimspector how to launch your application.

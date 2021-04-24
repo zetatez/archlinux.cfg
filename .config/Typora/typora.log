@@ -1,0 +1,83 @@
+INFO 2021/4/18 下午5:38:45  luanchFromDiffVersion, pre version is undefined
+INFO 2021/4/18 下午5:38:45  overwriteThemeFolder
+INFO 2021/4/18 下午5:38:45  ------------------start------------------
+INFO 2021/4/18 下午5:38:45  typora version: 0.9.98
+DEBUG 2021/4/18 下午5:38:45  [ '/usr/share/typora/Typora' ]
+INFO 2021/4/18 下午5:38:45  [Raven] instanceKey = 370b9c1a-22d5-4c24-b5c0-b1f9da10bbb5
+DEBUG 2021/4/18 下午5:38:45  app.openFile
+INFO 2021/4/18 下午5:38:45  [focus] 1
+INFO 2021/4/18 下午5:38:45  [Raven] userId = 5ce9277a-06e2-429c-aa18-dfbad31724a1
+INFO 2021/4/18 下午5:38:45  handle document.loadInitData
+INFO 2021/4/18 下午5:38:55  [blur] 1
+INFO 2021/4/18 下午5:38:56  [focus] 1
+INFO 2021/4/18 下午5:38:56  [blur] 1
+INFO 2021/4/18 下午5:38:58  [focus] 1
+INFO 2021/4/18 下午5:39:00  [blur] 1
+INFO 2021/4/18 下午5:39:01  [focus] 1
+INFO 2021/4/18 下午5:39:02  [blur] 1
+INFO 2021/4/18 下午5:39:03  [focus] 1
+INFO 2021/4/18 下午5:39:08  ----------------before-quit-----------------
+INFO 2021/4/18 下午5:39:08  ------------------will-quit------------------
+INFO 2021/4/18 下午5:39:33  ------------------start------------------
+INFO 2021/4/18 下午5:39:33  typora version: 0.9.98
+DEBUG 2021/4/18 下午5:39:33  [ '/usr/share/typora/Typora', 'archlinux.cfg/README.md' ]
+DEBUG 2021/4/18 下午5:39:33  app.openFile
+INFO 2021/4/18 下午5:39:33  addRecentDocument
+INFO 2021/4/18 下午5:39:33  [Raven] instanceKey = 435cfee5-1437-414b-bbf1-fc1cf3dceb33
+INFO 2021/4/18 下午5:39:33  [focus] 1
+INFO 2021/4/18 下午5:39:33  [Raven] userId = 5ce9277a-06e2-429c-aa18-dfbad31724a1
+INFO 2021/4/18 下午5:39:33  handle document.loadInitData
+INFO 2021/4/18 下午5:39:35  [blur] 1
+INFO 2021/4/18 下午5:39:36  [focus] 1
+INFO 2021/4/18 下午5:39:36  [blur] 1
+INFO 2021/4/18 下午5:39:36  [focus] 1
+INFO 2021/4/18 下午5:39:40  [blur] 1
+INFO 2021/4/18 下午5:39:40  [focus] 1
+INFO 2021/4/18 下午5:39:50  updateTheme
+INFO 2021/4/18 下午5:40:04  File.option.useCustomFontSize=true
+INFO 2021/4/18 下午5:40:04  document.body.parentElement.style.fontSize = '14px'
+INFO 2021/4/18 下午5:40:06  File.option.customFontSize=13
+INFO 2021/4/18 下午5:40:06  document.body.parentElement.style.fontSize = '13px'
+INFO 2021/4/18 下午5:40:06  File.option.customFontSize=12
+INFO 2021/4/18 下午5:40:06  document.body.parentElement.style.fontSize = '12px'
+INFO 2021/4/18 下午5:40:07  File.option.customFontSize=11
+INFO 2021/4/18 下午5:40:07  document.body.parentElement.style.fontSize = '11px'
+INFO 2021/4/18 下午5:40:08  File.option.customFontSize=10
+INFO 2021/4/18 下午5:40:08  document.body.parentElement.style.fontSize = '10px'
+INFO 2021/4/18 下午5:40:09  File.option.customFontSize=11
+INFO 2021/4/18 下午5:40:09  document.body.parentElement.style.fontSize = '11px'
+INFO 2021/4/18 下午5:40:10  File.option.customFontSize=10
+INFO 2021/4/18 下午5:40:10  document.body.parentElement.style.fontSize = '10px'
+INFO 2021/4/18 下午5:40:11  File.option.customFontSize=10
+INFO 2021/4/18 下午5:40:11  document.body.parentElement.style.fontSize = '10px'
+INFO 2021/4/18 下午5:40:14  File.setIndentSize(4);
+INFO 2021/4/18 下午5:40:16  File.option.prettyIndent = true;
+INFO 2021/4/18 下午5:40:19  File.option.autoPairExtendSymbol = true;
+INFO 2021/4/18 下午5:40:23  File.option.autoPairExtendSymbol = false;
+INFO 2021/4/18 下午5:40:24  File.option.autoPairExtendSymbol = true;
+INFO 2021/4/18 下午5:40:24  File.option.autoPairExtendSymbol = false;
+INFO 2021/4/18 下午5:40:39  window.File && (function(){File.isFocusMode = false; File.isTypeWriterMode = false; File.editor.updateFocusMode(false); File.editor.setTypeWriterMode(false, true);$('#md-notification').fadeOut();})();
+INFO 2021/4/18 下午5:40:39  [blur] 1
+INFO 2021/4/18 下午5:40:41  [focus] 1
+INFO 2021/4/18 下午5:40:51  window.File && (function(){File.setDefaultImageStorage("per-file-assert");})();
+INFO 2021/4/18 下午5:41:04  File.setDefaultImageStorage("./${filename}")
+INFO 2021/4/18 下午5:41:09  File.setDefaultImageStorage("./p${filename}")
+INFO 2021/4/18 下午5:41:09  File.setDefaultImageStorage("./pi${filename}")
+INFO 2021/4/18 下午5:41:10  File.setDefaultImageStorage("./pic${filename}")
+INFO 2021/4/18 下午5:41:11  File.setDefaultImageStorage("./pics${filename}")
+INFO 2021/4/18 下午5:41:11  File.setDefaultImageStorage("./pics/${filename}")
+INFO 2021/4/18 下午5:41:21  File.option.autoEscapeImageURL=true;
+INFO 2021/4/18 下午5:41:35  File.option.applyImageMoveForWeb = true
+INFO 2021/4/18 下午5:41:36  File.option.useRelativePathForImg = true
+INFO 2021/4/18 下午5:41:39  File.option.allowImageUpload = true
+INFO 2021/4/18 下午5:41:40  File.option.allowImageUpload = false
+INFO 2021/4/18 下午5:42:28  File.option.customFontSize=11
+INFO 2021/4/18 下午5:42:28  document.body.parentElement.style.fontSize = '11px'
+INFO 2021/4/18 下午5:42:28  File.option.customFontSize=12
+INFO 2021/4/18 下午5:42:28  document.body.parentElement.style.fontSize = '12px'
+INFO 2021/4/18 下午5:42:29  File.option.customFontSize=12
+INFO 2021/4/18 下午5:42:29  document.body.parentElement.style.fontSize = '12px'
+INFO 2021/4/18 下午5:42:34  [blur] 1
+INFO 2021/4/18 下午5:42:35  [focus] 1
+INFO 2021/4/18 下午5:42:43  ----------------before-quit-----------------
+INFO 2021/4/18 下午5:42:43  ------------------will-quit------------------

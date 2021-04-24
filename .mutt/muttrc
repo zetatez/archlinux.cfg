@@ -1,0 +1,71 @@
+# Lorenzo
+
+## alias 
+source ~/.mutt/mutt.alias
+
+## basic
+set charset="utf-8"
+set editor="vim"
+set sendmail="/usr/local/bin/msmtp"
+set use_from=yes                            # inform msmtp use which account
+set from="fincompleteness@163.com"          # default account for sending
+set realname="Lorenzo"                      # youe real name
+set envelope_from=yes                       # use msmtp -f
+set ispell="/usr/local/bin/aspell"          # spell check
+
+## mailbox
+set mbox_type = Maildir                     # mail box type
+set folder = "~/mail"                       # mail
+set spoolfile = "~/mail/inbox"              # inbox
+set record="~/mail/sent"                    # sent
+set postponed="~/mail/postponed"            # postponed
+
+## format
+my_hdr From: fincompleteness@163.com        # default account for sending
+my_hdr Reply-To: fincompleteness@163.com    # default account reply to
+set include                                 # reply with original email
+set indent_str="> "                         # reply with original email indent by >
+set signature=~/.mutt/signature             # signature
+
+## check new emails: do not open, because it too frq will be blocked
+# set check_new=yes                           # check new emails
+# set mail_check=900                          # check new emails every 900 seconds
+# set timeout=30                              # check new emails timout 30 seconds
+
+## rate emails
+score "~N" +4                               # new email     +4
+score "~D" -5                               # marked delete -5
+set sort=score                              # sort by rate
+set sort=reverse-date-received              # sort by date
+
+## personal habits
+set fast_reply                              # r to reply
+set resolve=yes                             # t or D to jump to the next email
+set ascii_chars=yes                         # tree list '->
+set move=no                                 # do not move email from spool to mbox after quit
+set nomove                                  # do not move email after reading
+set copy                                    # keep a backup of sent emails
+set quit=yes                                # exit directly when exit
+set delete=ask-yes                          # ask before delete
+set postpone=ask-no                         # delay sending
+set beep_new=yes                            # beeps when new mail comes
+set sendmail_wait=-1                        # don't wait when send mail
+set header=no                               # do not include header when reply
+set edit_headers=yes                        # allow editing header
+set mime_forward                            # forwarded email's MIME attachment
+set smart_wrap                              # don't break lines from the middle of words
+set nomarkers                               # no line break marks
+set pager_index_lines=7                     # indent line for email list
+set pager_context=3                         # display 3 lines of context in pager
+set pager_stop                              # page stop when reach to the end of the email, ie. not jump to the next email
+auto_view text/html                         # auto view html
+
+## macros
+### change accounts
+# macro generic "<esc>1" ":set from=fincompleteness@163.com"
+# macro generic "<esc>2" ":set from=fromfairest@icloud.com"
+# macro generic "<esc>3" ":set from=zetatez@icloud.com"
+
+### shortcut
+macro index,pager G '<shell-escape>fetchmail -sk<enter>'         # fetch mail, shortcut I
+
