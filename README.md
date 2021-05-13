@@ -96,8 +96,8 @@ mkswap -f /dev/sda2
 swapon /dev/sda2
 
 
-mkdir /mnt/boot
-mount /dev/sda1 /mnt/boot
+mkdir -p /mnt/boot/EFI
+mount /dev/sda1 /mnt/boot/EFI
 mount /dev/sda3 /mnt
 ```
 
@@ -112,10 +112,8 @@ pacstrap /mnt vim dhcpcd iwd sudo
 ### configure the system
 - fstab
 ```bash
+genfstab -U /mnt
 genfstab -U /mnt >> /mnt/etc/fstab
-cat /mnt/etc/fstab
-# 如果 EFI 分区没有那么未成功
-
 ```
 
 - chroot
@@ -174,14 +172,6 @@ vi /etc/hosts
 199.232.28.133 raw.githubusercontent.com
 ```
 
-- initramfs
-creating a new initramfs is usually not required, because mkinitcpio was run on installation of the kernel package with pacstrap.
-
-for lvm, system encryption or raid, modify mkinitcpio.conf and recreate the initramfs image:
-```bash
-mkinitcpio -P
-```
-
 - root password
 ```bash
 passwd
@@ -210,7 +200,7 @@ pacman -S grub efibootmgr intel-ucode
 
 uname -m
     # x86_64
-grub-install --target=x86_64-efi --efi-directoryr=/boot --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directoryr=/boot/EFI --bootloader-id=GRUB
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -223,25 +213,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
     # tools
     pacman -S net-tools inetutils iproute2
-
-    # check, is hotspot is generated
-    ls /etc/netctl
-        examples    hooks    interfaces    26duju-123C
-
-    cat /etc/netctl/26duju-123C
-        Description='Automatically generated profile by wifi-menu'
-        Interface=wlan0
-        Connection=wireless
-        Security=wpa
-        ESSID=26duju-123C
-        IP=dhcp
-        Key=26duju123
-
-    # auto connect to wifi on startup
-    systemctl enable netctl-auto@26duju-123C.service
-
-    # start netctl service, connect to wifi
-    systemctl start netctl-auto@26duju-123C.service
     ```
 
     - wire
@@ -267,20 +238,13 @@ grub-mkconfig -o /boot/grub/grub.cfg
     4.  [Start/enable](https://wiki.archlinux.org/index.php/Start/enable) `bluetooth.service`.
 
         **Note:**
-
         -   By default the bluetooth daemon will only give out bnep0 devices to users that are a member of the `lp` [group](https://wiki.archlinux.org/index.php/Users_and_groups#System_groups). Make sure to add your user to that group if you intend to connect to a bluetooth tether. You can change the group that is required in the file `/usr/share/dbus-1/system.d/bluetooth.conf`.
         -   Some Bluetooth adapters are bundled with a Wi-Fi card (e.g. [Intel Centrino](https://www.intel.com/content/www/us/en/wireless-products/centrino-advanced-n-6235.html)). These require that the Wi-Fi card is firstly enabled (typically a keyboard shortcut on a laptop) in order to make the Bluetooth adapter visible to the kernel.
         -   Some Bluetooth cards (e.g. Broadcom) conflict with the network adapter. Thus, you need to make sure that your Bluetooth device gets connected before the network service boot.
         -   Some tools such as hcitool and hciconfig have been deprecated upstream, and are no longer included in [bluez-utils](https://archlinux.org/packages/?name=bluez-utils). Since these tools will no longer be updated, it is recommended that scripts be updated to avoid using them. If you still desire to use them, install [bluez-utils-compat](https://aur.archlinux.org/packages/bluez-utils-compat/)AUR. See [FS#53110](https://bugs.archlinux.org/task/53110) and [the Bluez mailing list](https://www.spinics.net/lists/linux-bluetooth/msg69239.html) for more information.
 
-
-
 *   **bluetoothctl** — Pairing a device from the shell is one of the simplest and most reliable options.
     *   **Tip:** To automate bluetoothctl commands, use `echo -e "<command1>\n<command2>\n" | bluetoothctl` or `bluetoothctl -- command`
-
-
-
-
 
 ```bash
 # bluetooth protocl
@@ -367,13 +331,7 @@ pacman -S xf86-input-synaptics
 
 ```
 
-### tools
-```bash
-
-```
-
-### softwares
-- pacman
+### pacman 
 ```bash
 # update mirrors list
 # sduo pacman -Sy
@@ -386,7 +344,6 @@ pacman -S xf86-input-synaptics
 
 # remove package recursivly
 # pacman -Rsc vim 
-
 ```
 
 - softwares
@@ -521,7 +478,7 @@ sudo dmidecode
 
 
 
-### Piker
+### pikaur
 
 [https://github.com/actionless/pikaur]
 
