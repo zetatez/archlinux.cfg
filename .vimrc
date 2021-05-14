@@ -647,8 +647,9 @@ Plug 'vim-scripts/bash-support.vim'
 
 """""" c++
 """"""
-Plug 'rip-rip/clang_complete'
-Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'rip-rip/clang_complete'
+"
+" Plug 'octol/vim-cpp-enhanced-highlight'
 
 """"""
 """""" go
