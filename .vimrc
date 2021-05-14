@@ -98,7 +98,7 @@
 
 """"""
 """""" alway keep a backup
-silent! execute "!cp -f ~/.vimrc ~/.vimrc.bk"
+silent! execute "!cp -f /home/lorenzo/.vimrc /home/lorenzo/.vimrc.bk"
 
 """"""
 """""" TOP
@@ -110,7 +110,7 @@ let mapleader="\<SPACE>"
 "-------------------------------------------------------
 " configure vim, make it's build in plug-ins loadable
 filetype plugin on
-call plug#begin('~/.vim/plugged')
+call plug#begin('/home/lorenzo/.vim/plugged')
 """"""
 """""" startify
 Plug 'mhinz/vim-startify'
@@ -181,7 +181,7 @@ let g:UltiSnipsExpandTrigger = '<TAB>'
 let g:UltiSnipsJumpForwardTrigger = '<C-J>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-K>'
 let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsSnippetDirectories = ['~/macos.cfg/.ultisnips/']
+let g:UltiSnipsSnippetDirectories = ['/home/lorenzo/macos.cfg/.ultisnips/']
 noremap <LEADER>; <ESC>:UltiSnipsEdit<CR><C-W>H
 
 """"""
@@ -1252,11 +1252,11 @@ nnoremap <LEADER>n :let @/ = ""<CR>:<BACKSPACE>
 
 """"""
 """"""  vimrc/zshrc
-nnoremap ,. :vs ~/.vimrc<CR>
-nnoremap ., <ESC>:update<CR>:source ~/.vimrc<CR>
+nnoremap ,. :vs /home/lorenzo/.vimrc<CR>
+nnoremap ., <ESC>:update<CR>:source /home/lorenzo/.vimrc<CR>
 
-nnoremap ,z :vs ~/.zshrc<CR>
-nnoremap z, <ESC>:!source ~/.zshrc<CR><CR>
+nnoremap ,z :vs /etc/zshrc<CR>
+nnoremap z, <ESC>:!source /etc/zshrc<CR><CR>
 
 """"""
 """""" open broswer to search something
