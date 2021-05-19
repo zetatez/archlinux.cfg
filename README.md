@@ -50,7 +50,6 @@ vim /etc/pacman.d/mirrorlist
 pacman -Sy
 ```
 
-
 - partition disk
 ```bash
 /dev/sda
@@ -404,36 +403,53 @@ pacman -S xorg-xinit
 
 wait
 
-cd dwm
-sudo make && make clean install
+cd 
+cd dwm; sudo make && make clean install
 
 cd
-cd dmenu
-sudo make && make clean install
+cd dmenu; sudo make && make clean install
 
 cd
-cd st
-sudo make && make clean install
+cd st; sudo make && make clean install
 
 cd
-cd surf
-sudo make && make clean install
+cd surf; sudo make && make clean install
 
 vim ~/.xinitrc
-# -------------------------------
-# show time in dwm
+# --------------
+# wallpaper 
+# feh --bg-fill --randomize ~/archlinux.cfg/pics
+# feh --bg-fill ~/archlinux.cfg/pics/afternoon.jpg
+# feh --bg-fill ~/archlinux.cfg/pics/thinkdifferent.jpg
+# feh --bg-fill ~/archlinux.cfg/pics/clown.jpg
+# feh --bg-fill ~/archlinux.cfg/pics/eve.jpg
+# feh --bg-fill ~/archlinux.cfg/pics/loulou.jpg
+feh --bg-fill ~/archlinux.cfg/pics/arch.jpg
+
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8;
+
+# fcitx
+fcitx &
+
+# sudo pacman -S picom
+picom &
+
 while true
 do
-    xsetroot -name  "$(date -u +"%a %b %d %r")"
+    # sudo pacman -S acpi
+    x1=$(date +"%m/%d %H:%M:%S %Y")
+    x2=$(acpi|sed 's/,//g'|awk '{print $4" charging"}')
+    x3=$(acpi|grep Charging|awk '{print $5}'|awk -F : '{print $1"h"$2"m until charged"}')
+    xsetroot -name "$x1 $x2 $x3"
     sleep 1s
 done &
-
 exec dwm
 
-# start dwm manually 
-# exec startx
+# start dwm manually
+#startx
+# --------------
 ```
-
 
 
 ### fonts
@@ -454,34 +470,20 @@ ls -lR /user/share/fonts
 ```
 
 
-
 #### device check
 
 ```bash
 # 磁盘检测
 sudo pacman -S smartmontools
-sudo smartctl -A /dev/sda   #硬盘
-sudo smartctl -d sat -A /dev/sdc #usb设备
-
-# cpu 与显卡：
-# 如下两款是目前找到的，最佳的图形化查看 cpu 与显卡信息的软件。
-
-yay -S cpu-x
-yay -S gpu-viewer
+sudo smartctl -A /dev/sda
+sudo smartctl -d sat -A /dev/sdc
 
 # 系统完整信息:
-# 使用 dmidecode 可以完整查看系统绝大部分硬件信息，包括较难得到的内存频率等。
-
 sudo pacman -S dmidecode
 sudo dmidecode
 ```
 
-
-
-### pikaur
-
-[https://github.com/actionless/pikaur]
-
+### [pikaur](https://github.com/actionless/pikaur)
 ```
 sudo pacman -S --needed base-devel git
 git clone https://aur.archlinux.org/pikaur.git
@@ -490,9 +492,49 @@ makepkg -fsri
 
 pikaur -Syu
 pikaur -S google-chrome
-
-pikaur -s mate-power-manager
-
-
-
 ```
+
+
+# Archlinux-timeshift
+Arch linux OS backup and restore
+
+## timeshift
+```
+pikaur -S timeshift
+```
+
+## config timeshift
+```bash
+sudo timeshift-launcher
+```
+- ext4 -> RSYNC
+- /timeshift
+- location, schedule, users, filters, misc
+
+## restore from snapshots
+### can not enter current system: restore to a new system
+```bash
+# os crashed
+
+# use live CD, entering a temp OS
+
+# install samba, timeshift
+
+# mount remote backup disk 
+
+# set snapshot location 
+
+# restore
+sudo timeshift --restore --snapshot-device /dev/nvme0nX
+```
+
+### can     enter current system: restore to a current system
+```bash
+# get snapshot list
+sudo timeshift --list
+
+# choose recentest snapshot
+sudo timeshift --restore --snapshot '20XX-XXXX' --skip-grub
+```
+
+

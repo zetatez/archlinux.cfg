@@ -691,6 +691,9 @@ let g:go_highlight_variable_declarations = 0
 let g:go_doc_keywordprg_enabled = 0
 
 cnoremap gg Go
+nnoremap <C-]> :GoDef<CR> 
+nnoremap <C-[> :GoDefPop<CR> 
+nnoremap <C-\> :GoDefStack<CR> 
 
 " go get -u golang.org/x/lint/golint
 Plug 'golang/lint', { 'for': ['go', 'vim-plug'] }
@@ -917,15 +920,14 @@ set autochdir
 set autoread
 set autowrite
 set errorbells
-set visualbell
-" set paste                                     " do not set, or jk <ESC> map will not work
+" set paste                                       " do not set, or jk <ESC> map will not work
 set splitbelow splitright
 set lazyredraw
 set viewoptions=cursor,folds,slash,unix
 set path=.,/usr/include,~/go                    " directories which will be searched when using: gf, [f, ]f, ^Wf, :find, :sfind, :tabfind...
 syntax on
-""""""
 
+""""""
 """""" UI
 set number
 set relativenumber
@@ -1437,9 +1439,9 @@ nnoremap * mqV:s/\v^\/\* //<CR>V:s/\v \*\/$//<CR><ESC>'q
 vnoremap 8 o<ESC>O/*<ESC>gvo<ESC>o*/<ESC>gvjok
 vnoremap * :s/\v^\/\*$//<CR>gv:s/\v^\*\/$//<CR>
 
-"""""" add a ; or . at then end of the line
+"""""" add/remove ; at then end of the line
 nnoremap ; mqA;<ESC>`q
-nnoremap . mqA.<ESC>`q
+nnoremap : mqV:s/\v;$//<CR><ESC>'q
 
 """""" for markdown
 nnoremap - mqI- <ESC>`q
@@ -1458,10 +1460,10 @@ cnoremap dl /^\(.\+\)$\n\1$<CR>
 
 """""" indent
 " hard indent
+nnoremap > :norm 0i    <CR>
 nnoremap < V:s/^    //<CR>
 vnoremap > :norm 0i    <CR><ESC>gv
 vnoremap < :s/^    //<CR><ESC>gv
-nnoremap > :norm 0i    <CR>
 
 " soft indent
 nnoremap < <<

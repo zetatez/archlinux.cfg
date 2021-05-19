@@ -6,82 +6,84 @@ alias ss="source ~/.zshrc; screenfetch"
 alias vz="vim /etc/zshrc"
 
 # ENV
-#  ----------------
-export PATH="/usr/local/sbin:$PATH"
+# ----------------
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vi
 set -o vi
 TMOUT=
 
-#PS1=$'\n'
-PS1=$'\n🏴 ☠\n'
-alias 8="PS1=$'\n🏴‍☠️ ☠ %0~\n'"
-alias 9="PS1=$'\n%0~\n'"
-alias 0="PS1=$'%n@%m:%0~$ '"
-
 # comment with #
+# ----------------
 setopt interactivecomments
 
+# prompt
+# ----------------
+autoload -U colors && colors
+autoload -U promptinit
+promptinit
+# prompt -l
+# prompt -p
+# prompt walters
+PS1=$'\n F ☠\n'
+# PROMPT="%{$fg_bold[yellow]%}F%{$reset_color%} ☠ >> %{$reset_color%}%"
+# alias 9="PS1=$'\n%0~☠\n'"
+# alias 0="PS1=$'%n@%m:%0~$ '"
+
+# auto complete
+autoload -Uz compinit && compinit 
+
+# cli alias complete
+setopt completealiases
+
+# prompt show git
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+# PROMPT=\$vcs_info_msg_0_'%# '
+zstyle ':vcs_info:git:*' formats '%b'
+
+# remove dupliacte history
+setopt HIST_IGNORE_DUPS
+
+# dir stack
+# ----------------
+# mkdir -p ~/.cache/zsh/dirs
+# dirs -v
+# cd -num
+DIRSTACKFILE="$HOME/.cache/zsh/dirs"
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+      dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+        [[ -d $dirstack[1] ]] && cd $dirstack[1]
+fi
+chpwd() {
+      print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+  }
+DIRSTACKSIZE=30
+setopt autopushd pushdsilent pushdtohome
+## Remove duplicate entries
+setopt pushdignoredups
+## This reverts the +/- operators.
+setopt pushdminus
+alias dir="dirs -v"
+
+
 # pacman 
-#  ----------------
+# ----------------
 alias s="screenfetch"
 alias pac="sudo pacman -S"
 alias ppp="sudo pacman -Syyu"
 
-# softwares
-#---------------------------------------------------
-
-# docker 
-#  ----------------
-alias dk="docker"
-
-# lazygit
-#  ----------------
-alias lz="lazygit"
-
-# ranger
-alias ra="ranger"
-
-# sdkman
-#  ----------------
-
-# boost
-#  ----------------
-
-# java
-#  ----------------
-
-# python
-#  ----------------
-
-# julia
-#  ----------------
-
-# texlive
-#  ----------------
-
-# mongodb
-#  ----------------
-
-# mysql
-#  ----------------
-
-# vscode
-#  ----------------
-
-# emacs
-#  ----------------
-
-# typora
-#  ----------------
-
-# autojump
-#  ----------------
-[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
+# shell
+# ----------------
+alias b="bash"
+alias f="fish"
+alias z="zsh"
 
 # sys
-#  ----------------
+# ----------------
 alias p="pwd"
 alias q="exit"
 alias qq="exit; exit"
@@ -90,31 +92,106 @@ alias cls="clear"
 alias l="ls -l"
 alias ll="ls -l"
 alias la="ls -la"
-alias hi="history -n 1000"
-alias wh="which"
+alias his="history"
+alias wh="which";
 
 # tools
-#  ----------------
+# ----------------
 # alias co='pbcopy'
 # alias pa='pbpaste'
 # alias shot="screencapture"
 alias m="man"
 
 # navigation
+# ----------------
 alias ..="cd ..; ls -l"
 alias ...="cd ../..; ls -l"
 alias ....="cd ../../..; ls -l"
 alias .....="cd ../../../..; ls -l"
 
+
+# softwares
+#---------------------------------------------------
+alias sl="slock"
+alias s="screenfetch &"
+alias sss="startx"
+alias sk="screenkey --opacity 0 &"
+alias ks="ps -ef|grep screenkey|grep -v grep|awk '{print \"kill -9 \"\$2}'|sh"
+alias mm="mutt"
+alias lz="lazygit"
+alias ra="ranger"
+alias spotlight="synapse &"
+alias screenshot="flameshot"
+alias screenrecord="simplescreenrecorder"
+alias si="subl &"
+alias dk="docker"
+alias audiocut="shotcut &"
+alias videocut="shotcut &"
+alias photoshop="gimp &"
+alias music="netease-cloud-music &"
+alias game="steam &"
+alias email="thunderbird &"
+alias wechat="wechat-uos &"
+alias slack="slack &"
+alias virtualbox="virtualbox &"
+alias tree="tree -C"
+alias tex.xl="xelatex *.tex; bibtex *.aux; xelatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
+alias tex.pl="pdflatex *.tex; bibtex *.aux; pdflatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
+alias P="ping -c 3 www.baidu.com &"
+alias W="curl wttr.in/shanghai; finger shanghai@graph.no &"
+alias wt="watch -t -n 1 date"
+
+# http request
+# ----------------
+alias get='curl -i -s -H "Content-Type:application/json"'
+alias post='curl -i -s -H "Content-Type:application/json"'
+
+# sdkman
+# ----------------
+
+# boost
+# ----------------
+
+# java
+# ----------------
+
+# python
+# ----------------
+
+# julia
+# ----------------
+
+# texlive
+# ----------------
+
+# mongodb
+# ----------------
+
+# mysql
+# ----------------
+
+# vscode
+# ----------------
+
+# emacs
+# ----------------
+
+# typora
+# ----------------
+
+# autojump
+# ----------------
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
+
 # langs 
-#  ----------------
+# ----------------
 alias py="python"
 alias ju="julia"
 alias ja="java"
 alias sc="scala"
 
 # tmux
-#  ----------------
+# ----------------
 alias n="tmux new -s init"
 alias a="tmux attach -t init"
 alias d="tmux detach"
@@ -138,7 +215,7 @@ alias tks="tmux kill-session"
 alias tkst="tmux kill-session -t"
 
 # vi
-#  ----------------
+# ----------------
 alias v="vi"
 alias ve="vi +"
 alias vo="vi -o"
@@ -147,49 +224,64 @@ alias vp="vi -p"
 alias vr="vi -R"
 alias vd="vi -d"
 
-# mutt
-#  ----------------
-alias mm="mutt"
-
-# shell
-#  ----------------
-alias b="bash"
-alias f="fish"
-alias z="zsh"
-
 # git
-#  ----------------
+# ----------------
 alias g="git"
-alias gforce="git fetch --all && git reset --hard origin/master && git pull"
+alias gfc="git fetch --all && git reset --hard origin/master && git pull"
 alias gg="git add .; git commit -m 'update'; git push"
 alias gs="git status"
 alias gl="git log --oneline --graph"
+
 alias gi="git init"
 alias ga="git add"
 alias gaa="git add --all"
+
+alias grm="git remote"
+alias grmv="git remote -v"
+alias grma="git remote add"
+alias grmr="git remote add"
+
 alias gc="git commit -m"
 alias gca="git commit --amend"
-alias gpl="git pull"
-alias gps="git push"
+
 alias gf="git fetch"
+alias gpl="git pull"
+alias gplrp="git pull --rebase=preserve"
+alias gps="git push"
 alias gm="git merge"
 alias gd="git diff"
-alias gmt="git mergetool"
-alias gb="git branch"
+
 alias gck="git checkout"
 alias gckb="git checkout -b"
-alias gbd="git branch --delete"
+alias gckf="git checkout --"    # restore file
+
+alias gb="git branch"
+alias gba="git branch -a"
+alias gbd="git branch --delete" # delete local branch
+alias gpd="git push --delete"   # delete remote branch
+alias gcp="git cherry-pick -x"  # copy ommits to another branch 
+
 alias grb="git rebase"
 alias grbc="git rebase --continue"
+alias gmt="git mergetool"
+
 alias grs="git reset"
-alias grh="git reset HEAD"
-alias grhh="git reset --hard HEAD"
+alias grsm="git reset --merge ORIG_HEAD"  # revoke merge
+alias grsh="git reset HEAD"               # restore file to last commit
+alias grshh="git reset --hard HEAD"       # cancel all changes since last commit
+
 alias gt="git tag"
-alias gr="git remote"
-alias gra="git remote add"
+
+alias grv="git revert"                    # revert change
+alias grvc="git revert --continue"        # revert continue
+
+alias grl="git reflog"
+alias grle="git reflog expire --expire = now all"      # clear all git log
+alias ggc="git gc --prune = now"                       # clear all git log
+alias gpofat="git push origin --force --all --tags"    # clear all git log
 
 # task
-#  ----------------
+# ----------------
 alias tk="task"
 alias tka="task add"
 alias tk0="echo 'task add Send Alice a birthday card due:2016-11-08 scheduled:due-4d wait:due-7d until:due+2d'"
@@ -217,7 +309,7 @@ alias tktags="task _tags"
 alias tkstats="task stats"
 
 # timew
-#  ----------------
+# ----------------
 alias tw="timew"
 alias twsta="timew start"
 alias twsto="timew stop"
@@ -248,41 +340,12 @@ alias twesun="echo 'timew config exclusions.sunday    q >2:30 <7:30 12:30-13:00 
 # timew config exclusions.sunday    '<8:30 12:30-13:00 >23:30' :yes
 
 # taskell
-#  ----------------
+# ----------------
 alias taskell="taskell ~/macos.cfg/.taskell.md"
 alias tskl="taskell ~/macos.cfg/.taskell.md"
 
-# tree
-#  ----------------
-alias tree="tree -C"
-
-# markdown
-#  ----------------
-
-# latex
-#  ----------------
-alias tex.xl="xelatex *.tex; bibtex *.aux; xelatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
-alias tex.pl="pdflatex *.tex; bibtex *.aux; pdflatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
-
-# ping terst
-#  ----------------
-alias P="ping -c 3 www.baidu.com &"
-
-# weather 
-#  ----------------
-alias W="curl wttr.in/shanghai; finger shanghai@graph.no &"
-
-# show time
-#  ----------------
-alias wt="watch -t -n 1 date"
-
-# http request
-#  ----------------
-alias get='curl -i -s -H "Content-Type:application/json"'
-alias post='curl -i -s -H "Content-Type:application/json"'
-
 # fzf
-#  ----------------
+# ----------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # search syntax
 # 'wild	    - exact-match (quoted)       Items that include wild
@@ -303,52 +366,43 @@ alias post='curl -i -s -H "Content-Type:application/json"'
     # Set FZF_ALT_C_COMMAND to override the default command
     # Set FZF_ALT_C_OPTS to pass additional options
 
-# Faster your dock hide and show
-#  ----------------
-# ACCELERATE:
-# defaults write com.apple.dock autohide-time-modifier -float 0;killall Dock
-# RESTORE TO DEFAULT
-# defaults delete com.apple.dock autohide-delay; killall Dock
-
-
 # my tools
-#  ----------------
+# ----------------
 # fast open
-#  ----------------
+# ----------------
 alias v="vim"
 alias vv="vim ~/.vimrc"
-alias vfish="vim ~/.config/fish/config.fish"
-alias vin="vim ~/gitee/investing/investing.md"
-alias vfrm="vim ~/gitee/investing/frm.md"
-alias vcfa="vim ~/gitee/investing/cfa.md"
-alias vn="vim ~/gitee/note/note.md"
-alias vp="vim ~/gitee/note/password.json"
-alias vt="vim ~/gitee/note/task.md"
-alias vtmp="vim ~/gitee/note/tmp.md"
+alias vin="vim ~/repos/investing/investing.md"
+alias vfrm="vim ~/repos/investing/frm.md"
+alias vcfa="vim ~/repos/investing/cfa.md"
+alias vn="vim ~/note/note.md"
+alias vp="vim ~/note/password.json"
+alias vt="vim ~/note/task.md"
+alias vtmp="vim ~/note/tmp.md"
 
 alias x="nvim"
 alias xi="nvim"
 alias xx="nvim ~/.config/nvim/init.vim"
 
 # jump to dir
-#  ----------------
-alias m="cd ~/macos.cfg/scripts; ls -la"
+# ----------------
+alias m="cd ~/archlinux.cfg/scripts; ls -la"
+alias ji="cd ~/repos/investing; ls -l"
+alias jdoc="cd ~/docs; ranger"
+alias jdocl="cd ~/docs-local; ranger"
+alias jn="cd ~/note; ls -l"
+alias jx="cd ~/x; ranger"
+alias jv="cd ~/repos/vip; ls -l"
+alias jw="cd ~/x/wks; ranger"
 alias jd="cd ~/Downloads; ls -l"
-alias ji="cd ~/gitee/investing; ls -l"
 alias jk="cd ~/Desktop; ls -l"
-alias jl="cd ~/lib; ranger"
-alias jL="cd ~/lib-local; ranger"
-alias jn="cd ~/gitee/note; ls -l"
-alias jm="cd ~/Documents; ls -l"
-alias jmo="cd ~/Movies; ls -l"
-alias jp="cd ~/Pictures; ls -l"
-alias jmu="cd ~/Music; ls -l"
-alias jv="cd ~/v; ranger"
-alias jV="cd ~/gitee/vip; ls -l"
-alias jw="cd ~/v/wks; ranger"
+alias jD="cd ~/Documents; ls -l"
+alias jO="cd ~/Movies; ls -l"
+alias jP="cd ~/Pictures; ls -l"
+alias jU="cd ~/Music; ls -l"
 
 # key binding
-#  ----------------
+# ----------------
 bindkey -s '^F' 'vi $(fzf --preview "cat {}")\n'
 bindkey -s '^X' 'vi -c "Calendar -view=week"\n'
 bindkey -s '^H' 'vi -c "Calendar -view=clock"\n'
@@ -356,24 +410,21 @@ bindkey -s '^R' 'ranger .\n'
 bindkey -s '^B' 'google https://www.bing.com\n'
 bindkey -s '^G' 'lazygit\n'
 bindkey -s '^Y' 'clear; task summary; task ghistory; task calendar; task list\n'
-bindkey -s '^W' 'clear; W\n'
+bindkey -s '^W' 'W\n'
+bindkey -s '^E' 'synapse &\n'
 
-# ssh: s.
-#  ----------------
-# source ~/.ssh.list
+# gotohttp
+alias goguiup="sudo nohup ~/softwares/gotohttp_gui_x64/gotohttp -p yuhaiyan"
+alias goguidown="sudo ~/softwares/gotohttp_gui_x64/uninstall"
+alias gocliup="sudo nohup ~/softwares/gotohttp_cli_x64/gotohttp_cli -p yuhaiyan"
+alias goclidown="sudo ~/softwares/gotohttp_cli_x64/uninstall"
+
+# ssh
+alias s.0="ssh floren@lorenzo"                                      # home star
+alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"   # fucking work
+alias s.c="sshpass -p 'passw0rd' ssh -p 22 root@192.168.31.184"     # centos
 
 # mysql
-#  ----------------
+# ----------------
 alias ms="mysql -uroot -proot"
 
-# git completion
-autoload -Uz compinit && compinit 
-
-# git prompt
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
-# PROMPT=\$vcs_info_msg_0_'%# '
-zstyle ':vcs_info:git:*' formats '%b'

@@ -19,7 +19,7 @@ picom &
 
 while true
 do
-    xsetroot -name  "$(date -u +"%a %b %d %r")"
+    xsetroot -name  "$(date +"%m/%d %H:%M:%S")"
     sleep 1s
 done &
 
