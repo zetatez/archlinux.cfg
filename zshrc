@@ -7,7 +7,6 @@ alias vz="vim /etc/zshrc"
 alias vs="vim /etc/fish/config.fish"
 alias vv="vim ~/.vimrc"
 
-
 # ENV
 # ----------------
 export LANG=en_US.UTF-8
@@ -16,11 +15,9 @@ export EDITOR=vi
 set -o vi
 TMOUT=
 
-
 # setopt 
 # ----------------
 setopt interactivecomments      # comment with #
-
 
 # prompt
 # ----------------
@@ -51,7 +48,9 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 # remove dupliacte history
 setopt HIST_IGNORE_DUPS
-
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
 
 # dir stack
 # ----------------
@@ -74,19 +73,16 @@ setopt pushdignoredups
 setopt pushdminus
 alias dir="dirs -v"
 
-
 # pacman 
 # ----------------
 alias s="screenfetch"
 alias pac="sudo pacman -S"
 alias ppp="sudo pacman -Syyu"
 
-
 # shell
 # ---------------- alias b="bash"
 alias f="fish"
 alias z="zsh"
-
 
 # sys
 # ----------------
@@ -101,7 +97,6 @@ alias la="ls -la"
 alias his="history"
 alias wh="which";
 
-
 # tools
 # ----------------
 # alias co='pbcopy'
@@ -109,14 +104,12 @@ alias wh="which";
 # alias shot="screencapture"
 alias m="man"
 
-
 # navigation
 # ----------------
 alias ..="cd ..; ls -l"
 alias ...="cd ../..; ls -l"
 alias ....="cd ../../..; ls -l"
 alias .....="cd ../../../..; ls -l"
-
 
 # softwares
 #---------------------------------------------------
@@ -127,13 +120,18 @@ alias sss="startx"
 alias sk="screenkey --opacity 0 &"
 alias ks="ps -ef|grep screenkey|grep -v grep|awk '{print \"kill -9 \"\$2}'|sh"
 alias mm="mutt"
+alias termius="termius"
 alias lz="lazygit"
 alias ra="ranger"
+alias rss="newsboat"
 alias spotlight="synapse &"
 alias timeshift-launcher="sudo timeshift-launcher &"
-alias screenshot="flameshot"
+alias shot="flameshot gui"
+alias screenshot="flameshot gui"
 alias screenrecord="simplescreenrecorder"
 alias si="subl &"
+alias zeal="zeal &"                                             # dash
+alias foliate="foliate &"                                       # book
 alias dk="docker"
 alias audiocut="shotcut &"
 alias videocut="shotcut &"
@@ -151,17 +149,14 @@ alias P="ping -c 3 www.baidu.com &"
 alias W="curl wttr.in/shanghai; finger shanghai@graph.no &"
 alias wt="watch -t -n 1 date"
 
-
 # http request
 # ----------------
 alias get='curl -i -s -H "Content-Type:application/json"'
 alias post='curl -i -s -H "Content-Type:application/json"'
 
-
 # autojump
 # ----------------
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
-
 
 # langs 
 # ----------------
@@ -169,7 +164,6 @@ alias py="python"
 alias ju="julia"
 alias ja="java"
 alias sc="scala"
-
 
 # tmux
 # ----------------
@@ -195,7 +189,6 @@ alias ts="tmux switch -t"
 alias tks="tmux kill-session"
 alias tkst="tmux kill-session -t"
 
-
 # vi
 # ----------------
 alias v="vi"
@@ -205,7 +198,6 @@ alias vO="vi -O"
 alias vp="vi -p"
 alias vr="vi -R"
 alias vd="vi -d"
-
 
 # git
 # ----------------
@@ -263,7 +255,6 @@ alias grle="git reflog expire --expire = now all"      # clear all git log
 alias ggc="git gc --prune = now"                       # clear all git log
 alias gpofat="git push origin --force --all --tags"    # clear all git log
 
-
 # task
 # ----------------
 alias tk="task"
@@ -291,7 +282,6 @@ alias tkpri="echo 'config -- uda.priority.values H,M,,L'"
 alias tktag="echo 'task -+tagx and|or|xor -+tagy list'"
 alias tktags="task _tags"
 alias tkstats="task stats"
-
 
 # timew
 # ----------------
@@ -324,12 +314,10 @@ alias twesun="echo 'timew config exclusions.sunday    q >2:30 <7:30 12:30-13:00 
 # timew config exclusions.saturday  '<8:30 12:30-13:00 >23:30' :yes
 # timew config exclusions.sunday    '<8:30 12:30-13:00 >23:30' :yes
 
-
 # taskell
 # ----------------
 alias taskell="taskell ~/macos.cfg/.taskell.md"
 alias tskl="taskell ~/macos.cfg/.taskell.md"
-
 
 # fzf
 # ----------------
@@ -353,7 +341,6 @@ alias tskl="taskell ~/macos.cfg/.taskell.md"
     # Set FZF_ALT_C_COMMAND to override the default command
     # Set FZF_ALT_C_OPTS to pass additional options
 
-
 # my tools
 # ----------------
 # fast open
@@ -370,7 +357,6 @@ alias vtmp="vim ~/note/tmp.md"
 alias x="nvim"
 alias xi="nvim"
 alias xx="nvim ~/.config/nvim/init.vim"
-
 
 # jump to dir
 # ----------------
@@ -389,19 +375,17 @@ alias jO="cd ~/Movies; ls -l"
 alias jP="cd ~/Pictures; ls -l"
 alias jU="cd ~/Music; ls -l"
 
-
 # key binding
 # ----------------
 bindkey -s '^F' 'vi $(fzf --preview "cat {}")\n'
 bindkey -s '^X' 'vi -c "Calendar -view=week"\n'
 bindkey -s '^H' 'vi -c "Calendar -view=clock"\n'
 bindkey -s '^R' 'ranger .\n'
-bindkey -s '^B' 'google https://www.bing.com\n'
+bindkey -s '^B' 'google https://www.google.com\n'
 bindkey -s '^G' 'lazygit\n'
 bindkey -s '^Y' 'clear; task summary; task ghistory; task calendar; task list\n'
 bindkey -s '^W' 'W\n'
 bindkey -s '^E' 'synapse &\n'
-
 
 # gotohttp
 # ---------------
@@ -410,18 +394,15 @@ alias goguidown="sudo ~/softwares/gotohttp_gui_x64/uninstall"
 alias gocliup="sudo nohup ~/softwares/gotohttp_cli_x64/gotohttp_cli -p yuhaiyan"
 alias goclidown="sudo ~/softwares/gotohttp_cli_x64/uninstall"
 
-
 # ssh
 # ---------------
 alias s.0="ssh floren@lorenzo"                                      # home star
 alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"   # fucking work
 alias s.c="sshpass -p 'passw0rd' ssh -p 22 root@192.168.31.184"     # centos
 
-
 # mysql
 # ----------------
 alias ms="mysql -uroot -proot"
-
 
 # for suckless & other c project
 # ----------------
@@ -429,18 +410,23 @@ alias rc="rm -f config.h"
 alias smc="sudo make clean"
 alias smci="sudo make clean install"
 
-
 # k8s completion
 # ----------------
 source <(kubectl completion zsh)
 alias k=kubectl
 complete -F __start_kubectl k
 
-
 # wifi
 # ----------------
-alias 1="sh /root/home.wifi.sh"
-alias 2="sh /root/phone.wifi.sh"
-alias trojan="cd /home/lorenzo/softwares/trojan; sudo ./trojan &"    # google
+alias 1="sudo sh /root/home.wifi.sh"
+alias 2="sudo sh /root/phone.wifi.sh"
+alias 3="sudo pkill -9 wpa_supplicant"
+alias ptrojan="sudo pkill -9 trojan"
+
+
+# working
+alias note="vim ~/notes/note.md"
+alias meeting="vim ~/notes/meeting.md"
+
 
 
