@@ -15,7 +15,7 @@ vim +PlugInstall &
 
 # startify
 mv ~/.vim/plugged/vim-startify/autoload/startify/fortune.vim ~/.vim/plugged/vim-startify/autoload/startify/fortune.vim.bk
-ln ~/archlinux.cfg/.vim-startify-fortune.vim ~/.vim/plugged/vim-startify/autoload/startify/fortune.vim
+cp ~/archlinux.cfg/.vim-startify-fortune.vim ~/.vim/plugged/vim-startify/autoload/startify/fortune.vim
 
 echo "--- vim done--------"
 

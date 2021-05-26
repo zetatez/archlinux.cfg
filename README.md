@@ -4,8 +4,7 @@
 
 ### pre-installation
 - image
-
-https://archlinux.org/download/
+    [archlinux.iso](https://archlinux.org/download/)
 
 - verify signature
 ```bash
@@ -16,7 +15,8 @@ gpg --keyserver-options auto-key-retrieve --verify archlinux-version-x86_64.iso.
 
 - boot the live evnvironment
 
-- verify the boot mode, must done !
+- verify the boot mode. necessary !
+
 ```bash
 ls /sys/firmware/efi/efivars
 ```
@@ -52,48 +52,42 @@ pacman -Sy
 
 - partition disk
 ```bash
-/dev/sda
-->
-/dev/sda1  512M   /boot
-/dev/sda2  4G     swap
-/dev/sda3  all    /
-
+# /dev/sda
+# ->
+# /dev/sda1  512M   /boot
+# /dev/sda2  4G     swap
+# /dev/sda3  all    /
 
 lsblk
 
 parted /dev/sda
-    mktable
-    gpt
-    yes
-    quit
+    # mktable
+    # gpt
+    # yes
+    # quit
 
 fdisk -l
 cfdisk /dev/sda
-n
-1
-+300M
-type: EFI
+# n
+# 1
+# +300M
+# type: EFI
 
-n
-2
-+4G
-type swap
+# n
+# 2
+# +4G
+# type swap
 
-n
-3
-<CR> all for /
-type filesystem
+# n
+# 3
+# <CR> all for /
+# type filesystem
 
-# efi 分区
-# 注意格式化顺序，会吃药的，efi分区最后格式化未vfat
+# mind the format order, efi last !!!
 mkfs.ext4 /dev/sda3
-
 mkfs.vfat /dev/sda1
-
 mkswap -f /dev/sda2
-
 swapon /dev/sda2
-
 
 mkdir -p /mnt/boot/EFI
 mount /dev/sda1 /mnt/boot/EFI
@@ -105,12 +99,12 @@ mount /dev/sda3 /mnt
 # change mirrorlist
 pacstrap /mnt base linux linux-firmware
 pacstrap /mnt vim dhcpcd iwd sudo
-
 ```
 
 ### configure the system
 - fstab
 ```bash
+# check fstab !!!
 genfstab -U /mnt
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
@@ -118,9 +112,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 - chroot
 ```bash
 vim /mnt/etc/pacman.d/mirrorlist
-add
-Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch
-Server = http://mirrors.163.com/archlinux/$repo/os/$arch
+    # add
+    Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch
+    Server = http://mirrors.163.com/archlinux/$repo/os/$arch
 
 arch-chroot /mnt
 
@@ -150,22 +144,22 @@ locale-gen
 
 # create the locale.conf file, and set the lang variable accordingly
 vim /etc/locale.conf
-LANG=en_US.UTF-8
+    LANG=en_US.UTF-8
 
 # if you set the keyboard layout, make the changes persistent in vconsole.conf
-vim /etc/vconsole.conf
+# vim /etc/vconsole.conf
 # KEYMAP=de-latin1
 ```
 
 - network confiuration
 ```bash
 vi /etc/hostname
-Arch
-# Add matching entries to hosts(5):
+    Arch
+
 vi /etc/hosts
-127.0.0.1	localhost
-::1		localhost
-127.0.1.1	Arch.localdomain	Arch
+    127.0.0.1	localhost
+    ::1		localhost
+    127.0.1.1	Arch.localdomain	Arch
 
 # for github
 199.232.28.133 raw.githubusercontent.com
@@ -187,8 +181,8 @@ passwd lorenzo
 # add root to user lorenzo
 pacman -S sudo
 vim /etc/sudoers
-# uncomment
-%wheel ALL=(ALL)ALL
+    # uncomment
+    %wheel ALL=(ALL)ALL
 ```
 
 - boot loader
@@ -198,7 +192,8 @@ vim /etc/sudoers
 pacman -S grub efibootmgr intel-ucode
 
 uname -m
-    # x86_64
+# x86_64
+
 grub-install --target=x86_64-efi --efi-directoryr=/boot/EFI --bootloader-id=GRUB
 
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -227,24 +222,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
     ```
 
 - bluetooth
-
-    1.  [Install](https://wiki.archlinux.org/index.php/Install) the [bluez](https://archlinux.org/packages/?name=bluez) package, providing the Bluetooth protocol stack.
-
-    2.  [Install](https://wiki.archlinux.org/index.php/Install) the [bluez-utils](https://archlinux.org/packages/?name=bluez-utils) package, providing the `bluetoothctl` utility. Alternatively install [bluez-utils-compat](https://aur.archlinux.org/packages/bluez-utils-compat/)AUR to additionally have the [deprecated BlueZ tools](https://wiki.archlinux.org/index.php/Bluetooth#Deprecated_BlueZ_tools).
-
-    3.  The generic Bluetooth driver is the `btusb` kernel module. [Check](https://wiki.archlinux.org/index.php/Kernel_module#Obtaining_information) whether that module is loaded. If it's not, then [load the module](https://wiki.archlinux.org/index.php/Kernel_module#Manual_module_handling).
-
-    4.  [Start/enable](https://wiki.archlinux.org/index.php/Start/enable) `bluetooth.service`.
-
-        **Note:**
-        -   By default the bluetooth daemon will only give out bnep0 devices to users that are a member of the `lp` [group](https://wiki.archlinux.org/index.php/Users_and_groups#System_groups). Make sure to add your user to that group if you intend to connect to a bluetooth tether. You can change the group that is required in the file `/usr/share/dbus-1/system.d/bluetooth.conf`.
-        -   Some Bluetooth adapters are bundled with a Wi-Fi card (e.g. [Intel Centrino](https://www.intel.com/content/www/us/en/wireless-products/centrino-advanced-n-6235.html)). These require that the Wi-Fi card is firstly enabled (typically a keyboard shortcut on a laptop) in order to make the Bluetooth adapter visible to the kernel.
-        -   Some Bluetooth cards (e.g. Broadcom) conflict with the network adapter. Thus, you need to make sure that your Bluetooth device gets connected before the network service boot.
-        -   Some tools such as hcitool and hciconfig have been deprecated upstream, and are no longer included in [bluez-utils](https://archlinux.org/packages/?name=bluez-utils). Since these tools will no longer be updated, it is recommended that scripts be updated to avoid using them. If you still desire to use them, install [bluez-utils-compat](https://aur.archlinux.org/packages/bluez-utils-compat/)AUR. See [FS#53110](https://bugs.archlinux.org/task/53110) and [the Bluez mailing list](https://www.spinics.net/lists/linux-bluetooth/msg69239.html) for more information.
-
-*   **bluetoothctl** — Pairing a device from the shell is one of the simplest and most reliable options.
-    *   **Tip:** To automate bluetoothctl commands, use `echo -e "<command1>\n<command2>\n" | bluetoothctl` or `bluetoothctl -- command`
-
 ```bash
 # bluetooth protocl
 pacman -S bluez
@@ -291,7 +268,7 @@ systemctl enable sshd
 systemctl start sshd
 
 vi /etc/ssh/sshd_config
-# Permi ... yes
+    # Permi ... yes
 
 cd
 ssh-keygen
@@ -330,21 +307,6 @@ pacman -S xf86-input-synaptics
 
 ```
 
-### pacman 
-```bash
-# update mirrors list
-# sduo pacman -Sy
-
-# update system
-# pacman -Syyu
-
-# remove package
-# pacman -R
-
-# remove package recursivly
-# pacman -Rsc vim 
-```
-
 - softwares
 ```bash
 # font
@@ -358,62 +320,60 @@ pacman -S wqy-microhei
 pacman -S fcitx fcitx-im fcitx-googlepinyin fcitx-configtool
 
 vim ~/.xinitrc
-# add
-    # -----------------------
+    # add
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
     export XMODIFIERS="@im=fcitx"
     fcitx &
-    # -----------------------
 
 pacman -S vim neovim
 pacman -S zsh fish task timew ranger git lazygit fzf neovim tmux zathura w3m vit cmus evince mutt
 pacman -S python julia scala sbt
 
 chsh -s /bin/zsh
-
 touch ~/.zshrc
 
 su -
+chsh -s /bin/zsh
 touch ~/.zshrc
 ```
 
 - suckless: dwm, demenu, st, surf
-    - dwm [https://wiki.archlinux.org/index.php/Dwm_(简体中文)]
-    - demenu [https://wiki.archlinux.org/index.php/Dmenu]
-    - dwm [https://zhuanlan.zhihu.com/p/183861786]
 ```bash
-# !!! terminal simulator
+# terminal simulator
 pacman -S rxvt-unicode
 
-# desktop
+# DWM 
 # none root
 cd
-git clone https://git.suckless.org/dwm &
-git clone http://git.suckless.org/dmenu &
-git clone https://git.suckless.org/st &
-git clone https://git.suckless.org/surf &
+git clone https://git@github:zetatez/archlinux.cfg.git &
+
+cd
+mkdir suckless; cd suckless
+# git clone https://git.suckless.org/dwm &
+# git clone http://git.suckless.org/dmenu &
+# git clone https://git.suckless.org/st &
+# git clone https://git.suckless.org/surf &
+
+git clone https://git@github:zetatez/arch-dwm.git &
+git clone https://git@github:zetatez/arch-dmenu.git &
+git clone https://git@github:zetatez/arch-st.git &
+git clone https://git@github:zetatez/arch-surf.git &
+git clone https://git@github:zetatez/arch-slock.git &
 
 # dependency
-pacman -S base-devel
-pacman -S alacarte
-pacman -S xorg-server
-pacman -S xorg-apps
-pacman -S xorg-xinit
-
+sudo pacman -S base-devel
+sudo pacman -S alacarte
+sudo pacman -S xorg-server
+sudo pacman -S xorg-apps
+sudo pacman -S xorg-xinit
 wait
 
-cd 
-cd dwm; sudo make && make clean install
-
-cd
-cd dmenu; sudo make && make clean install
-
-cd
-cd st; sudo make && make clean install
-
-cd
-cd surf; sudo make && make clean install
+cd ~/suckless/arch-dwm   ; sudo make && make clean install
+cd ~/suckless/arch-dmenu ; sudo make && make clean install
+cd ~/suckless/arch-st    ; sudo make && make clean install
+cd ~/suckless/arch-surf  ; sudo make && make clean install
+cd ~/suckless/arch-slock ; sudo make && make clean install
 
 vim ~/.xinitrc
 # --------------
@@ -425,6 +385,7 @@ vim ~/.xinitrc
 # feh --bg-fill ~/archlinux.cfg/pics/eve.jpg
 # feh --bg-fill ~/archlinux.cfg/pics/loulou.jpg
 feh --bg-fill ~/archlinux.cfg/pics/arch.jpg
+# feh --bg-fill ~/archlinux.cfg/pics/linux.png
 
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8;
@@ -438,12 +399,14 @@ picom &
 while true
 do
     # sudo pacman -S acpi
-    x1=$(date +"%m/%d %H:%M:%S %Y")
-    x2=$(acpi|sed 's/,//g'|awk '{print $4" charging"}')
-    x3=$(acpi|grep Charging|awk '{print $5}'|awk -F : '{print $1"h"$2"m until charged"}')
-    xsetroot -name "$x1 $x2 $x3"
+    x1=$(date +"%H:%M:%S %m/%d %Y")
+    x2=$(acpi|grep Discharging|sed 's/,//g'|awk '{print $4" discharging"}')
+    x3=$(acpi|grep Charging|awk '{print $5}'|awk -F : '{print $1"h/"$2"m until charged"}')
+    x4=$(acpi|grep Full|awk '{print $4" full charged"}')
+    xsetroot -name "$x1 $x2$x3$x4"
     sleep 1s
 done &
+
 exec dwm
 
 # start dwm manually
@@ -466,25 +429,22 @@ pacman -S noto-fonts-cjk
 
 # available fonts
 ls -lR /user/share/fonts
-
 ```
 
-
 #### device check
-
 ```bash
-# 磁盘检测
+# disk info
 sudo pacman -S smartmontools
 sudo smartctl -A /dev/sda
-sudo smartctl -d sat -A /dev/sdc
 
-# 系统完整信息:
+# system info 
 sudo pacman -S dmidecode
 sudo dmidecode
 ```
 
 ### [pikaur](https://github.com/actionless/pikaur)
 ```
+cd
 sudo pacman -S --needed base-devel git
 git clone https://aur.archlinux.org/pikaur.git
 cd pikaur
@@ -493,7 +453,6 @@ makepkg -fsri
 pikaur -Syu
 pikaur -S google-chrome
 ```
-
 
 # Archlinux-timeshift
 Arch linux OS backup and restore
@@ -537,4 +496,20 @@ sudo timeshift --list
 sudo timeshift --restore --snapshot '20XX-XXXX' --skip-grub
 ```
 
+
+
+### pacman 
+```bash
+# update mirrors list
+# sduo pacman -Sy
+
+# update system
+# pacman -Syyu
+
+# remove package
+# pacman -R
+
+# remove package recursivly
+# pacman -Rsc vim 
+```
 
