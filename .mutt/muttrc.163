@@ -27,8 +27,8 @@ set include                                 # reply with original email
 set indent_str="> "                         # reply with original email indent by >
 set signature=~/.mutt/signature             # signature
 
-## check new emails: do not open, because it too freqent,  will be blocked by 163
-set check_new=yes                           # check new emails
+## check new emails: do not open, because it too frq will be blocked
+# set check_new=yes                           # check new emails
 # set mail_check=900                          # check new emails every 900 seconds
 # set timeout=30                              # check new emails timout 30 seconds
 
@@ -60,13 +60,13 @@ set pager_context=3                         # display 3 lines of context in page
 set pager_stop                              # page stop when reach to the end of the email, ie. not jump to the next email
 auto_view text/html                         # auto view html
 
-### shortcut
-macro index,pager G '<shell-escape>fetchmail -sk<enter>'         # fetch mail, shortcut G
-
 ## macros
 ### change accounts
 # macro generic "<esc>0" ":set from=crazyleadstogenius@gmail.com"
 # macro generic "<esc>1" ":set from=fincompleteness@163.com"
 # macro generic "<esc>2" ":set from=fromfairest@icloud.com"
 # macro generic "<esc>3" ":set from=zetatez@icloud.com"
+
+### shortcut
+macro index,pager G '<shell-escape>fetchmail -sk<enter>'         # fetch mail, shortcut G
 
