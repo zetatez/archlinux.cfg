@@ -118,7 +118,7 @@ Plug 'mhinz/vim-startify'
 """"""
 """""" calendar;
 Plug 'itchyny/calendar.vim'
-let g:calendar_views= ['year', 'month', 'clock', 'day_7', 'day', 'month', 'agenda', 'event']
+let g:calendar_views= ['year', 'month', 'day_7', 'day', 'clock', 'agenda']
 let g:calendar_cyclic_view=1
 let g:calendar_skip_event_delete_confirm=1
 let g:calendar_skip_task_delete_confirm=1
@@ -645,10 +645,11 @@ let g:tex_conceal='abdmg'
 " Speed up writing new scripts considerably.
 Plug 'vim-scripts/bash-support.vim'
 
-"""""" c++
 """"""
+"""""" c/c++
 " Plug 'rip-rip/clang_complete'
-"
+" " let g:clang_library_path='/usr/lib64/libclang.so'
+
 " Plug 'octol/vim-cpp-enhanced-highlight'
 
 """"""
@@ -924,7 +925,7 @@ set errorbells
 set splitbelow splitright
 set lazyredraw
 set viewoptions=cursor,folds,slash,unix
-set path=.,/usr/include,~/go                    " directories which will be searched when using: gf, [f, ]f, ^Wf, :find, :sfind, :tabfind...
+set path=.,/usr/include,~/go                     " directories which will be searched when using: gf, [f, ]f, ^Wf, :find, :sfind, :tabfind...
 syntax on
 
 """"""
@@ -966,9 +967,9 @@ colorscheme ambre
 """"""
 """""" fold
 " set nofoldenable
-set foldenable
-set foldmethod=indent
-set foldlevel=2
+" set foldenable
+" set foldmethod=indent
+" set foldlevel=2
 
 """"""
 """""" searching
@@ -978,10 +979,10 @@ set hlsearch incsearch
 
 """"""
 """""" tabs, indents, wrap
-set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-set expandtab
+set noexpandtab
+set shiftwidth=4
 set backspace=2
 set shiftround
 set autoindent
@@ -1271,34 +1272,33 @@ nnoremap <LEADER>b :call CompileRun()<CR>
 func! CompileRun()
     exec "w"
     if &filetype == 'c'
-        exec '!g++ % -o %<'
+        exec '!g++ % -o x%<'
         set splitbelow
-        :term ./%
+        :term ./x%<
+        :res +3
     elseif &filetype == 'cpp'
-        exec "!g++ -std=c++11 % -Wall -o %<"
+        exec "!g++ -std=c++11 % -Wall -o x%<"
         set splitbelow
-        set splitbelow
-        :term ./%
+        :term ./x%<
+        :res +3
     elseif &filetype == 'go'
         set splitbelow
         :term go run %
-        ;res +6
+        :res +3
     elseif &filetype == 'python'
         set splitbelow
         :term python %
-        ;res +6
+        :res +3
     elseif &filetype == 'julia'
         set splitbelow
         :term julia %
-        ;res +6
+        :res +3
     elseif &filetype == 'sh'
         set splitbelow
-        :term bash %
-        ;res +6
+        :term sh %
+        :res +3
     elseif &filetype == 'markdown'
         exec "InstantMarkdownPreview"
-    elseif &filetype == 'html'
-        silent! exec "!".g:mkdp_browser." % &"
     endif
 endfunc;
 
