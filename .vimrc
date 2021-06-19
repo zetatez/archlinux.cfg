@@ -433,6 +433,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 highlight BookmarkSign ctermbg=NONE ctermfg=160
 highlight BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
+" let g:bookmark_sign = '*'
 let g:bookmark_highlight_lines = 1
 " Add/remove bookmark at current line	        mm         :BookmarkToggle
 " Add/edit/remove annotation at current line	mi         :BookmarkAnnotate <TEXT>
@@ -647,12 +648,12 @@ Plug 'vim-scripts/bash-support.vim'
 
 """"""
 """""" c/c++
-" Plug 'rip-rip/clang_complete'
-" " let g:clang_library_path='/usr/lib64/libclang.so'
+Plug 'rip-rip/clang_complete'
+let g:clang_library_path='/usr/lib64/libclang.so'
 
-" Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
-""""""
+"""""".
 """""" go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " :GoUpdateBinaries
@@ -786,7 +787,7 @@ Plug 'google/vim-glaive'
 " automformat
 augroup autoformat_settings
   " autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  " autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   " autocmd FileType gn AutoFormatBuffer gn
@@ -921,18 +922,16 @@ set autochdir
 set autoread
 set autowrite
 set errorbells
-" set paste                                       " do not set, or jk <ESC> map will not work
 set splitbelow splitright
 set lazyredraw
 set viewoptions=cursor,folds,slash,unix
 set path=.,/usr/include,~/go                     " directories which will be searched when using: gf, [f, ]f, ^Wf, :find, :sfind, :tabfind...
-syntax on
+" syntax on
 
 """"""
 """""" UI
 set number
 set relativenumber
-set showcmd
 set noshowmode
 set ruler
 set scrolloff=3
@@ -940,7 +939,6 @@ set scrolloff=3
 " set listchars=tab:\.\ ,trail:<
 set showmatch
 set matchpairs+=<:>
-set showmatch
 set cmdheight=2
 set cmdwinheight=5
 set display=lastline
@@ -960,9 +958,9 @@ autocmd InsertEnter * call ToggleCursors()
 
 """"""
 """""" colorscheme
-" colorscheme Chasing_Logic
+colorscheme Chasing_Logic
 " colorscheme sift
-colorscheme ambre
+" colorscheme ambre
 
 """"""
 """""" fold
@@ -1004,7 +1002,7 @@ set ttimeoutlen=0
 """"""
 """""" always back to the last cursor
 augroup resCur
-    autocmd!
+	autocmd!
     autocmd BufReadPost * call setpos(".", getpos("'\""))
 augroup END
 
@@ -1099,6 +1097,10 @@ nnoremap <right> :vertical resize-3<CR>
 nnoremap <LEADER>q <C-w>j:q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>e <ESC><C-w>x<CR>
+
+"""""" paste toggle 
+" set paste                                       " do not set, or jk <ESC> map will not work
+nnoremap <C-p> :set invpaste<CR> 
 
 """"""
 """""" command mode cursor movement
