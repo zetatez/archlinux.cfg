@@ -1,376 +1,861 @@
 # c
 
+snippet todo  "// TODO: " bwA
+// TODO: $0
+endsnippet
 
-# ------
-# ------ main
-# ------
+snippet "hello world" "hello world" bA
+#include <stdio.h>
 
-snippet main
-int main(int args, char *argv[])
-{
-	${0}
-	return 0;
+int main() {
+    ${1:printf("Hello, World!");}
+    $0
+    return 0;
 }
 endsnippet
 
-snippet maina
-int main(int args, char *argv[])
-{
-	${0}
-	return 0;
-}
+# comment 
+# -------------------------------------------
+snippet //  "//" bwA
+// $0
 endsnippet
 
-snippet mainv
-int main(void)
-{
-	${0}
-	return 0;
-}
+snippet /*  "/*" bwA
+/*
+$0
+*/
+$0
 endsnippet
 
-snippet inc
-#include <${1:stdio}.h>
+snippet /.  "/*" bwA
+/*
+$1
+*/
+$0
 endsnippet
 
-snippet ifdef
-# ifndef...define...endif
+# define
+# -------------------------------------------
+snippet dfn "#define var val" bwA
+#define ${1:PI} ${2:3.141592654} 
+$0
 endsnippet
 
-snippet ifndef
-#ifndef $1
-#define ${1:SYMBOL} ${2:value}
-#endif /* ifndef $1 */
+snippet udfn "#define var val" bwA
+#undef ${1:MESSAGE}
+$0
 endsnippet
 
-snippet def
-#define
-# ifdef...endif
-endsnippet
-
-snippet #if
-#if ${1:FOO}
-${0:${VISUAL}}
+snippet indd "if not defined define" bwA
+#if !defined (${1:MESSAGE})
+    #define $1 ${2:"your wish!"} 
 #endif
+
+$0
 endsnippet
 
-# ------
-# ------ control statements
-# ------
-snippet if
-if (${1:true}) {
-	${0:${VISUAL}}
+snippet udd "undefine define" bwA
+#undef ${1:MESSAGE}
+#define $1 ${2:"your wish!"} 
+
+$0
+endsnippet
+
+# Predefined Macros
+snippet pdm "predefined macro" bwA
+${1:
+printf("File :%s\n", __FILE__ );
+printf("Date :%s\n", __DATE__ );
+printf("Time :%s\n", __TIME__ );
+printf("Line :%d\n", __LINE__ );
+printf("ANSI :%d\n", __STDC__ );
 }
 endsnippet
 
-snippet ife
+snippet dpass "define pass" bwA
+#define PASS printf("pass")
+$0
+endsnippet
+
+snippet dps "define pass" bwA
+PASS;
+$0
+endsnippet
+
+
+# key words
+# -------------------------------------------
+snippet bts "basic types" bwA
+${1:/* 
+Type                  Storage size    Value range
+char                  1 byte          -128 to 127
+short                 2 bytes         -32,768 to 32,767
+int                   4 bytes         -2,147,483,648 to 2,147,483,647
+long                  8 bytes         -9223372036854775808 to 9223372036854775807
+
+signed char           1 byte          -128 to 127
+unsigned char         1 byte          0 to 255
+unsigned short        2 bytes         0 to 65,535
+unsigned int          4 bytes         0 to 4,294,967,295
+unsigned long         8 bytes         0 to 18446744073709551615
+
+float                 4 bytes         1.2E-38   to 3.4E+38     6 decimal places
+double                8 bytes         2.3E-308  to 1.7E+308   15 decimal places
+long double           10 bytes        3.4E-4932 to 1.1E+4932  19 decimal places
+
+void
+void *
+*/}
+endsnippet
+
+snippet keywords "keywords" bwA
+${1:/* 
+auto          else        long          switch
+break         enum        register      typedef
+case          extern      return        union
+char          float       short         unsigned
+const         for         signed        void
+continue      goto        sizeof        volatile
+default       if          static        while
+do            int         struct        _Packed
+double
+*/}
+endsnippet
+
+snippet icl "include" bwA
+#include<${1:stdio.h}>
+$0
+endsnippet
+
+snippet vd "void" bwA
+void $1;
+$0
+endsnippet
+
+snippet em "enum" bwA
+enum ${1:week} {${2:Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday}};
+$0
+endsnippet
+
+snippet vlt "volatile " bwA
+volatile ${1:var};
+$0
+endsnippet
+
+snippet ct "continue" bwA
+continue;$0
+endsnippet
+
+snippet bk "break" bwA
+break;$0
+endsnippet
+
+snippet rt "return" bwA
+return ${1:${VISUAL:msg}};$0
+endsnippet
+
+
+# variables
+# -------------------------------------------
+snippet vv "type var;" bwA
+${1:type var = value};
+$0
+endsnippet
+
+snippet cv "char" bwA
+char ${1:c};
+$0
+endsnippet
+
+snippet chv "char" bwA
+char ${1:c};
+$0
+endsnippet
+
+snippet chsv "char" bwA
+char ${1:s}[${2:100}];
+$0
+endsnippet
+
+snippet sv "short" bwA
+short ${1:x};
+$0
+endsnippet
+
+snippet iv "int" bwA
+int ${1:i};
+$0
+endsnippet
+
+snippet lv "long" bwA
+long ${1:x};
+$0
+endsnippet
+
+snippet fv "float" bwA
+float ${1:x};
+$0
+endsnippet
+
+snippet dv "double" bwA
+double ${1:x};
+$0
+endsnippet
+
+snippet ldv "long double" bwA
+long double ${1:x};
+$0
+endsnippet
+
+snippet ucv "unsigned char" bwA
+unsigned char ${1:x};
+$0
+endsnippet
+
+snippet usv "unsigned short" bwA
+unsigned short ${1:x};
+$0
+endsnippet
+
+snippet uiv "unsigned int" bwA
+unsigned int ${1:x};
+$0
+endsnippet
+
+snippet ulv "unsigned long" bwA
+unsigned long ${1:x};
+$0
+endsnippet
+
+# constant
+snippet cc "const" bwA
+const ${1:double} ${2:PI} = ${3:3.141592654};
+$0
+endsnippet
+
+snippet cnsti "const int" bwA
+const int ${1:var} = ${2:val};
+$0
+endsnippet
+
+snippet cnstf "const float" bwA
+const float ${1:var} = ${2:val};
+$0
+endsnippet
+
+snippet cnstd "const double" bwA
+const double ${1:var} = ${2:val};
+$0
+endsnippet
+
+snippet cnstld "const long double" bwA
+const long double ${1:var} = ${2:val};
+$0
+endsnippet
+
+
+# storage class: auto, register, static, extern, 
+# -------------------------------------------
+snippet scau "auto" bwA
+auto ${1:type var};
+$0
+endsnippet
+
+snippet scex "extern" bwA
+extern ${1:type var};
+$0
+endsnippet
+
+snippet scre "register" bwA
+register ${1:type var};
+$0
+endsnippet
+
+snippet scst "static" bwA
+static ${1:type var};
+$0
+endsnippet
+
+
+# operators 
+# -------------------------------------------
+snippet "op pri" "operators priority" bwA
+${1:/* 
+<-       () [] -> .
+->       ! - ++ -- + - * & (type) sizeof
+<-       * / %
+<-       + -
+<-       << >>
+<-       < <= > >=
+<-       == !=
+<-       &
+<-       ^
+<-       |
+<-       &&
+<-       ||
+->       ?:
+->       = += -= *= /= %= &=
+->       ^= |= <<= >>=
+<-       ,
+*/}
+$0
+endsnippet
+
+# > >= < <= == !=
+snippet gt/ ">" wA
+> $0
+endsnippet
+
+snippet ge/ ">=" wA
+>= $0
+endsnippet
+
+snippet lt/ "<" wA
+< $0
+endsnippet
+
+snippet le/ "<=" wA
+<= $0
+endsnippet
+
+snippet eq/ "==" wA
+== $0
+endsnippet
+
+snippet ne/ "!=" wA
+!= $0
+endsnippet
+
+# and or
+snippet and/ "&&" wA
+&&$0
+endsnippet
+
+snippet or/ "||" wA
+||$0
+endsnippet
+
+snippet band "&" wA
+&$0
+endsnippet
+
+snippet bor "|" wA
+|$0
+endsnippet
+
+snippet bnot "!" wA
+!$0
+endsnippet
+
+snippet bcmp "~" wA
+~$0
+endsnippet
+
+snippet brs "bit right shift >>" wA
+>>$0
+endsnippet
+
+snippet bls "bit left shift <<" wA
+<<$0
+endsnippet
+
+snippet "pp|pluss" "+" irA
+ + $0
+endsnippet
+
+snippet "mm|minuss" "mm" irA
+ - $0
+endsnippet
+
+snippet dpl "+" wA
+++$0
+endsnippet
+
+snippet dmi "--" wA
+--$0
+endsnippet
+
+snippet "xx|mutiplyy" "xx" irA
+*$0
+endsnippet
+
+snippet "ddd" "/" irA
+/$0
+endsnippet
+
+snippet "rrr" "%" irA
+%$0
+endsnippet
+
+snippet "hh|hatt" "^" irA
+^$0
+endsnippet
+
+snippet "uu" "_" irA
+_$0
+endsnippet
+
+# ?: or ?? to expand, note: the first printf have no ;
+snippet "\?:|\?\?" "condition ? case true: case false;" irA
+${1:condition} ? ${2:printf("true")} : ${3:printf("false")};
+$0
+endsnippet
+
+snippet szf "sizeof" wA
+sizeof(${1:var})$0
+endsnippet
+
+snippet -. "->" wA
+->$0
+endsnippet
+
+# control flow
+# -------------------------------------------
+snippet ie "visual if else" bwA
 if (${1:true}) {
-	${2:${VISUAL}}
+    ${2:printf("if")};
 } else {
-	${0}
+    ${3:printf("else")};
 }
+
+$0
 endsnippet
 
-snippet el
-else {
-	${0:${VISUAL}}
+snippet if "visual if" bwA
+if (${1:true}) {
+    ${1:${VISUAL:printf("if")}};
 }
+
+$0
 endsnippet
 
-snippet elif
-else if (${1:true}) {
-	${0:${VISUAL}}
+snippet ii "if else if" bwA
+if (${1:true}) {
+    ${3:printf("if")};
+} else if (${2:true}) {
+    ${4:printf("else if")};
+} $0
+endsnippet
+
+snippet "} el" "visual else" rA
+} else {
+    ${1:printf("else")};
 }
+
+$0
 endsnippet
 
-snippet ifi
-if (${1:true}) ${0};
+snippet "} ei" "visual elif" rA
+} else if (${1:True}) {
+    ${1:printf("else if")};
+} $0
 endsnippet
 
-snippet tern
-${1:/* condition */} ? ${2:a} : ${3:b}
-endsnippet
-
-snippet sw
-switch (${1:/* variable */}) {
-	case ${2:/* variable case */}:
-		${3}
-		${4:break;}${5}
-	default:
-		${6}
+snippet iok "if !ok { ... }" bwA
+if (!ok) {
+    ${1:${VISUAL:printf("pass")}};
 }
+
+$0
 endsnippet
 
-snippet case
-case ${1:/* variable case */}:
-	${2}
-	${3:break;}
+snippet swi "switch" wA
+switch (${1:val}) {
+    case ${2:val1}:
+        ${3:printf("case 1")};
+        break;
+    case ${4:val2}:
+        ${5:printf("case 2")};
+        break;
+    default:
+        ${6:printf("default")};
+        break;
+};
+
+$0
 endsnippet
 
-snippet ret
-return ${0};
+snippet cs "case" bwA
+case ${1:val}:
+    $2;
+    break;
+$0
 endsnippet
 
-# ------
-# ------ loops
-# ------
-snippet for
-for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
-	${4}
+snippet dft "default" bwA
+default:
+    $1;
+    break;
+$0
+endsnippet
+
+snippet for "for ... { ... }" bwA
+for (${1:i=1}; ${2:i<n}; ${3:i++}) {
+    ${4:${VISUAL:printf("pass")}};
 }
+
+$0
 endsnippet
 
-snippet forr
-for (int ${1:i} = ${2:0}; ${3:$1 < 10}; $1${4:++}) {
-	${5}
+snippet ofor "one line for" bwA
+for (${1:i=1}; ${2:i<=10}; ${3:i++}) { ${4:printf("pass")}; };$0
+endsnippet
+
+snippet ff "for for" bwA
+for (${1:i=1; i<=10; i++}) {
+    for (${2:j=1; j<=10; j++}) {
+        ${3:printf("pass")};
+    }
+    ${4:printf("pass")};
 }
+
+$0
 endsnippet
 
-snippet wh
-while (${1:/* condition */}) {
-	${0:${VISUAL}}
+snippet lfor "chain list for" bwA
+for (${1:ptr=root}; ${2:ptr!=NULL}; ${3:ptr=ptr.next}) {
+    ${4:printf("pass")};
 }
+
+$0
 endsnippet
 
-snippet do
+snippet wl "while for" bwA
+while (${1:i<=10}) {
+    ${3:printf("pass")};
+    $4
+
+    ${2:i++}
+}
+
+$0
+endsnippet
+
+snippet dow "do while" bwA
 do {
-	${0:${VISUAL}}
-} while (${1:/* condition */});
+    ${3:printf("pass")};
+    $4
+
+    ${2:i++}
+} while (${1:i<=10});
+
+$0
 endsnippet
 
-## FUNCTIONS
-snippet func
-${1:void} ${2:function_name}(${3})
-{
-	${4}
+snippet lb "label" bwA
+${1:LABEL}: ${2:printf("pass")};
+$0
+endsnippet
+
+snippet goto "goto" bwA
+goto ${1:LABEL};$0
+endsnippet
+
+# function
+# -------------------------------------------
+snippet dfc "declare function" bwA
+${1:return_type} ${2:func}(${3:type1 var1, type2 var2});
+endsnippet
+
+snippet main "func main() { ... }" bwA
+int main() {
+    $0;
+
+    return 0;
 }
 endsnippet
 
-snippet func0
-${1:void} ${2:function_name}()
-{
-	${3}
+snippet fc "function" bwA
+${1:return_type} ${2:func}(${3:type1 var1[], type2 var2[size], type3 *var3, type4 var4}) {
+    $1 ${4:res};
+    ${5:printf("pass")};
+    
+    return $4;
+}
+
+$0
+endsnippet
+
+# arguments be passed by reference
+snippet byr "arg be passed by reference" bwA
+${1:return_type} ${2:func}(${3:type1 *var1, type2 *var2}) {
+    $1 ${4:res};
+    ${5:printf("pass")};
+    
+    return $4;
+}
+
+$0
+endsnippet
+
+snippet byv "arg be passed by value" bwA
+${1:return_type} ${2:func}(${3:type1 var1, type2 var2}) {
+    $1 ${4:res};
+    ${5:printf("pass")};
+    
+    return $4;
+}
+
+$0
+endsnippet
+
+snippet retar "res an array" bwA
+${1:return_type} * ${2:func}(${3:type1 var1, type2 *var2}) {
+    static $1 ${4:arr}[${5:size}];
+    ${5:printf("pass")};
+    
+    return $4;
+}
+
+$0
+endsnippet
+
+
+snippet vararg "var arg" bwA
+#include <stdio.h>
+#include <stdarg.h>
+
+${1:int} ${2:func}(int num, ...) {
+    va_list valist;
+    int i;
+
+    /* initialize valist for num number of arguments */
+    va_start(valist, num);
+
+    /* access all the arguments assigned to valist */
+    for (i = 0; i < num; i++) {
+        // sum += va_arg(valist, int);
+        ${3:printf("pass")};
+    }
+
+    /* clean memory reserved for valist */
+    va_end(valist);
+
+    return 0;
+}
+
+$0
+endsnippet
+
+snippet exvararg "var arg example" bwA
+#include <stdio.h>
+#include <stdarg.h>
+
+${1:double} ${2:func}(int num, ...) {
+    va_list valist;
+    int i;
+
+    double sum = 0.0;
+
+    /* initialize valist for num number of arguments */
+    va_start(valist, num);
+
+    /* access all the arguments assigned to valist */
+    for (i = 0; i < num; i++) {
+        sum += va_arg(valist, int);
+        ${3:printf("pass")};
+    }
+
+    /* clean memory reserved for valist */
+    va_end(valist);
+
+    return sum/num;
+}
+
+int main() {
+    printf("Average of 2, 3, 4, 5 = %f\n", $2(4, 2,3,4,5));
+    printf("Average of 5, 10, 15 = %f\n", $2(3, 5,10,15));
 }
 endsnippet
 
-snippet func0doc
-/*! \brief ${1:Brief function description here}
- *
- *  ${2:Detailed description of the function}
- *
- * \return ${3:Return parameter description}
- */
-${4:void} ${5:function_name}()
-{
-	${6}
-}
+# array
+# -------------------------------------------
+snippet 1ar "type arr [size]" bwA
+${1:type} ${2:arr} [${3:size}];
+$0
 endsnippet
 
-snippet func1
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter})
-{
-	${5}
-}
+snippet 2ar "type arr [m][n]" bwA
+${1:type} ${2:arr} [${3:m}][${4:n}];
+$0
 endsnippet
 
-snippet func1doc
-/*! \brief ${1:Brief function description here}
- *
- *  ${2:Detailed description of the function}
- *
- * \param $3 ${4:Parameter description}
- * \return ${5:Return parameter description}
- */
-${6:void} ${7:function_name}(${8:Type} ${3:Parameter})
-{
-	${9}
-}
+snippet 3ar "type arr [m][n][o]" bwA
+${1:type} ${2:arr} [${3:m}][${4:n}][${5:o}];
+$0
 endsnippet
 
-snippet func2
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter})
-{
-	${7}
-}
+snippet 4ar "type arr [m][n][o][p]" bwA
+${1:type} ${2:arr} [${3:m}][${4:n}][${5:o}][${6:p}];
+$0
 endsnippet
 
-snippet func2doc
-/*! \brief ${1:Brief function description here}
- *
- *  ${2:Detailed description of the function}
- *
- * \param $3 ${4:Parameter description}
- * \param $5 ${6:Parameter description}
- * \return ${7:Return parameter description}
- */
-${8:void} ${9:function_name}(${10:Type} ${3:Parameter}, ${11:Type} ${5:Parameter})
-{
-	${12}
-}
+snippet a1ar "asign type arr [] = {val1, val2, val3, val4}" bwA
+${1:type} ${2:arr} [] = {${3:val1, val2, val3, val4}};
+$0
 endsnippet
 
-snippet fun3
-${1:void} ${2:function_name}(${3:Type} ${4:Parameter}, ${5:Type} ${6:Parameter}, ${7:Type} ${8:Parameter})
-{
-	${9}
-}
+snippet a2ar "asign type arr [m][n] = {{}, {}}" bwA
+${1:type} ${2:arr} [${3:m}][${4:n}] = {${5:{}, {}, {}}};
+$0
 endsnippet
 
-snippet func3doc
-/*! \brief ${1:Brief function description here}
- *
- *  ${2:Detailed description of the function}
- *
- * \param $3 ${4:Parameter description}
- * \param $5 ${6:Parameter description}
- * \param $7 ${8:Parameter description}
- * \return ${9:Return parameter description}
- */
-${10:void} ${11:function_name}(${12:Type} ${3:Parameter}, ${13:Type} ${5:Parameter}, ${14:Type} ${7:Parameter})
-{
-	${15}
-}
+# pointer 
+# -------------------------------------------
+snippet ptr "point" bwA
+${1:type} *${2:ptr}${3: = NULL};
+$0
 endsnippet
 
-
-# ------
-# ------ types
-# ------
-snippet td
-typedef ${1:int} ${2:MyCustomType};
+snippet 1ptr "point" bwA
+${1:type} *${2:ptr}${3: = NULL};
+$0
 endsnippet
 
-# struct
-snippet str
-/*! \struct $1
- *  \brief ${3:Brief struct description}
- *
- *  ${4:Detailed description}
- */
-struct ${1:`vim_snippets#Filename('$1_t', 'name')`} {
-	${2:Data} /*!< ${4:Description} */
-}${5: /* optional variable list */};
+snippet 2ptr "point" bwA
+${1:type} **${2:ptr}${3: = NULL};
+$0
 endsnippet
 
-snippet tds
-/*! \struct $2
- *  \brief ${5:Brief struct description}
- *
- *  ${6:Detailed description}
- */
-typedef struct ${2:_$1 }{
-	m_${3:Data} /*!< ${4:Description} */
-} ${1:`vim_snippets#Filename('$1_t', 'name')`};
+snippet 3ptr "point" bwA
+${1:type} ***${2:ptr} ${3:= NULL};
+$0
 endsnippet
 
-snippet enum
-/*! \enum $1
- *
- *  ${2:Detailed description}
- */
-enum ${1:name} { ${0} };
-endsnippet
-
-snippet tde
-/*! \enum $2
- *
- *  ${4:Detailed description}
- */
-typedef enum {
-	${1:Data} /*!< ${3:Description} */
-} ${2:foo};
-endsnippet
-
-
-# ------
-# ------ i/o
-# ------
-snippet pri
-printf("${1:%s}\n"${2});
-endsnippet
-
-snippet fpr
-fprintf(${1:stderr}, "${2:%s}\n"${3});
-endsnippet
-
-snippet prd
-printf("${1:} = %d\n", $1);
-endsnippet
-
-snippet prf
-printf("${1:} = %f\n", $1);
-endsnippet
-
-snippet prx
-printf("${1:} = %${2}\n", $1);
-endsnippet
-
-# getopt
-snippet getopt
-int choice;
-while (1)
-{
-	static struct option long_options[] =
-	{
-		/* Use flags like so:
-		{"verbose",	no_argument,	&verbose_flag, 'V'}*/
-		/* Argument styles: no_argument, required_argument, optional_argument */
-		{"version", no_argument,	0,	'v'},
-		{"help",	no_argument,	0,	'h'},
-		${1}
-		{0,0,0,0}
-	};
-
-	int option_index = 0;
-
-	/* Argument parameters:
-		no_argument: " "
-		required_argument: ":"
-		optional_argument: "::" */
-
-	choice = getopt_long( argc, argv, "vh", long_options, &option_index);
-
-	if (choice == -1)
-		break;
-
-	switch( choice )
-	{
-		case 'v':
-			${2}
-			break;
-
-		case 'h':
-			${3}
-			break;
-
-		case '?':
-			/* getopt_long will have already printed an error */
-			break;
-
-		default:
-			/* Not sure how to get here... */
-			return EXIT_FAILURE;
-	}
+snippet isnull "if point" bwA
+if (!ptr) {
+    ${1:printf("null pointer")};
 }
 
-/* Deal with non-option arguments here */
-if ( optind < argc )
-{
-	while ( optind < argc )
-	{
-		${0}
-	}
-}
+$0
 endsnippet
 
-# ------
-# ------ todo
-# ------
-snippet todo
-/*! TODO: ${1:Todo description here}
- *  \todo $1
- */
+# c-string 
+# -------------------------------------------
+snippet strc "string in c style" bwA
+char ${2:str}[${2:n}]${3: = "${4:string}"};
+$0
 endsnippet
+
+snippet strf "string functions" bwA
+${1:strchr(str1, ch)
+strstr(str1, str2)
+strlen(str1, str2)
+strcat(str1, str2)
+strcpy(str1, str2)
+strcmp(str1, str2)
+...
+}$0
+endsnippet
+
+# struct 
+# -------------------------------------------
+snippet stru "struct var" bwA
+struct ${1:Novel} struct {${2:
+    ${3:char title[50]};
+    ${4:char author[50]};
+    ${5:char subject[100]};
+    ${6:int id};
+}};
+
+$0
+endsnippet
+
+# typedef 
+# -------------------------------------------
+snippet tpd "typedef" bwA
+typedef ${1:type} ${2:type_alias};
+$0
+endsnippet
+
+# input/output 
+# -------------------------------------------
+snippet getc "getchar" bwA
+int c;
+c = getchar();
+$0
+endsnippet
+
+snippet putc "putchar" bwA
+int c;
+putchar(c);
+$0
+endsnippet
+
+snippet gets "gets" bwA
+char str[100];
+gets(str);
+
+$0
+endsnippet
+
+snippet puts "puts" bwA
+char str[100];
+puts(str);
+$0
+endsnippet
+
+snippet sf "scrant" bwA
+scanf("${1:%d %s}", ${2:&i, str});
+$0
+endsnippet
+
+snippet "pf" "printf" brA
+printf("${1:%d %s}", ${2:&i, str});
+$0
+endsnippet
+
+snippet pass "printf" bwA
+printf("${1:pass}");
+$0
+endsnippet
+
+# type casting 
+# -------------------------------------------
+snippet 2c "to char" wA
+(char) $0
+endsnippet
+
+snippet 2s "to short" wA
+(short) $0
+endsnippet
+
+snippet 2i "to int" wA
+(int) $0
+endsnippet
+
+snippet 2li "to long" wA
+(long) $0
+endsnippet
+
+snippet 2uc "to unsigned char" wA
+(unsigned char) $0
+endsnippet
+
+snippet 2us "to unsigned short" wA
+(unsigned short) $0
+endsnippet
+
+snippet 2ui "to unsigned int" wA
+(unsigned int) $0
+endsnippet
+
+snippet 2ul "to unsigned long" wA;
+(unsigned long) $0
+endsnippet
+
+snippet 2f "to float" wA
+(float) $0
+endsnippet
+
+snippet 2d "to double" wA
+(double) $0
+endsnippet
+
+snippet 2ld "to long double" wA
+(long double) $0
+endsnippet
+
 
 
 

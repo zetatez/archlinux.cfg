@@ -2,24 +2,17 @@
 
 # hello world
 # -------------------------------------------
-snippet hello  "hello world" bwA
+snippet "hello world"  "hello world" bwA
 package main
 
 import (
-	"os"
-	"log"
 	"fmt"
 )
 
-func init() {
-	log.SetOutput(os.Stdout)
-}
-
 func main() {
 	fmt.Println("hello world!")
-	log.Println("logging..")
-
 	$0
+
 }
 endsnippet
 
@@ -42,7 +35,7 @@ $0
 endsnippet
 
 snippet pk  "package" bwA
-package ${1:main}
+package ${1:app}
 
 $0
 endsnippet
@@ -51,7 +44,37 @@ snippet todo  "// TODO: " wA
 // TODO: $0
 endsnippet
 
-# symbols
+snippet note  "// NOTE: " wA
+// NOTE: $0
+endsnippet
+
+snippet hint  "// HINTS: " wA
+// HINT: $0
+endsnippet
+
+
+# operators 
+# -------------------------------------------
+snippet "op pri" "operators priority" bwA
+${1:/*
+<-       () [] -> . ++ --
+->       + - ! ~ ++ -- (type) * & sizeof
+<-       * / %
+<-       + -
+<-       << >>
+<-       < <= > >=
+<-       == !=
+<-       &
+<-       ^
+<-       |
+<-       &&
+<-       ||
+->       = += -= *= /= %= >>= <<= &= ^= |=
+<-       ,
+*/}
+$0
+endsnippet
+
 # > >= < <= == !=
 snippet gt/ ">" wA
 > $0
@@ -78,24 +101,39 @@ snippet ne/ "!=" wA
 endsnippet
 
 # and or
-snippet and/ "&" wA
-&$0
-endsnippet
-
-snippet or/ "|" wA
-|$0
-endsnippet
-
-priority 2
-snippet "andd" "&&" irA
+snippet and/ "&&" wA
 &&$0
 endsnippet
 
-snippet "orr" "||" irA
+snippet or/ "||" wA
 ||$0
 endsnippet
 
-snippet "ppp|pluss" "+" irA
+snippet band "&" wA
+&$0
+endsnippet
+
+snippet bor "|" wA
+|$0
+endsnippet
+
+snippet bnot "!" wA
+!$0
+endsnippet
+
+snippet bcmp "~" wA
+~$0
+endsnippet
+
+snippet brs "bit right shift >>" wA
+>>$0
+endsnippet
+
+snippet bls "bit left shift <<" wA
+<<$0
+endsnippet
+
+snippet "pp|pluss" "+" irA
  + $0
 endsnippet
 
@@ -103,11 +141,18 @@ snippet "mm|minuss" "mm" irA
  - $0
 endsnippet
 
+snippet dpl "+" wA
+++$0
+endsnippet
+
+snippet dmi "--" wA
+--$0
+endsnippet
+
 snippet "xx|mutiplyy" "xx" irA
 *$0
 endsnippet
 
-priority 1
 snippet "ddd" "/" irA
 /$0
 endsnippet
@@ -124,17 +169,23 @@ snippet "uu" "_" irA
 _$0
 endsnippet
 
+snippet -. "->" wA
+->$0
+endsnippet
+
 # key words
 # -------------------------------------------
 snippet bts "basic types" bwA
 ${1:/* 
-# basic types
 bool    string    byte      error       rune
 int     int8      int16     int32       int64
 uint    uint8     uint16    uint32      uint64       uintptr
 float   float32   float64   complex64   complex128
+*/}
+endsnippet
 
-# functions
+snippet keywords "keywords" bwA
+${1:/* 
 make    new       len       cap         append       copy   close   delete
 complex real      imag
 panic   recover
@@ -158,27 +209,21 @@ snippet rt "return" bwA
 return ${1:${VISUAL:msg}}$0
 endsnippet
 
-snippet "fp|fmt" "fmt.Println" brA
+snippet fp "fmt.Println" bwA
 fmt.Println(${1:${VISUAL:"pass"}})
 $0
 endsnippet
 
-snippet fs "fmt.Sprintf(...)" bwA
+snippet fs "fmt.Sprintf" bwA
 fmt.Sprintf("%${1:s}", ${2:msg})
 $0
 endsnippet
 
 snippet lb "label" bwA
-${1:LOOP}: ${2: for i < 20 kvs{
-	if i == 10 {
-		i += 1
-		goto $1
-	}
-}}
-$0
+${1:label}: $0
 endsnippet
 
-snippet gl "goto" bwA
+snippet goto "goto" bwA
 goto ${1:label}$0
 endsnippet
 
@@ -295,7 +340,7 @@ $0
 endsnippet
 
 snippet aar "agsign arr var" bwA
-var ${1:arr} = [${2:4|...}]${3:type}${4:{1,2,3,4}}
+var ${1:arr} = [$2]${3:type}${4:{1,2,3,4}}
 $0
 endsnippet
 
@@ -305,13 +350,13 @@ $0
 endsnippet
 
 snippet amar "agsign multi-dim arr var" bwA
-var ${1:arrs} = [][]${2:type}${3:{{1,2},{3,4},{5,6}}}
+var ${1:arrs} = [$2][$3]${4:type}${5:{${6:{1,2},{3,4},{5,6}}}}
 $0
 endsnippet
 
 # slice
 # -------------------------------------------
-snippet ss "define slice, null slice, difault value is nil" bwA
+snippet sl "define slice, null slice, difault value is nil" bwA
 ${1:sl} := ${2:sls}[${3:3:7}]
 $0
 endsnippet
@@ -319,7 +364,7 @@ endsnippet
 snippet dsl "define slice, null slice, difault value is nil" bwA
 var ${1:sl} []${2:type}
 ${3:$1 := make([]$2, 0)
-3:$1 := []$2{}}
+$1 := []$2{}}
 $0
 endsnippet
 
@@ -356,6 +401,7 @@ if ${1:true} {
 } else {
 	${3:fmt.Println("else")}
 }
+
 $0
 endsnippet
 
@@ -363,25 +409,38 @@ snippet if "visual if" bwA
 if ${1:true} {
 	${1:${VISUAL:fmt.Println("if")}}
 }
+
 $0
 endsnippet
 
-snippet el "visual else" bwA
-else {
-	${1:${VISUAL:fmt.Println("else")}}
-}$0
+snippet ii "if else if" bwA
+if ${1:true} {
+	${3:fmt.Println("if")}
+} else if ${2:true}  {
+	${4:fmt.Println("else if")}
+} $0
 endsnippet
 
-snippet ef "visual elif" bwA
-else if ${1:True} {
-	${1:${VISUAL:fmt.Println("else if")}}
-}$0
+snippet "} el" "else" rA
+} else {
+	${1:fmt.Println("else")}
+}
+
+$0
 endsnippet
 
-snippet ok "if !ok { ... }" bwA
+snippet "} ei" "visual elif" rA
+} else if ${1:True} {
+	${1:fmt.Println("else if")}
+} $0
+endsnippet
+
+snippet iok "if !ok { ... }" bwA
 if !ok {
 	${1:${VISUAL:fmt.Println("pass")}}
-}$0
+}
+
+$0
 endsnippet
 
 snippet terexp "ternary expression" wA
@@ -413,15 +472,15 @@ switch t := ${1:var}.(type){
 $0
 endsnippet
 
-snippet "cs|case" "case ...:" brA
+snippet cs "case" bwA
 case ${1:val}:
-	${2:${VISUAL:fmt.Println("pass")}}
-$0
+	${2:fmt.Println("case")}$0
 endsnippet
 
-snippet dft "case: default: ..." bwA
+snippet dft "default" bwA
 default:
-	${0:${VISUAL:fmt.Println("pass")}}
+	${1:fmt.Println("default")}
+$0
 endsnippet
 
 snippet ft "fallthrough" wA
@@ -437,26 +496,25 @@ endsnippet
 
 snippet cfor "c for" bwA
 for ${1:i :=1}; ${2:i <= 10}; ${3:i++} {
-	${4:fmt.Println("pass")}$0
+	${4:fmt.Println("pass")}
 }
-endsnippet
 
-snippet wl "while for" bwA
-for ${1:i <= 10} {
-	${2:fmt.Println("pass")}$0
-}
+$0
 endsnippet
 
 snippet afor "array range for" bwA
 for ${1:idx}, ${2:v} := range ${3:nums} {
-	${4:${VISUAL:fmt.Println("pass")}}$0
+	${4:fmt.Println("pass")}
 }
+
+$0
 endsnippet
 
 snippet mfor "map range for" bwA
 for ${1:key}${2:, ${3:val}} := range ${4:kvs}{
 	${5:fmt.Println($1, $3)}
 }
+
 $0
 endsnippet
 
@@ -467,24 +525,38 @@ endsnippet
 snippet ff "for for" bwA
 for ${1:i :=1; i <= 10; i++} {
 	for ${2:j :=1; j <= 10; j++} {
-		${3:fmt.Println("pass")} }
+		${3:fmt.Println("pass")}
 	}
-	${4:fmt.Println("pass")} }$0
+	${4:fmt.Println("pass")}
 }
+
+$0
+endsnippet
+
+snippet wl "while for" bwA
+for ${1:i <= 10} {
+	${2:fmt.Println("pass")}
+}
+
+$0
 endsnippet
 
 # function
 # -------------------------------------------
-snippet initf "func init" bwA
+snippet initfc "func init" bwA
 func init() {
 	${1:fmt.Println("init before main")}
 }
+
+$0
 endsnippet
 
-snippet mainf "func main() { ... }" bwA
+snippet mainfc "func main() { ... }" bwA
 func main() {
-	${1:${VISUAL:fmt.Println("pass")}}$0
+	${1:${VISUAL:fmt.Println("pass")}}
 }
+
+$0
 endsnippet
 
 snippet fc "function" bwA
@@ -493,6 +565,13 @@ func ${1:funcName}(${2:var1 type1, var2 type2}) ${3:returnType} {
 	${4:// pass}
 	return res
 }
+
+$0
+endsnippet
+
+snippet ofc "one line function" bwA
+func ${1:funcName}(${2:var1 type1, var2 type2}) ${3:returnType} { return $4 }
+$0
 endsnippet
 
 snippet mfc "multi-return function" bwA
@@ -503,28 +582,32 @@ func ${1:funcName}(${2:var1 type1, var2 type2}) (${3:returnType1}, ${4:returnTyp
 
 	return res1, res2
 }
+
+$0
 endsnippet
 
 # variadic functions can be called with any number of trailing arguments.
 snippet vfc "variadic function" bwA
-func ${1:funcName}(args ...${2:int}) ${3:int} {
+func ${1:funcName}(args ...${2:float64}) ${3:float64} {
 	var ${4:res} $3
-	for _, val:= range args {
-		${5:res += val}
-	}
+	${5:for _, val:= range args {
+		${6:res += val}
+	}}
 	return $4
 }
-
-${5:// args := []int{1, 2, 3, 4}
+${7:// args := []float64{1, 2, 3, 4}
 // funcName(args...)
 // funcName(1,2)
 // funcName(1,2,3)
-}$0
+}
+
+$0
 endsnippet
 
 snippet afc "anonymous function: fn := func() { ... }" bwA
 ${1:afunc} := func() { ${2:${VISUAL}} }
-${0}
+
+$0
 endsnippet
 
 snippet byfc "arg be passed by function" bwA
@@ -532,13 +615,24 @@ func ${1:funcName}(f func(${2:int, int}) ${3:int}, ${4:v int}) ${5:int} {
 	${6:res := f(v)}}
 	return ${7:res}
 }
+
+$0
 endsnippet
 
+# arguments be passed by value
+snippet byv "arg be passed by value" bwA
+func ${1:funcName}(${2:var} ${3:type}) {
+	$4
+}
+
+$0
+endsnippet
 # arguments be passed by reference
 snippet byr "arg be passed by reference" bwA
-func ${1:funcName}(iptr *${2:int}) {
-	${3:*iptr = 0}
+func ${1:funcName}(${2:var} *${3:type}) {
+	$4
 }
+
 $0
 endsnippet
 
@@ -546,6 +640,7 @@ snippet tfc "TestFunction func" bwA
 func Test${1:FuncName}(${2:t *testing.T}, ${3:val Type}) {
 	${4:${VISUAL:fmt.Println("pass")}}
 }
+
 $0
 endsnippet
 
@@ -558,6 +653,7 @@ ${4:	if n == 0 {
 	}}
 	return ${5:n * $1(n-1)}
 }
+
 $0
 endsnippet
 
@@ -598,25 +694,26 @@ endsnippet
 # interface
 # -------------------------------------------
 snippet itf "interface" bwA
-type ${1:InterfaceName} interface {${2:
-	${3:func1}() float64
-	${4:func2}() float64
+type ${1:Interface} interface {${2:
+	${3:func1}() ${4:float64}
+	${5:func2}() ${6:float64}
 }}
+
 $0
 endsnippet
 
 snippet helpinte "interface" bwA
-type ${1:interfaceName} interface {
-	${2:func1}() float64
-	${3:func2}() float64
+type ${1:Interface} interface {
+	${2:func1() float64}
+	${3:func2() float64}
 }
 
-type ${4:classA} struct {
+type ${4:ClassA} struct {
 ${5:	r float64
 	d float64
 }}
 
-type ${6:classB} struct {
+type ${6:ClassB} struct {
 ${7:	r float64
 }}
 
@@ -656,18 +753,23 @@ endsnippet
 
 # structure
 # -------------------------------------------
-snippet dtp "type aliasType type" bwA
-type ${1:aliasType} ${2:mytype}
+snippet dtp "type Aliastype type" bwa
+type ${1:AliasType} ${2:type}
 $0
 endsnippet
 
-snippet tps "type aliasType string" bwA
-type ${1:aliasType} string
+snippet tps "type AliasType string" bwA
+type ${1:AliasType} string
 $0
 endsnippet
 
-snippet tpf "type aliasType float64" bwA
-type ${1:aliasType} float64
+snippet tpi "type AliasType int64" bwA
+type ${1:AliasType} int64 
+$0
+endsnippet
+
+snippet tpf "type AliasType float64" bwA
+type ${1:AliasType} float64
 $0
 endsnippet
 
@@ -678,15 +780,32 @@ type ${1:Novel} struct {${2:
 	${5:subject string}
 	${6:id int}
 }}
+
 $0
 endsnippet
 
-snippet "mb|mtd|method" "method: func (arg type) f(...) returnType { ... }" brwA
-func (${1:arg} ${2:*type}) ${3:f}(${4:var1 type1, var2 type2}) ${5:returnType} {
+snippet mb "method: f" bwA
+func (${1:val} ${2:*type}) ${3:f}(${4:var1 type1, var2 type2}) ${5:returnType} {
 	var ${6:ret} $5
-	${0:${VISUAL:fmt.Println("pass")}}
+	$7
 	return $6
 }
+
+$0
+endsnippet
+
+snippet strmb "method: String" bwA
+import "bytes"
+
+func (${1:arg} ${2:*type}) String() string {
+	var ${5:buf}  bytes.Buffer
+	buf.WriteByte('{')
+	$6
+	buf.WriteByte('}')
+	return $5
+}
+
+$0
 endsnippet
 
 snippet helpst "struct var" bwA
@@ -777,78 +896,82 @@ $0
 endsnippet
 
 snippet errn "errors.New" bwA
-errors.New("${1:arg can not be zero!}")$0
+errors.New("${1:arg can not be zero!}")
+$0
 endsnippet
 
 snippet ep "error panic" bwA
-if err != nil { panic(${1:err}) }${0}
+if err != nil { panic(${1:err}) }
+$0
 endsnippet
 
 snippet eh "error handle and return" bwA
 if err != nil {
 	fmt.Println(err)
 }
-${0}
+$0
 endsnippet
 
 snippet ewp "errors.Wrap" bwA
 errors.Wrap(${1:err}, "${2:message}")
+$0
 endsnippet
 
 snippet ewf "errors.Wrapf" bwA
 errors.Wrapf(${1:err}, "${2:message %v}", ${3:args...})
+$0
 endsnippet
 
 snippet ree "return error" bwA
 if err != nil {
 	return err
 }
-${0}
+$0
 endsnippet
 
 snippet rewp "error return wrap" bwA
 if err != nil {
 	return errors.Wrap(err, "${1:message}")
 }
-${0}
+$0
 endsnippet
 
 snippet rewf "error return wrapf" bwA
 if err != nil {
 	return errors.Wrapf(err, "${1:message %v}", ${2:args...})
 }
-${0}
+$0
 endsnippet
 
 snippet ler "error with log.Fatal(err)" bwA
 if err != nil {
 	log.Fatal(err)
 }
-${0}
+$0
 endsnippet
 
 snippet mree "multiple return when error" bwA
 if err != nil {
 	return ${1:nil}, ${2:err}
 }
-${0}
+$0
 endsnippet
 
 snippet mrewp "multiple return when error wrap" bwA
 if err != nil {
 	return nil, errors.Wrap(err, "${1:message}")
 }
-${0}
+$0
 endsnippet
 
 snippet mrewf "multiple return when error wrapf" bwA
 if err != nil {
 	return nil, errors.Wrapf(err, "${1:message %v}", ${2:args...})
 }
-${0}
+$0
 endsnippet
 
-snippet ii "if inline error" bwA
+snippet ive "if inline error" bwA
 if ${1:v}, err := ${2:os.Open(file)}; err != nil {
 	${0:${VISUAL:fmt.Println("pass")}}
 }
@@ -1520,19 +1643,25 @@ endsnippet
 
 # defer
 # -------------------------------------------
-snippet dfr "defer: defer func() {...}" bwA
+snippet dfp "defer: defer action" bwA
+defer ${1:fmt.Println("defer")}
+$0
+endsnippet
+
+snippet dfc "defer: defer func() {...}" bwA
 defer ${1:fun}(${2:var1 type1, var2 type2})
 $0
 endsnippet
 
-snippet adfr "anonymous defer: defer func() {...}" bwA
-defer func() {
-	${1:${VISUAL:fmt.Println("pass")}}
-}()
+snippet dfa "anonymous defer: defer func() {...}" bwA
+defer func($1) {
+	${3:${VISUAL:fmt.Println("pass")}}
+}($2)
+
 $0
 endsnippet
 
-snippet rdf "defer recover" bwA
+snippet dfr "defer recover" bwA
 defer func() {
 	if err := recover(); err != nil {
 		${1:${VISUAL:fmt.Println("pass")}}
@@ -1540,7 +1669,6 @@ defer func() {
 }()
 $0
 endsnippet
-
 
 snippet helpdefer "defer example" bwA
 ${1:
@@ -1666,6 +1794,30 @@ snippet lgpa "log.Panic(...)" bwA
 log.Panic("${1:${VISUAL}}")
 endsnippet
 
+snippet trace "trace jobs" bwA
+import (
+	"log"
+	"time"
+)
+
+func trace(${1:msg string}) func() {
+	start := time.Now()
+	${2:log.Printf("enter %s", msg)}
+	return func() { ${3:log.Printf("exit %s (%s)", msg, time.Since(start))} }
+}
+
+func ${4:jobs}() {
+	defer trace("bigSlowOperation")() // don't forget the extra parentheses
+	${5:
+	// ...lots of work...
+	time.Sleep(10 * time.Second) // simulate slow operation by sleeping	
+	}
+}
+
+$0
+endsnippet
+
+
 # std lib: json
 # -------------------------------------------
 snippet helpjson "parsing json" bwA
@@ -1683,16 +1835,16 @@ type ${1:LUT} struct {
 }
 /* json file like
 [
-    {"table_name":"t_meta_app_system_info",        "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_app_system_db_map",      "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_db_info",                "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_env_info",               "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_middleware_cluster_info","time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_middleware_server_info", "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_monitor_system_info",    "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_mysql_cluster_info",     "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_mysql_server_info",      "time":"2021-01-01 12:01:01"},
-    {"table_name":"t_meta_user_info",              "time":"2021-01-01 12:01:01"}
+	{"table_name":"t_meta_app_system_info",        "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_app_system_db_map",      "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_db_info",                "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_env_info",               "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_middleware_cluster_info","time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_middleware_server_info", "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_monitor_system_info",    "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_mysql_cluster_info",     "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_mysql_server_info",      "time":"2021-01-01 12:01:01"},
+	{"table_name":"t_meta_user_info",              "time":"2021-01-01 12:01:01"}
 ]
 */
 
@@ -2156,13 +2308,6 @@ for a := 1; a <= numJobs; a++ {
 
 $0
 endsnippet
-
-
-
-
-
-
-
 
 
 

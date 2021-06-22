@@ -7,11 +7,13 @@ endsnippet
 
 # http request
 snippet get\ "http get" bwA
-curl -i -s -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$0
+curl -i -s -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1
+$0
 endsnippet
 
 snippet post\ "http post" bwA
-curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$0
+curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1
+$0
 endsnippet
 
 # tools
@@ -19,7 +21,39 @@ snippet "(\S+) =" "x= -> x = " rwA
 `!p snip.rv = match.group(1) + " = "`$0
 endsnippet
 
-snippet "(\[|\(|\{|\"|\'|\`)\\" "parenthesis" rwA
+#  
+snippet "\[\]" "parenthesis" rwA
+[$1]$0
+endsnippet
+
+snippet "\(\)" "parenthesis" rwA
+($1)$0
+endsnippet
+
+snippet "\{\}" "parenthesis" rwA
+{$1}$0
+endsnippet
+
+snippet "\<\>" "parenthesis" rwA
+<$1>$0
+endsnippet
+
+snippet "\"\"\\" "parenthesis" rwA
+"$1"$0
+endsnippet
+
+snippet "\'\'\\" "parenthesis" rwA
+'$1'$0
+endsnippet
+# [] -> [$1]$0
+# () -> ($1)$0
+# {} -> {$1}$0
+# <> -> <$1>$0
+# "" -> "$1"$0
+# '' -> '$1"$0
+
+#  
+snippet "(\[|\(|\{|\"|\'|\`) \\" "parenthesis" rwA
 `!p
 m = {'[':']','(':')','{':'}','"':'"',"'":"'"}
 snip.rv = match.group(1) + m.get(match.group(1),'.')
@@ -31,7 +65,38 @@ endsnippet
 # "          -> ""
 # '          -> ''
 
-snippet "(\[|\(|\{|\<|\"|\')(\]|\)|\}|\>|\"|\')([^\\]+)\\" "parenthesis" rwA
+# 
+snippet "(\[)(\])([^\\]+)\\" "parenthesis" rwA
+`!p
+snip.rv = match.group(1) + match.group(3) + match.group(2)
+`$0
+endsnippet
+
+snippet "(\()(\))([^\\]+)\\" "parenthesis" rwA
+`!p
+snip.rv = match.group(1) + match.group(3) + match.group(2)
+`$0
+endsnippet
+
+snippet "(\{)(\})([^\\]+)\\" "parenthesis" rwA
+`!p
+snip.rv = match.group(1) + match.group(3) + match.group(2)
+`$0
+endsnippet
+
+snippet "(\<)(\>)([^\\]+)\\" "parenthesis" rwA
+`!p
+snip.rv = match.group(1) + match.group(3) + match.group(2)
+`$0
+endsnippet
+
+snippet "(\")(\")([^\\]+)\\" "parenthesis" rwA
+`!p
+snip.rv = match.group(1) + match.group(3) + match.group(2)
+`$0
+endsnippet
+
+snippet "(\')(\')([^\\]+)\\" "parenthesis" rwA
 `!p
 snip.rv = match.group(1) + match.group(3) + match.group(2)
 `$0
@@ -49,7 +114,6 @@ ${1/\w+\s*/\u$0/g}
 ${1:a text}$0
 endsnippet
 
-
 # letter
 snippet d\ "Dear" bwA
 Dear ${1:Loura},
@@ -60,6 +124,7 @@ Yours sincerely,
 
 Lorenzo.
 `date`
+
 endsnippet
 
 snippet s\ "Signature" bwA
@@ -68,6 +133,7 @@ Yours sincerely,
 
 Lorenzo.
 `date`
+
 endsnippet
 
 # time
@@ -917,7 +983,7 @@ endsnippet
 snippet mit "mit license" bwA
 MIT License
 
-Copyright (c) 2021 Lorenzo
+Copyright (c) ${1:2021} ${2:Lorenzo}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
