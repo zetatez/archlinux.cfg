@@ -1028,8 +1028,9 @@ nnoremap : ;
 
 """"""
 """""" zen mode
-nnoremap <C-c> zz
 " Ctrl + U or D will move up/down the view port without moving the cursor
+inoremap <C-c> <ESC>zza
+nnoremap <C-c> <ESC>zz
 nnoremap <C-u> 5<C-y>
 nnoremap <C-d> 5<C-e>
 
@@ -1079,7 +1080,7 @@ tnoremap <C-j> <C-w>j
 tnoremap <C-k> <C-w>k
 tnoremap <C-l> <C-w>l
 " open terminal in vertical, horizontal and new tab
-nnoremap <LEADER>t :set splitbelow<CR>:term ++rows=18<CR>
+nnoremap <LEADER>t :set splitbelow<CR>:term ++rows=18<CR>task list<CR>
 nnoremap <LEADER>v :set splitright<CR>:vsplit<CR>:term ++curwin<CR>
 nnoremap <leader>st :tabnew<cr>:term ++curwin<CR>
 nnoremap <LEADER>sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>:term ++curwin<CR>
@@ -1335,7 +1336,8 @@ cnoremap ;z !zathura $(fzf)<CR>
 """""" for taskwarrior
 " brew install task
 nnoremap <LEADER>y :! clear; task summary; task ghistory; task calendar; task list <CR>
-cnoremap ;t !task 
+nnoremap <LEADER>' :set splitright<CR>:vsplit<CR>:term ++curwin ++cols=60<CR>task list<CR>
+cnoremap ;t !task
 
 cnoremap 'a !clear; task add 
 cnoremap 'e !clear; task edit 
@@ -1410,7 +1412,6 @@ inoremap <C-h> <ESC>I
 inoremap <C-l> <ESC>A
 inoremap <C-k> <ESC>ddi
 inoremap <C-d> <ESC>DA
-inoremap <C-c> <ESC>v0xI
 
 """""" upper/lowwer current word
 noremap w <ESC>vawgUi
