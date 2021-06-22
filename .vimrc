@@ -98,7 +98,7 @@
 
 """"""
 """""" alway keep a backup
-silent! execute "!cp -f /home/lorenzo/.vimrc /home/lorenzo/.vimrc.bk"
+silent! execute "!cp -f ~/.vimrc ~/.vimrc.bk"
 
 """"""
 """""" TOP
@@ -110,7 +110,7 @@ let mapleader="\<SPACE>"
 "-------------------------------------------------------
 " configure vim, make it's build in plug-ins loadable
 filetype plugin on
-call plug#begin('/home/lorenzo/.vim/plugged')
+call plug#begin('~/.vim/plugged')
 """"""
 """""" startify
 Plug 'mhinz/vim-startify'
@@ -181,7 +181,7 @@ let g:UltiSnipsExpandTrigger = '<TAB>'
 let g:UltiSnipsJumpForwardTrigger = '<C-J>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-K>'
 let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsSnippetDirectories = ['/home/lorenzo/macos.cfg/.ultisnips/']
+let g:UltiSnipsSnippetDirectories = ['/home/lorenzo/archlinux.cfg/.ultisnips/']
 noremap <LEADER>; <ESC>:UltiSnipsEdit<CR><C-W>H
 
 """"""
@@ -508,7 +508,7 @@ let g:vmt_fence_text = 'TOC'
 let g:vmt_fence_closing_text = '/TOC'
     
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-let g:mkdp_path_to_chrome = "/Applications/Safari.app"
+let g:mkdp_path_to_chrome = "/usr/bin/google"
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
