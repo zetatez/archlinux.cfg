@@ -1368,6 +1368,9 @@ cnoremap ;i !timew
 " cnoremap 'w !clear; timew week<CR>
 " cnoremap 'm !clear; timew month<CR>
 
+""""""
+"""""" my ssh tool:x. git clone x; sudo cp x/x /usr/local/bin/
+nnoremap <LEADER>\ :set splitbelow<CR>:split<CR>:term ++curwin ++rows=25<CR>x<CR>
 "-------------------------------------------------------
 " |   basic end                                        |
 "-------------------------------------------------------
@@ -1473,5 +1476,8 @@ nnoremap < <<
 nnoremap > >>
 vnoremap < <<<ESC>gv
 vnoremap > >><ESC>gv
+
+
+
 
 
