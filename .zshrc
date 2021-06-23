@@ -2,12 +2,12 @@
 
 # author: Lorenzo
 #---------------------------------------------------
-alias ss="source ~/.zshrc; screenfetch"
+alias ss="source ~/.zshrc"
 alias vz="vim /etc/zshrc"
 alias vs="vim /etc/fish/config.fish"
 alias vv="vim ~/.vimrc"
 
-# ENV
+# zsh behavior 
 # ----------------
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -15,12 +15,10 @@ export EDITOR=vi
 set -o vi
 TMOUT=
 
-# setopt 
-# ----------------
-setopt interactivecomments      # comment with #
+# comment with #
+setopt interactivecomments
 
 # prompt
-# ----------------
 autoload -U colors && colors
 autoload -U promptinit
 promptinit
@@ -28,7 +26,7 @@ promptinit
 # prompt -p
 # prompt walters
 # PS1=$'\n F ☠\n'
-PS1=$'\n%n@%m:%0~$ \n'
+PS1=$'\n%n@%m:%0~+/ '
 alias 0="PS1=$'\n%n@%m:%0~$ \n'"
 
 # auto complete
@@ -73,6 +71,12 @@ setopt pushdignoredups
 setopt pushdminus
 alias dir="dirs -v"
 
+# PATH
+# ----------------
+# Go Lang
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 # pacman 
 # ----------------
 alias s="screenfetch"
@@ -95,13 +99,10 @@ alias l="ls -l"
 alias ll="ls -l"
 alias la="ls -la"
 alias his="history"
-alias wh="which";
+alias wh="which"
 
 # tools
 # ----------------
-# alias co='pbcopy'
-# alias pa='pbpaste'
-# alias shot="screencapture"
 alias m="man"
 
 # navigation
@@ -114,6 +115,7 @@ alias .....="cd ../../../..; ls -l"
 # softwares
 #---------------------------------------------------
 alias google='google --proxy-server="socks5://127.0.0.1:1080" >> /dev/null &'
+alias sd="sudo shutdown now"
 alias sl="slock"
 alias s="screenfetch &"
 alias sss="startx"
@@ -124,6 +126,7 @@ alias termius="termius"
 alias lz="lazygit"
 alias ra="ranger"
 alias rss="newsboat"
+alias sound="alsamixer"
 alias spotlight="synapse &"
 alias timeshift-launcher="sudo timeshift-launcher &"
 alias shot="flameshot gui"
@@ -133,6 +136,8 @@ alias si="subl &"
 alias zeal="zeal &"                                             # dash
 alias foliate="foliate &"                                       # book
 alias dk="docker"
+alias tran="trans en:zh "
+alias trane="trans zh:en "
 alias audiocut="shotcut &"
 alias videocut="shotcut &"
 alias photoshop="gimp &"
@@ -145,18 +150,25 @@ alias virtualbox="virtualbox &"
 alias tree="tree -C"
 alias tex.xl="xelatex *.tex; bibtex *.aux; xelatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
 alias tex.pl="pdflatex *.tex; bibtex *.aux; pdflatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
-alias P="ping -c 3 www.baidu.com &"
+alias P="ping -c 1 www.baidu.com &"
+alias IP="ip a|grep -E '^\s+inet .* brd.*dynamic.*'|awk '{print \$2}'"
 alias W="curl wttr.in/shanghai; finger shanghai@graph.no &"
 alias wt="watch -t -n 1 date"
+
+# k8s completion
+# ----------------
+source <(kubectl completion zsh)
+alias k=kubectl
+complete -F __start_kubectl k
+
+# autojump
+# ----------------
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
 # http request
 # ----------------
 alias get='curl -i -s -H "Content-Type:application/json"'
 alias post='curl -i -s -H "Content-Type:application/json"'
-
-# autojump
-# ----------------
-[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
 # langs 
 # ----------------
@@ -206,50 +218,39 @@ alias gfc="git fetch --all && git reset --hard origin/master && git pull"
 alias gg="git add .; git commit -m 'update'; git push"
 alias gs="git status"
 alias gl="git log --oneline --graph"
-
 alias gi="git init"
 alias ga="git add"
 alias gaa="git add --all"
-
 alias grm="git remote"
 alias grmv="git remote -v"
 alias grma="git remote add"
 alias grmr="git remote add"
-
 alias gc="git commit -m"
 alias gca="git commit --amend"
-
 alias gf="git fetch"
 alias gpl="git pull"
 alias gplrp="git pull --rebase=preserve"
 alias gps="git push"
 alias gm="git merge"
 alias gd="git diff"
-
 alias gck="git checkout"
 alias gckb="git checkout -b"
 alias gckf="git checkout --"    # restore file
-
 alias gb="git branch"
 alias gba="git branch -a"
 alias gbd="git branch --delete" # delete local branch
 alias gpd="git push --delete"   # delete remote branch
 alias gcp="git cherry-pick -x"  # copy ommits to another branch 
-
 alias grb="git rebase"
 alias grbc="git rebase --continue"
 alias gmt="git mergetool"
-
 alias grs="git reset"
 alias grsm="git reset --merge ORIG_HEAD"  # revoke merge
 alias grsh="git reset HEAD"               # restore file to last commit
 alias grshh="git reset --hard HEAD"       # cancel all changes since last commit
-
 alias gt="git tag"
-
 alias grv="git revert"                    # revert change
 alias grvc="git revert --continue"        # revert continue
-
 alias grl="git reflog"
 alias grle="git reflog expire --expire = now all"      # clear all git log
 alias ggc="git gc --prune = now"                       # clear all git log
@@ -342,17 +343,19 @@ alias tskl="taskell ~/macos.cfg/.taskell.md"
     # Set FZF_ALT_C_OPTS to pass additional options
 
 # my tools
-# ----------------
+# ------------------------------------------------------
 # fast open
 # ----------------
 alias v="vim"
 alias vin="vim ~/repos/investing/investing.md"
 alias vfrm="vim ~/repos/investing/frm.md"
 alias vcfa="vim ~/repos/investing/cfa.md"
-alias vn="vim ~/note/note.md"
-alias vp="vim ~/note/password.json"
-alias vt="vim ~/note/task.md"
 alias vtmp="vim ~/note/tmp.md"
+alias vnote="vim ~/note/note.md"
+alias vpassword="vim ~/note/password.md"
+alias vtask="vim ~/note/task.md"
+alias note="vim ~/notes/note.md"
+alias meeting="vim ~/notes/meeting.md"
 
 alias x="nvim"
 alias xi="nvim"
@@ -375,6 +378,37 @@ alias jO="cd ~/Movies; ls -l"
 alias jP="cd ~/Pictures; ls -l"
 alias jU="cd ~/Music; ls -l"
 
+# gotohttp
+# ---------------
+alias goguiup="sudo nohup ~/softwares/gotohttp_gui_x64/gotohttp -p yuhaiyan"
+alias goguidown="sudo ~/softwares/gotohttp_gui_x64/uninstall"
+alias gocliup="sudo nohup ~/softwares/gotohttp_cli_x64/gotohttp_cli -p yuhaiyan"
+alias goclidown="sudo ~/softwares/gotohttp_cli_x64/uninstall"
+
+# for suckless & other c project
+# ----------------
+alias rc="rm -f config.h"
+alias smc="sudo make clean"
+alias smci="sudo make clean install"
+
+# wifi
+# ----------------
+alias 1="sudo sh /root/home.wifi.sh"
+alias 2="sudo sh /root/phone.wifi.sh"
+alias 3="sudo pkill -9 wpa_supplicant"
+alias trojan="sudo ./trojan &; cd"
+alias ptrojan="sudo pkill -9 trojan"
+
+# mysql
+# ----------------
+alias ms="mysql -uroot -proot"
+
+# ssh
+# ---------------
+alias s.0="ssh floren@lorenzo"                                      # home star
+alias s.c="sshpass -p 'passw0rd' ssh -p 22 root@192.168.31.184"     # centos
+alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"
+
 # key binding
 # ----------------
 bindkey -s '^F' 'vi $(fzf --preview "cat {}")\n'
@@ -387,46 +421,22 @@ bindkey -s '^Y' 'clear; task summary; task ghistory; task calendar; task list\n'
 bindkey -s '^W' 'W\n'
 bindkey -s '^E' 'synapse &\n'
 
-# gotohttp
-# ---------------
-alias goguiup="sudo nohup ~/softwares/gotohttp_gui_x64/gotohttp -p yuhaiyan"
-alias goguidown="sudo ~/softwares/gotohttp_gui_x64/uninstall"
-alias gocliup="sudo nohup ~/softwares/gotohttp_cli_x64/gotohttp_cli -p yuhaiyan"
-alias goclidown="sudo ~/softwares/gotohttp_cli_x64/uninstall"
+# proxy
+# export http_proxy="socks5://127.0.0.1:1080"
+# export https_proxy="socks5://127.0.0.1:1080"
+# export ALL_PROXY=socks5://127.0.0.1:1080
+# alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
+# alias unsetproxy="unset ALL_PROXY"
 
-# ssh
-# ---------------
-alias s.0="ssh floren@lorenzo"                                      # home star
-alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"   # fucking work
-alias s.c="sshpass -p 'passw0rd' ssh -p 22 root@192.168.31.184"     # centos
+# monitors
+alias screen-mirror="xrandr --output eDP1 --auto --same-as DP1"
+alias sm="xrandr --output eDP1 --auto --same-as DP1"
 
-# mysql
-# ----------------
-alias ms="mysql -uroot -proot"
+alias screen-independent-left="xrandr --output eDP1 --auto --left-of DP1"
+alias sil="xrandr --output eDP1 --auto --left-of DP1"
 
-# for suckless & other c project
-# ----------------
-alias rc="rm -f config.h"
-alias smc="sudo make clean"
-alias smci="sudo make clean install"
-
-# k8s completion
-# ----------------
-source <(kubectl completion zsh)
-alias k=kubectl
-complete -F __start_kubectl k
-
-# wifi
-# ----------------
-alias 1="sudo sh /root/home.wifi.sh"
-alias 2="sudo sh /root/phone.wifi.sh"
-alias 3="sudo pkill -9 wpa_supplicant"
-alias ptrojan="sudo pkill -9 trojan"
-
-
-# working
-alias note="vim ~/notes/note.md"
-alias meeting="vim ~/notes/meeting.md"
+alias screen-independent-right="xrandr --output eDP1 --auto --right-of DP1"
+alias sir="xrandr --output eDP1 --auto --right-of DP1"
 
 
 

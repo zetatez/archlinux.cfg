@@ -2,7 +2,7 @@
 
 # author: Lorenzo
 #---------------------------------------------------
-alias ss="source ~/.zshrc; screenfetch"
+alias ss="source ~/.zshrc"
 alias vz="vim /etc/zshrc"
 alias vs="vim /etc/fish/config.fish"
 alias vv="vim ~/.vimrc"
@@ -26,7 +26,7 @@ promptinit
 # prompt -p
 # prompt walters
 # PS1=$'\n F ☠\n'
-PS1=$'\n%n@%m:%0~$ \n'
+PS1=$'\n%n@%m:%0~+/ '
 alias 0="PS1=$'\n%n@%m:%0~$ \n'"
 
 # auto complete
@@ -115,6 +115,7 @@ alias .....="cd ../../../..; ls -l"
 # softwares
 #---------------------------------------------------
 alias google='google --proxy-server="socks5://127.0.0.1:1080" >> /dev/null &'
+alias sd="sudo shutdown now"
 alias sl="slock"
 alias s="screenfetch &"
 alias sss="startx"
@@ -135,6 +136,8 @@ alias si="subl &"
 alias zeal="zeal &"                                             # dash
 alias foliate="foliate &"                                       # book
 alias dk="docker"
+alias tran="trans en:zh "
+alias trane="trans zh:en "
 alias audiocut="shotcut &"
 alias videocut="shotcut &"
 alias photoshop="gimp &"
@@ -148,6 +151,7 @@ alias tree="tree -C"
 alias tex.xl="xelatex *.tex; bibtex *.aux; xelatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
 alias tex.pl="pdflatex *.tex; bibtex *.aux; pdflatex *.tex; rm -f *.aux; rm -f *.bbl; rm -f *.blg; rm -f *.log; rm -f *.out; open *.pdf"
 alias P="ping -c 1 www.baidu.com &"
+alias IP="ip a|grep -E '^\s+inet .* brd.*dynamic.*'|awk '{print \$2}'"
 alias W="curl wttr.in/shanghai; finger shanghai@graph.no &"
 alias wt="watch -t -n 1 date"
 
@@ -402,8 +406,8 @@ alias ms="mysql -uroot -proot"
 # ssh
 # ---------------
 alias s.0="ssh floren@lorenzo"                                      # home star
-alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"   # fucking work
 alias s.c="sshpass -p 'passw0rd' ssh -p 22 root@192.168.31.184"     # centos
+alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"
 
 # key binding
 # ----------------
@@ -416,4 +420,23 @@ bindkey -s '^G' 'lazygit\n'
 bindkey -s '^Y' 'clear; task summary; task ghistory; task calendar; task list\n'
 bindkey -s '^W' 'W\n'
 bindkey -s '^E' 'synapse &\n'
+
+# proxy
+# export http_proxy="socks5://127.0.0.1:1080"
+# export https_proxy="socks5://127.0.0.1:1080"
+# export ALL_PROXY=socks5://127.0.0.1:1080
+# alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
+# alias unsetproxy="unset ALL_PROXY"
+
+# monitors
+alias screen-mirror="xrandr --output eDP1 --auto --same-as DP1"
+alias sm="xrandr --output eDP1 --auto --same-as DP1"
+
+alias screen-independent-left="xrandr --output eDP1 --auto --left-of DP1"
+alias sil="xrandr --output eDP1 --auto --left-of DP1"
+
+alias screen-independent-right="xrandr --output eDP1 --auto --right-of DP1"
+alias sir="xrandr --output eDP1 --auto --right-of DP1"
+
+
 
