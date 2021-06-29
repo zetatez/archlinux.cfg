@@ -1,0 +1,15 @@
+
+
+# http request
+snippet get\ "http get" bwA
+curl -i -s -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1
+$0
+endsnippet
+
+snippet post\ "http post" bwA
+curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1
+$0
+endsnippet
+
+
+

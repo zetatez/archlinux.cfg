@@ -98,7 +98,7 @@
 
 """"""
 """""" alway keep a backup
-silent! execute "!cp -f ~/.vimrc ~/.vimrc.bk"
+silent! execute "!cp -f ~/.vimrc ~/.vimrc.bk >>/dev/null"
 
 """"""
 """""" TOP
@@ -111,6 +111,14 @@ let mapleader="\<SPACE>"
 " configure vim, make it's build in plug-ins loadable
 filetype plugin on
 call plug#begin('~/.vim/plugged')
+""""""
+"""""" vsh
+Plug 'zetatez/vsh'
+" let g:vsh_send_line = "<ENTER>"
+" let g:vsh_send_selection = "<ENTER>"
+" let g:vsh_exit = "<ESC><ESC>"
+" let g:vsh_exit_cmd = "qq"
+
 """"""
 """""" startify
 Plug 'mhinz/vim-startify'
@@ -125,21 +133,19 @@ let g:calendar_skip_task_delete_confirm=1
 let g:calendar_skip_task_clear_completed_confirm=1
 let g:calendar_google_calendar = 0
 let g:calendar_google_task = 0
-nnoremap <LEADER>x :Calendar -view=month<CR>
-cnoremap ;d Calendar -view=day<CR>
-cnoremap ;w Calendar -view=week<CR>
-cnoremap ;m Calendar -view=month<CR>
-nnoremap \\ :call CalendarToggle()<CR>
 let g:calendar_is_open = 0
 function! CalendarToggle()
-    if g:calendar_is_open
-        :q
-        let g:calendar_is_open = 0
-    else
-        :Calendar -view=clock -position=here<CR>
-        let g:calendar_is_open = 1
-    endif
+	if g:calendar_is_open
+		:q
+		let g:calendar_is_open = 0
+	else
+		:Calendar -view=clock -position=here<CR>
+		let g:calendar_is_open = 1
+	endif
 endfunction
+nnoremap <LEADER>c :Calendar -view=month<CR>
+cnoremap ;c Calendar -view=month<CR>
+nnoremap ,, :call CalendarToggle()<CR>
 
 """"""
 """""" language xkbswitch: it make vim very slow, better not use
@@ -248,10 +254,10 @@ let g:tagbar_autoclose = 1
 let g:tagbar_case_insensitive = 1
 let g:tagbar_iconchars = ['/', '|']
 let g:tagbar_visibility_symbols = {
-            \ 'public'    : '/',
-            \ 'protected' : '^',
-            \ 'private'   : '*'
-            \ }
+			\ 'public'    : '/',
+			\ 'protected' : '^',
+			\ 'private'   : '*'
+			\ }
 let g:tagbar_width = max([24, winwidth(0) / 5])
 nnoremap \] :TagbarToggle<CR>
 
@@ -264,12 +270,12 @@ let g:gitgutter_map_keys = 0
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_preview_win_floating = 1
 autocmd BufWritePost * GitGutter
-" :Git             ~ :!git 
+" :Git             ~ :!git
 
 Plug 'junegunn/gv.vim'
 
 """"""
-"""""" undotree: ": Z 
+"""""" undotree: ": Z
 Plug 'mbbill/undotree'
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_SetFocusWhenToggle = 1
@@ -365,22 +371,22 @@ nnoremap <silent> N :call WordNavigation('backward')<cr>
 """""" pair parentheses
 Plug 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
-            \ ['brown',       'RoyalBlue3'  ],
-            \ ['Darkblue',    'SeaGreen3'   ],
-            \ ['darkgray',    'DarkOrchid3' ],
-            \ ['darkgreen',   'firebrick3'  ],
-            \ ['darkcyan',    'RoyalBlue3'  ],
-            \ ['darkred',     'SeaGreen3'   ],
-            \ ['darkmagenta', 'DarkOrchid3' ],
-            \ ['brown',       'firebrick3'  ],
-            \ ['gray',        'RoyalBlue3'  ],
-            \ ['darkmagenta', 'DarkOrchid3' ],
-            \ ['Darkblue',    'firebrick3'  ],
-            \ ['darkgreen',   'RoyalBlue3'  ],
-            \ ['darkcyan',    'SeaGreen3'   ],
-            \ ['darkred',     'DarkOrchid3' ],
-            \ ['red',         'firebrick3'  ],
-            \ ]
+			\ ['brown',       'RoyalBlue3'  ],
+			\ ['Darkblue',    'SeaGreen3'   ],
+			\ ['darkgray',    'DarkOrchid3' ],
+			\ ['darkgreen',   'firebrick3'  ],
+			\ ['darkcyan',    'RoyalBlue3'  ],
+			\ ['darkred',     'SeaGreen3'   ],
+			\ ['darkmagenta', 'DarkOrchid3' ],
+			\ ['brown',       'firebrick3'  ],
+			\ ['gray',        'RoyalBlue3'  ],
+			\ ['darkmagenta', 'DarkOrchid3' ],
+			\ ['Darkblue',    'firebrick3'  ],
+			\ ['darkgreen',   'RoyalBlue3'  ],
+			\ ['darkcyan',    'SeaGreen3'   ],
+			\ ['darkred',     'DarkOrchid3' ],
+			\ ['red',         'firebrick3'  ],
+			\ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 " Always On:
@@ -435,15 +441,15 @@ highlight BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
 " let g:bookmark_sign = '*'
 let g:bookmark_highlight_lines = 1
-" Add/remove bookmark at current line	        mm         :BookmarkToggle
+" Add/remove bookmark at current line			mm         :BookmarkToggle
 " Add/edit/remove annotation at current line	mi         :BookmarkAnnotate <TEXT>
-" Jump to next bookmark in buffer	            mn         :BookmarkNext
-" Jump to previous bookmark in buffer	        mp         :BookmarkPrev
-" Show all bookmarks (toggle)	                ma         :BookmarkShowAll
-" Clear bookmarks in current buffer only	    mc         :BookmarkClear
-" Clear bookmarks in all buffers	            mx         :BookmarkClearAll
-" Move up bookmark at current line	            [count]mkk :BookmarkMoveUp [<COUNT>]
-" Move down bookmark at current line	        [count]mjj :BookmarkMoveDown [<COUNT>]
+" Jump to next bookmark in buffer				mn         :BookmarkNext
+" Jump to previous bookmark in buffer			mp         :BookmarkPrev
+" Show all bookmarks (toggle)					ma         :BookmarkShowAll
+" Clear bookmarks in current buffer only		mc         :BookmarkClear
+" Clear bookmarks in all buffers				mx         :BookmarkClearAll
+" Move up bookmark at current line				[count]mkk :BookmarkMoveUp [<COUNT>]
+" Move down bookmark at current line			[count]mjj :BookmarkMoveDown [<COUNT>]
 " Move bookmark at current line to another line	[count]mg  :BookmarkMoveToLine <LINE>
 " Save all bookmarks to a file                             :BookmarkSave <FILE_PATH>
 " Load bookmarks from a file                               :BookmarkLoad <FILE_PATH>
@@ -453,7 +459,7 @@ let g:bookmark_highlight_lines = 1
 Plug 'reedes/vim-wordy'
 " uncover usage problems in your writing
 Plug 'ron89/thesaurus_query.vim'
-" multi-language thesaurus query and replacement 
+" multi-language thesaurus query and replacement
 Plug 'reedes/vim-pencil'
 
 """"""
@@ -467,10 +473,10 @@ Plug 'evanthegrayt/vim-lovehandle'
 " :help lovehandle-project-specific-vimrc-setup
 " Obviously, in a real-world example, all the URLs would be different.
 let g:lovehandle_list = [
-            \   ['dev',             'mysql://root:root@localhost:3306/dev'],
-            \   ['pro',             'postgres://user:password@host:port/database'],
-            \   ['mysql',           'mysql://root:root@localhost:3306/das'],
-            \ ]
+			\   ['dev',             'mysql://root:root@localhost:3306/dev'],
+			\   ['pro',             'postgres://user:password@host:port/database'],
+			\   ['mysql',           'mysql://root:root@localhost:3306/das'],
+			\ ]
 let g:lovehandle_default_database = 'dev'
 " :LHSwitch! pro
 
@@ -506,7 +512,7 @@ let g:vmt_dont_insert_fence = 1
 let g:vmt_cycle_list_item_markers = 1
 let g:vmt_fence_text = 'TOC'
 let g:vmt_fence_closing_text = '/TOC'
-    
+
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 let g:mkdp_path_to_chrome = "/usr/bin/google"
 " set to 1, nvim will open the preview window after entering the markdown buffer
@@ -560,18 +566,18 @@ let g:mkdp_browserfunc = ''
 " content_editable: if enable content editable for preview page, default: v:false
 " disable_filename: if disable filename header for preview page, default: 0
 let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {},
-    \ 'flowchart_diagrams': {},
-    \ 'content_editable': v:false,
-    \ 'disable_filename': 0
-    \ }
+			\ 'mkit': {},
+			\ 'katex': {},
+			\ 'uml': {},
+			\ 'maid': {},
+			\ 'disable_sync_scroll': 0,
+			\ 'sync_scroll_type': 'middle',
+			\ 'hide_yaml_meta': 1,
+			\ 'sequence_diagrams': {},
+			\ 'flowchart_diagrams': {},
+			\ 'content_editable': v:false,
+			\ 'disable_filename': 0
+			\ }
 " use a custom markdown style must be absolute path
 " like '/Users/username/markdown.css' or expand('~/markdown.css')
 let g:mkdp_markdown_css = ''
@@ -602,10 +608,10 @@ let g:mdip_imgname = 'image'
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 " You can use the following to quickly enable / disable table mode in insert mode by using || or __:
 function! s:isAtStartOfLine(mapping)
-  let text_before_cursor = getline('.')[0 : col('.')-1]
-  let mapping_pattern = '\V' . escape(a:mapping, '\')
-  let comment_pattern = '\V' . escape((&l:commentstring, '%s.*$', '', ''), '\')
-  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+	let text_before_cursor = getline('.')[0 : col('.')-1]
+	let mapping_pattern = '\V' . escape(a:mapping, '\')
+	let comment_pattern = '\V' . escape((&l:commentstring, '%s.*$', '', ''), '\')
+	return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
 endfunction
 inoreabbrev <expr> <bar><bar> <SID>isAtStartOfLine('\|\|') ? '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
 inoreabbrev <expr> __ <SID>isAtStartOfLine('__') ? '<c-o>:silent! TableModeDisable<cr>' : '__'
@@ -626,14 +632,14 @@ let g:tex_flavor='latex'
 let g:vimtex_view_method='skim'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_compiler_latexmk = {
-            \ 'executable' : 'latexmk',
-            \ 'options' : [
-                \   '-xelatex',
-                \   '-file-line-error',
-                \   '-synctex=1',
-                \   '-interaction=nonstopmode',
-                \ ],
-                \}
+			\ 'executable' : 'latexmk',
+			\ 'options' : [
+				\   '-xelatex',
+				\   '-file-line-error',
+				\   '-synctex=1',
+				\   '-interaction=nonstopmode',
+				\ ],
+				\}
 
 Plug 'KeitaNakamura/tex-conceal.vim'
 set conceallevel=1
@@ -645,6 +651,10 @@ let g:tex_conceal='abdmg'
 " Write BASH-scripts by inserting comments, statements, tests, variables, builtins, etc..
 " Speed up writing new scripts considerably.
 Plug 'vim-scripts/bash-support.vim'
+
+""""""
+"""""" vim cmd line
+" Plug 'jalvesaq/vimcmdline'
 
 """"""
 """""" c/c++
@@ -693,9 +703,9 @@ let g:go_highlight_variable_declarations = 0
 let g:go_doc_keywordprg_enabled = 0
 
 cnoremap gg Go
-nnoremap <C-]> :GoDef<CR> 
-nnoremap <C-[> :GoDefPop<CR> 
-nnoremap <C-\> :GoDefStack<CR> 
+nnoremap <C-]> :GoDef<CR>
+nnoremap <C-[> :GoDefPop<CR>
+nnoremap <C-\> :GoDefStack<CR>
 
 " go get -u golang.org/x/lint/golint
 Plug 'golang/lint', { 'for': ['go', 'vim-plug'] }
@@ -786,17 +796,17 @@ Plug 'google/vim-glaive'
 " used to configure codefmt's maktaba flags. see `:help :Glaive` for usage.
 " automformat
 augroup autoformat_settings
-  " autocmd FileType bzl AutoFormatBuffer buildifier
-  " autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  " autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
-  " alternative: autocmd filetype python autoformatbuffer autopep8
-  " autocmd FileType rust AutoFormatBuffer rustfmt
-  autocmd FileType vue AutoFormatBuffer prettier
+	" autocmd FileType bzl AutoFormatBuffer buildifier
+	" autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+	autocmd FileType dart AutoFormatBuffer dartfmt
+	autocmd FileType go AutoFormatBuffer gofmt
+	" autocmd FileType gn AutoFormatBuffer gn
+	autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+	autocmd FileType java AutoFormatBuffer google-java-format
+	autocmd FileType python AutoFormatBuffer yapf
+	" alternative: autocmd filetype python autoformatbuffer autopep8
+	" autocmd FileType rust AutoFormatBuffer rustfmt
+	autocmd FileType vue AutoFormatBuffer prettier
 augroup END
 
 """""" Chiel92/vim-autoformat
@@ -881,11 +891,11 @@ Plug 'mg979/vim-xtabline'
 """""" denite.nvim
 " pip3 install --user pynvim
 if has('nvim')
-  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+	Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/denite.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+	Plug 'Shougo/denite.nvim'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 """"""
@@ -950,8 +960,8 @@ set wildmode=full
 """"""
 """""" set cursorline/cursorcolum will slow down the vi startup
 function ToggleCursors() abort
-    set cursorline!
-    " set cursorcolumn!
+	set cursorline!
+	" set cursorcolumn!
 endfunction
 autocmd InsertLeave * call ToggleCursors()
 autocmd InsertEnter * call ToggleCursors()
@@ -993,7 +1003,8 @@ set textwidth=0
 
 """"""
 """""" acceleration
-set timeoutlen=400
+" set timeoutlen=400
+set timeoutlen=200
 set ttimeoutlen=0
 " ttimeoutlen    mapping delay      key code delay
 "    < 0        'timeoutlen'       'timeoutlen'
@@ -1003,7 +1014,7 @@ set ttimeoutlen=0
 """""" always back to the last cursor
 augroup resCur
 	autocmd!
-    autocmd BufReadPost * call setpos(".", getpos("'\""))
+	autocmd BufReadPost * call setpos(".", getpos("'\""))
 augroup END
 
 """"""
@@ -1099,9 +1110,9 @@ nnoremap <LEADER>q <C-w>j:q<CR>
 nnoremap <LEADER>w :w<CR>
 nnoremap <LEADER>e <ESC><C-w>x<CR>
 
-"""""" paste toggle 
+"""""" paste toggle
 " set paste                                       " do not set, or jk <ESC> map will not work
-nnoremap <C-p> :set invpaste<CR> 
+nnoremap <C-p> :set invpaste<CR>
 
 """"""
 """""" command mode cursor movement
@@ -1158,20 +1169,20 @@ nnoremap ) $
 vnoremap ( 0
 vnoremap ) $
 
-" n/N 
+" n/N
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
 """"""
 """""" see changes
 function! DiffWithFileFromDisk()
-    let filename=expand('%')
-    let diffname = filename.'.fileFromBuffer'
-    exec 'saveas! '.diffname
-    diffthis
-    vsplit
-    exec 'edit '.filename
-    diffthis
+	let filename=expand('%')
+	let diffname = filename.'.fileFromBuffer'
+	exec 'saveas! '.diffname
+	diffthis
+	vsplit
+	exec 'edit '.filename
+	diffthis
 endfunction
 nmap \d :call DiffWithFileFromDisk()<CR>
 
@@ -1187,7 +1198,7 @@ nnoremap \g :!ctags -R . >> /dev/null 2>&1 &<CR><CR>
 nnoremap te :!
 nnoremap tr :r!
 " nnoremap ty <ESC>yyq:p<ESC>Ir! <ESC>A<CR><ESC>:w<CR><ESC>o<ESC>j
-nnoremap tf :r !figlet 
+nnoremap tf :r !figlet
 
 """"""
 """""" lower/upper current line
@@ -1236,11 +1247,11 @@ noremap <LEADER>sn :set nospell!<CR>
 """"""
 """""" clever tab
 function! CleverTab()
-    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-        return "\<Tab>"
-    else
-        return "\<C-N>"
-    endif
+	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<Tab>"
+	else
+		return "\<C-N>"
+	endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
@@ -1273,36 +1284,36 @@ noremap wb :!w3m "https://cn.bing.com/search?q=<C-R><C-W>"<CR><CR>
 """"" compile and run: c/c++/python/shell
 nnoremap <LEADER>b :call CompileRun()<CR>
 func! CompileRun()
-    exec "w"
-    if &filetype == 'c'
-        exec '!g++ % -o x%<'
-        set splitbelow
-        :term ./x%<
-        :res +3
-    elseif &filetype == 'cpp'
-        exec "!g++ -std=c++11 % -Wall -o x%<"
-        set splitbelow
-        :term ./x%<
-        :res +3
-    elseif &filetype == 'go'
-        set splitbelow
-        :term go run %
-        :res +3
-    elseif &filetype == 'python'
-        set splitbelow
-        :term python %
-        :res +3
-    elseif &filetype == 'julia'
-        set splitbelow
-        :term julia %
-        :res +3
-    elseif &filetype == 'sh'
-        set splitbelow
-        :term sh %
-        :res +3
-    elseif &filetype == 'markdown'
-        exec "InstantMarkdownPreview"
-    endif
+	exec "w"
+	if &filetype == 'c'
+		exec '!g++ % -o x%<'
+		set splitbelow
+		:term ./x%<
+		:res +3
+	elseif &filetype == 'cpp'
+		exec "!g++ -std=c++11 % -Wall -o x%<"
+		set splitbelow
+		:term ./x%<
+		:res +3
+	elseif &filetype == 'go'
+		set splitbelow
+		:term go run %
+		:res +3
+	elseif &filetype == 'python'
+		set splitbelow
+		:term python %
+		:res +3
+	elseif &filetype == 'julia'
+		set splitbelow
+		:term julia %
+		:res +3
+	elseif &filetype == 'sh'
+		set splitbelow
+		:term sh %
+		:res +3
+	elseif &filetype == 'markdown'
+		exec "InstantMarkdownPreview"
+	endif
 endfunc;
 
 """"""
@@ -1339,19 +1350,19 @@ nnoremap <LEADER>y :! clear; task summary; task ghistory; task calendar; task li
 nnoremap <LEADER>' :set splitright<CR>:vsplit<CR>:term ++curwin ++cols=60<CR>task list<CR>
 cnoremap ;t !task
 
-cnoremap 'a !clear; task add 
-cnoremap 'e !clear; task edit 
-cnoremap 'm !clear; task modify 
+cnoremap 'a !clear; task add
+cnoremap 'e !clear; task edit
+cnoremap 'm !clear; task modify
 cnoremap 'j !clear; task project:
-cnoremap '[ !clear; task start 
-cnoremap '] !clear; task stop 
-cnoremap '\ !clear; task done 
-cnoremap 'r !clear; task ready 
-cnoremap 'w !clear; task waiting 
+cnoremap '[ !clear; task start
+cnoremap '] !clear; task stop
+cnoremap '\ !clear; task done
+cnoremap 'r !clear; task ready
+cnoremap 'w !clear; task waiting
 cnoremap 'l !clear; task list<CR>
 cnoremap 'n !clear; task next<CR>
 cnoremap 't !clear; task due:today list<CR>
-cnoremap 'u !clear; task due.any: list<CR>
+cnoremap 'd !clear; task due.any: list<CR>
 "ts:summary
 cnoremap 's !clear; task summary; task ghistory; tark burndown.daily; task calendar <CR>
 "tf:filter
@@ -1363,7 +1374,7 @@ cnoremap '1 !clear; echo "task add Send Alice a birthday card due:2016-11-08 sch
 """""" timewarrior
 " brew install timewarrior
 nnoremap <LEADER>z :!clear; timew month<CR>
-cnoremap ;i !timew 
+cnoremap ;i !timew
 " cnoremap 'd !clear; timew day<CR>;
 " cnoremap 'w !clear; timew week<CR>
 " cnoremap 'm !clear; timew month<CR>
@@ -1371,6 +1382,13 @@ cnoremap ;i !timew
 """"""
 """""" my ssh tool:x. git clone x; sudo cp x/x /usr/local/bin/
 nnoremap <LEADER>\ :set splitbelow<CR>:split<CR>:term ++curwin ++rows=25<CR>x<CR>
+cnoremap xx !x
+cnoremap xa !x -a
+cnoremap xd !x -d
+cnoremap xs !x -s
+cnoremap xC !x -C
+cnoremap xh !x -h
+
 "-------------------------------------------------------
 " |   basic end                                        |
 "-------------------------------------------------------
@@ -1429,7 +1447,7 @@ nnoremap 0 viw<ESC>a }<ESC>gvo<ESC>i{ <ESC>wwi
 nnoremap < viw<ESC>a ><ESC>gvo<ESC>i< <ESC>wwi
 nnoremap > viw<ESC>a 》<ESC>gvo<ESC>i《 <ESC>wwi
 
-"""""" comment/uncomment with // or # 
+"""""" comment/uncomment with // or #
 nnoremap / mqI// <ESC>`q
 nnoremap ? mqV:s/\v^\/\/ //<CR><ESC>`q
 vnoremap / :norm I// <ESC>gv
@@ -1476,8 +1494,4 @@ nnoremap < <<
 nnoremap > >>
 vnoremap < <<<ESC>gv
 vnoremap > >><ESC>gv
-
-
-
-
 

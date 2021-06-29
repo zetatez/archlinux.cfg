@@ -1,0 +1,197 @@
+
+# cli 
+# -------------------------------
+snippet ll "ls -l" bwA
+ls -l$0
+endsnippet
+
+snippet la "ls -l" bwA
+ls -la$0
+endsnippet
+
+snippet cc "clear" bwA
+clear
+endsnippet
+
+snippet ssh "ssh" bwA
+ssh -p ${1:22} ${2:root}@${3:ip}$0
+endsnippet
+
+snippet sp "sshpass" bwA
+sshpass -p ${1:passw0rd} ssh -p ${2:22} ${3:root}@${4:ip}$0
+endsnippet
+
+snippet pi "ping" bwA
+ping ${1:www.baidu.com} $0
+endsnippet
+
+snippet get "http get" bwA
+curl -i -s -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1$0
+endsnippet
+
+snippet post "http post" bwA
+curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1$0
+endsnippet
+
+snippet gg "google" bwA
+w3m "https://cn.bing.com/search?q=${1:archlinux}"$0
+endsnippet
+
+snippet ms "mysql" bwA
+mysql -u${1:root} -p${2:passw0rd} $0
+endsnippet
+
+# task warrior
+# -------------------------------
+snippet tk "task" bwA
+task $0
+endsnippet
+
+snippet tl "task list" bwA
+task list$0 
+endsnippet
+
+snippet ti "task info" bwA
+task ${1:id} info$0
+endsnippet
+
+snippet ta "task add" bwA
+task add $0
+endsnippet
+
+snippet te "task edit" bwA
+task edit $0
+endsnippet
+
+snippet tm "task modify" bwA
+task ${1:id} modify $0
+endsnippet
+
+snippet tproj "task project" bwA
+task project:$0
+endsnippet
+
+snippet tn "task next" bwA
+task next$0
+endsnippet
+
+snippet tdt "task due:today list" bwA
+task due:today list$0
+endsnippet
+
+snippet tda "task due:any list" bwA
+task due:any list$0
+endsnippet
+
+snippet t[ "task start" bwA
+task start $0
+endsnippet
+
+snippet t] "task stop" bwA
+task stop $0
+endsnippet
+
+snippet tdo "task done" bwA
+task done $0
+endsnippet
+
+snippet trd "task ready" bwA
+task ready$0
+endsnippet
+
+snippet tw "task waiting" bwA
+task waiting$0
+endsnippet
+
+snippet trp "task reports" bwA
+task reports$0
+endsnippet
+
+snippet t/ "task pattern search" bwA
+task /${1:pattern}/ list$0
+endsnippet
+
+snippet tf "task filtering" bwA
+task project:${1:projname} and ${2:-+work} status:${3:pending} /${4:pattern}/ ${5:entry.before|after:today-4d and entry.before|after:today-4d}} list$0
+endsnippet
+
+snippet t0 "task template 0 for time" bwA
+task add ${1:Send Alice a birthday card} due:${2:2016-11-08} scheduled:${3:due-4d} wait:${4:due-7d} until:${5:due+2d}$0
+endsnippet
+
+snippet ts "task summary" bwA
+task summary; task ghistory; tark burndown.daily; task calendar
+endsnippet
+
+snippet tcfg "task config" bwA
+task config default.${1:command long}
+endsnippet
+
+snippet tpri "task priority" bwA
+task config -- uda.priority.values ${1:H,M,,L}
+endsnippet
+
+snippet trec "task recur" bwA
+task add ${1:Do the thing} due:${2:2022-01-01T00:00} recur:${3:weekly} until:${4:now+1yr}$0
+endsnippet
+
+snippet ttag "task tag" bwA
+task ${1:-+tagx} ${2:and|or|xor} ${3:-+tagy} list
+endsnippet
+
+snippet ttt "task tag" bwA
+task _tags$0
+endsnippet
+
+# time warrior
+# -------------------------------
+snippet ww "timew" bwA
+timew $0
+endsnippet
+
+snippet wsche "timew schedule" bwA
+timew config exclusions.monday    '<${1:7:30 12:30-13:00 >23:30}' :yes
+timew config exclusions.tuesday   '<$1' :yes
+timew config exclusions.wednesday '<$1' :yes
+timew config exclusions.thursday  '<$1' :yes
+timew config exclusions.friday    '<$1' :yes
+timew config exclusions.saturday  '<${2:8:30 12:30-13:00 >23:30}' :yes
+timew config exclusions.sunday    '<$2' :yes
+$0
+endsnippet
+
+snippet w[ "timew start" bwA
+timew start$0
+endsnippet
+
+snippet w] "timew stop" bwA
+timew stop$0
+endsnippet
+
+snippet wc "timew continue" bwA
+timew continue$0
+endsnippet
+
+snippet wtag "timew tag" bwA
+timew start ${1:tagx tagy}$0
+endsnippet
+
+snippet wsum "timew summay" bwA
+timew summary$0
+endsnippet
+
+snippet wm "timew month" bwA
+timew month$0
+endsnippet
+
+snippet wtrack "timew track" bwA
+timew track ${1:9:00-10:00} ${2:'task tracked'}$0
+endsnippet
+
+snippet wd "timew dur:day week month gaps" bwA
+timew ${1:day|week|month|gaps}$0
+endsnippet
+
+
+
+
