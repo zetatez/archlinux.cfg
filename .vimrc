@@ -124,7 +124,7 @@ Plug 'zetatez/vsh'
 Plug 'mhinz/vim-startify'
 
 """"""
-"""""" calendar;
+"""""" calendar
 Plug 'itchyny/calendar.vim'
 let g:calendar_views= ['year', 'month', 'day_7', 'day', 'clock', 'agenda']
 let g:calendar_cyclic_view=1
@@ -391,7 +391,7 @@ let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 " Always On:
 autocmd VimEnter * RainbowParenthesesToggle
-autocmd Syntax * RqainbowParenthesesLoadRound;
+autocmd Syntax * RqainbowParenthesesLoadRound
 autocmd Syntax * RainbowParenthesesLoadSquare
 autocmd Syntax * RainbowParenthesesLoadBraces
 
@@ -821,7 +821,7 @@ nnoremap \f :Autoformat<CR>
 Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 autocmd FileType css,scss let b:prettier_exec_cmd = "prettier-stylelint"
 " <LEADER>P               " prettier by default will run on auto save but can also be manually triggered by
-" :Prettier;
+" :Prettier
 
 """"""
 """""" syntax checking: slow the the vim open speed
@@ -1063,7 +1063,7 @@ noremap <LEADER>. <ESC>:bp<CR>
 nnoremap s <nop>
 
 """""" split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
-nnoremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>;
+nnoremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 nnoremap sj :set splitbelow<CR>:split<CR>
 nnoremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 nnoremap sl :set splitright<CR>:vsplit<CR>
@@ -1314,7 +1314,7 @@ func! CompileRun()
 	elseif &filetype == 'markdown'
 		exec "InstantMarkdownPreview"
 	endif
-endfunc;
+endfunc
 
 """"""
 """""" vim-plug
@@ -1375,7 +1375,7 @@ cnoremap '1 !clear; echo "task add Send Alice a birthday card due:2016-11-08 sch
 " brew install timewarrior
 nnoremap <LEADER>z :!clear; timew month<CR>
 cnoremap ;i !timew
-" cnoremap 'd !clear; timew day<CR>;
+" cnoremap 'd !clear; timew day<CR>
 " cnoremap 'w !clear; timew week<CR>
 " cnoremap 'm !clear; timew month<CR>
 

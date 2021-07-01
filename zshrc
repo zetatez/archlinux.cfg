@@ -401,12 +401,6 @@ alias ptrojan="sudo pkill -9 trojan"
 # ----------------
 alias ms="mysql -uroot -proot"
 
-# ssh
-# ---------------
-alias s.0="ssh floren@lorenzo"                                      # home star
-alias s.c="sshpass -p 'passw0rd' ssh -p 22 root@192.168.31.184"     # centos
-alias s.w="sshpass -p 'Orcl1107' ssh -p 22222 dblog@10.100.69.13"
-
 # key binding
 # ----------------
 bindkey -s '^F' 'vi $(fzf --preview "cat {}")\n'
