@@ -112,12 +112,16 @@ let mapleader="\<SPACE>"
 filetype plugin on
 call plug#begin('~/.vim/plugged')
 """"""
+"""""" my vim plug
 """""" vsh
 Plug 'zetatez/vsh'
 " let g:vsh_send_line = "<ENTER>"
 " let g:vsh_send_selection = "<ENTER>"
 " let g:vsh_exit = "<ESC><ESC>"
 " let g:vsh_exit_cmd = "qq"
+
+"""""" vim-alt 
+Plug 'zetatez/vim-alt'
 
 """"""
 """""" startify
@@ -898,10 +902,6 @@ else
 	Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-""""""
-"""""" my vim plug
-Plug 'zetatez/vim-alt'
-
 call plug#end()
 "-------------------------------------------------------
 " :w
@@ -1393,105 +1393,4 @@ cnoremap xh !x -h
 " |   basic end                                        |
 "-------------------------------------------------------
 
-
-
-"-------------------------------------------------------
-" |   my plugins                                       |
-"-------------------------------------------------------
-" Plug 'zetatez/vim-alt'
-"
-" The vim-alt key ^[
-
-" ----------------------------------
-"  vim alt key
-" ----------------------------------
-"""""" move line/lines up/down
-noremap u dd2kp
-noremap d ddp
-vnoremap u :m '<-2<CR>gv=gv
-vnoremap d :m '>+1<CR>gv=gv
-
-"""""" add/delete previous/next line
-nnoremap p <ESC>O<ESC>j$
-nnoremap n <ESC>o<ESC>k$
-nnoremap P <ESC>kdd
-nnoremap N <ESC>jddk
-
-nnoremap ap <ESC>O<ESC>j$
-nnoremap an <ESC>o<ESC>k$
-nnoremap dp <ESC>kdd
-nnoremap dn <ESC>jddk
-
-"""""" insert mode cursor movement
-inoremap h <ESC>I
-inoremap l <ESC>A
-inoremap k <ESC>ddi
-inoremap d <ESC>DA
-inoremap c <ESC>v0xI
-
-inoremap <C-h> <ESC>I
-inoremap <C-l> <ESC>A
-inoremap <C-k> <ESC>ddi
-inoremap <C-d> <ESC>DA
-
-"""""" upper/lowwer current word
-noremap w <ESC>vawgUi
-noremap s <ESC>vawgui
-
-"""""" add "" or '' to the current word
-nnoremap " viw<ESC>a"<ESC>bi"<ESC>lel
-nnoremap ' viw<ESC>a'<ESC>bi'<ESC>lel
-nnoremap ( viw<ESC>a )<ESC>gvo<ESC>i( <ESC>wwi
-nnoremap 9 viw<ESC>a ]<ESC>gvo<ESC>i[ <ESC>wwi
-nnoremap 0 viw<ESC>a }<ESC>gvo<ESC>i{ <ESC>wwi
-nnoremap < viw<ESC>a ><ESC>gvo<ESC>i< <ESC>wwi
-nnoremap > viw<ESC>a 》<ESC>gvo<ESC>i《 <ESC>wwi
-
-"""""" comment/uncomment with // or #
-nnoremap / mqI// <ESC>`q
-nnoremap ? mqV:s/\v^\/\/ //<CR><ESC>`q
-vnoremap / :norm I// <ESC>gv
-vnoremap ? :s/\v^\/\/ //<CR><ESC>gv
-
-nnoremap 3 mqI# <ESC>`q
-nnoremap # mqV:s/\v^\# //<CR><ESC>`q
-vnoremap 3 :norm I# <ESC>gv
-vnoremap # :s/\v^\# //<CR><ESC>gv
-
-nnoremap 8 mqI/* <ESC>A */<ESC>'q
-nnoremap * mqV:s/\v^\/\* //<CR>V:s/\v \*\/$//<CR><ESC>'q
-vnoremap 8 o<ESC>O/*<ESC>gvo<ESC>o*/<ESC>gvjok
-vnoremap * :s/\v^\/\*$//<CR>gv:s/\v^\*\/$//<CR>
-
-"""""" add/remove ; at then end of the line
-nnoremap ; mqA;<ESC>`q
-nnoremap : mqV:s/\v;$//<CR><ESC>'q
-
-"""""" for markdown
-nnoremap - mqI- <ESC>`q
-nnoremap _ mqV:s/\v^- //<CR><ESC>'q
-
-"""""" copy, copy to system clipboard
-nnoremap y y$
-vnoremap y "+y
-
-"""""" find duplicate words/lines
-nnoremap = /\(\<\w\+\>\) *\1\><CR>
-nnoremap + /^\(.\+\)$\n\1$<CR>
-
-cnoremap dw /\(\<\w\+\>\) *\1\><CR>
-cnoremap dl /^\(.\+\)$\n\1$<CR>
-
-"""""" indent
-" hard indent
-nnoremap > :norm 0i    <CR>
-nnoremap < V:s/^    //<CR>
-vnoremap > :norm 0i    <CR><ESC>gv
-vnoremap < :s/^    //<CR><ESC>gv
-
-" soft indent
-nnoremap < <<
-nnoremap > >>
-vnoremap < <<<ESC>gv
-vnoremap > >><ESC>gv
 
