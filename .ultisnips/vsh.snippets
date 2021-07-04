@@ -1,24 +1,42 @@
-
-
 # cli 
 # -------------------------------
 snippet ll "ls -l" bwA
 ls -l$0
 endsnippet
 
+snippet .. "cd ..;ls -l" bwA
+cd ..; ls -l$0
+endsnippet
+
 snippet la "ls -l" bwA
 ls -la$0
 endsnippet
 
-snippet cc "clear" bwA
-clear
+snippet cls "clear" bwA
+clear$0
 endsnippet
 
-snippet .. "cd ..;ls -l" bwA
-cd ..; ls -l
+snippet his "history" bwA
+history$0
 endsnippet
 
-snippet ssh "ssh" bwA
+snippet pp "pwd" bwA
+pwd$0
+endsnippet
+
+snippet qq "exit" bwA
+exit$0
+endsnippet
+
+snippet sd "shutdown" bwA
+sudo shutdown now$0
+endsnippet
+
+snippet ss "source ~/.zshrc" bwA
+source ~/.zshrc$0
+endsnippet
+
+snippet sh "ssh" bwA
 ssh -p ${1:22} ${2:root}@${3:ip}$0
 endsnippet
 
@@ -38,123 +56,361 @@ snippet post "http post" bwA
 curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1$0
 endsnippet
 
-snippet gg "google" bwA
+# cli app
+# -------------------------------
+snippet fzf  "vi $(fzf --preview 'cat {}')" bwA
+vi $(fzf --preview 'cat {}'
+endsnippet
+
+snippet ra  "ranger ." bwA
+ranger .
+endsnippet
+
+snippet lz  "lazygit ." bwA
+lazygit .
+endsnippet
+
+snippet w3m "google" bwA
 w3m "https://cn.bing.com/search?q=${1:archlinux}"$0
 endsnippet
 
 snippet ms "mysql" bwA
-mysql -u${1:root} -p${2:passw0rd} $0
+mysql -u${1:root} -p${2:password} $0
+endsnippet
+
+snippet mm  "mutt" bwA
+mutt$0
+endsnippet
+
+# c/c++ project
+# -------------------------------
+snippet smc  "sudo make clean" bwA
+sudo make clean$0
+endsnippet
+
+snippet smi  "sudo make install" bwA
+sudo make install$0
+endsnippet
+
+snippet smci  "sudo make clean install" bwA
+sudo make clean install$0
+endsnippet
+
+snippet g+  "g++" bwA
+${2:g++ -std=c++11 ${1:main}.c -Wall -o $1 $0
+./$1}
+$0
+endsnippet
+
+# git
+# -------------------------------
+snippet g. "git"
+git $0
+endsnippet
+
+snippet gitfc "git force: git fetch --all && git reset --hard origin/master && git pull"
+git fetch --all && git reset --hard ${1:origin/master} && git pull$0
+endsnippet
+
+snippet gitg "git add .; git commit -m 'update'; git push"
+git add .; git commit -m 'update'; git push$0
+endsnippet
+
+snippet gits "git status"
+git status$0
+endsnippet
+
+snippet gitl "git log --oneline --graph"
+git log --oneline --graph $0
+endsnippet
+
+snippet giti "git init"
+git init$0
+endsnippet
+
+snippet gita "git add"
+git add $0 
+endsnippet
+
+snippet gitaa "git add --all"
+git add --all$0
+endsnippet
+
+snippet gitrm "git remote"
+git remote $0
+endsnippet
+
+snippet gitrmv "git remote -v"
+git remote -v$0
+endsnippet
+
+snippet gitrma "git remote add"
+git remote add $0
+endsnippet
+
+snippet gitc "git commit -m"
+git commit -m "${1:update}"$0
+endsnippet
+
+snippet gitca "git commit --amend"
+git commit --amend $0
+endsnippet
+
+snippet gitf "git fetch"
+git fetch$0
+endsnippet
+
+snippet gitpl "git pull"
+git pull$0
+endsnippet
+
+snippet gitplrp "git pull --rebase=preserve"
+git pull --rebase=preserve$0
+endsnippet
+
+snippet gitps "git push"
+git push$0
+endsnippet
+
+snippet gitm "git merge"
+git merge$0
+endsnippet
+
+snippet gitd "git diff"
+git diff$0
+endsnippet
+
+snippet gitck "git checkout"
+git chekout ${1:dev}$0
+endsnippet
+
+snippet gitckb "git checkout -b"
+git checkout -b ${1:dev}$0 
+endsnippet
+
+snippet gitckf "restore file: git checkout --"
+git checkout -- ${1:filename}$0
+endsnippet
+
+snippet gitb "git branch"
+git branch$0
+endsnippet
+
+snippet gitba "git branch -a"
+git branch -a$0
+endsnippet
+
+snippet gitbd "delete local branch: git branch --delete"
+git branch --delete ${1:dev}
+endsnippet
+
+snippet gitpd "delete remote branch: git push --delete"
+git push --delete ${dev}$0
+endsnippet
+
+snippet gitcp "copy commits to another branch: git cherry-pick -x"
+git cherry-pick -x $0
+endsnippet
+
+snippet gitrb "git rebase"
+git rebase$0
+endsnippet
+
+snippet gitrbc "git rebase --continue"
+git reset --continue$0
+endsnippet
+
+snippet gtimt "git mergetool"
+git mergetool$0
+endsnippet
+
+snippet gitrs "git reset"
+git reset$0
+endsnippet
+
+snippet gitrsm "git reset --merge ORIG_HEAD"
+git reset --merge ORIG_HEAD$0
+endsnippet
+
+snippet gitrsh "git reset HEAD"
+git reset HEAD$0
+endsnippet
+
+snippet gitrshh "git reset --hard HEAD"
+git reset --hard HEAD$0
+endsnippet
+
+snippet gitt "git tag"
+git tag $0
+endsnippet
+
+snippet gitrv "git revert"
+git revert$0
+endsnippet
+
+snippet gitrvc "git revert --continue"
+git revert $0 --continue$0
+endsnippet
+
+snippet gitrl "git reflog"
+git reflog $0
+endsnippet
+
+snippet gitcagl "git clear all git log"
+git reflog expire --expire = now all
+git gc --prune = now
+git push origin --force --all --tags$0
 endsnippet
 
 # task warrior
 # -------------------------------
-snippet tk "task" bwA
+snippet tk. "task" bwA
 task $0
 endsnippet
 
-snippet tl "task list" bwA
+snippet tkl "task list" bwA
 task list$0 
 endsnippet
 
-snippet ti "task info" bwA
+snippet tki "task info" bwA
 task ${1:id} info$0
 endsnippet
 
-snippet ta "task add" bwA
+snippet tka "task add" bwA
 task add $0
 endsnippet
 
-snippet te "task edit" bwA
+snippet tke "task edit" bwA
 task edit $0
 endsnippet
 
-snippet tm "task modify" bwA
+snippet tkm "task modify" bwA
 task ${1:id} modify $0
 endsnippet
 
-snippet tproj "task project" bwA
+snippet tkproj "task project" bwA
 task project:$0
 endsnippet
 
-snippet tn "task next" bwA
+snippet tkn "task next" bwA
 task next$0
 endsnippet
 
-snippet tdt "task due:today list" bwA
+snippet tkdt "task due:today list" bwA
 task due:today list$0
 endsnippet
 
-snippet tda "task due:any list" bwA
+snippet tkda "task due:any list" bwA
 task due:any list$0
 endsnippet
 
-snippet t[ "task start" bwA
+snippet tk[ "task start" bwA
 task start $0
 endsnippet
 
-snippet t] "task stop" bwA
+snippet tk] "task stop" bwA
 task stop $0
 endsnippet
 
-snippet tdo "task done" bwA
+snippet tkdo "task done" bwA
 task done $0
 endsnippet
 
-snippet trd "task ready" bwA
+snippet tkrd "task ready" bwA
 task ready$0
 endsnippet
 
-snippet tw "task waiting" bwA
+snippet tkw "task waiting" bwA
 task waiting$0
 endsnippet
 
-snippet trp "task reports" bwA
+snippet tkrp "task reports" bwA
 task reports$0
 endsnippet
 
-snippet t/ "task pattern search" bwA
+snippet tk/ "task pattern search" bwA
 task /${1:pattern}/ list$0
 endsnippet
 
-snippet tf "task filtering" bwA
+snippet tkf "task filtering" bwA
 task project:${1:projname} and ${2:-+work} status:${3:pending} /${4:pattern}/ ${5:entry.before|after:today-4d and entry.before|after:today-4d}} list$0
 endsnippet
 
-snippet t0 "task template 0 for time" bwA
+snippet tk0 "task template 0 for time" bwA
 task add ${1:Send Alice a birthday card} due:${2:2016-11-08} scheduled:${3:due-4d} wait:${4:due-7d} until:${5:due+2d}$0
 endsnippet
 
-snippet ts "task summary" bwA
+snippet tks "task summary" bwA
 task summary; task ghistory; tark burndown.daily; task calendar
 endsnippet
 
-snippet tcfg "task config" bwA
+snippet tkcfg "task config" bwA
 task config default.${1:command long}
 endsnippet
 
-snippet tpri "task priority" bwA
+snippet tkpri "task priority" bwA
 task config -- uda.priority.values ${1:H,M,,L}
 endsnippet
 
-snippet trec "task recur" bwA
+snippet tkrec "task recur" bwA
 task add ${1:Do the thing} due:${2:2022-01-01T00:00} recur:${3:weekly} until:${4:now+1yr}$0
 endsnippet
 
-snippet ttag "task tag" bwA
+snippet tktag "task tag" bwA
 task ${1:-+tagx} ${2:and|or|xor} ${3:-+tagy} list
 endsnippet
 
-snippet ttt "task tag" bwA
+snippet tktt "task tag" bwA
 task _tags$0
 endsnippet
 
 # time warrior
 # -------------------------------
-snippet ww "timew" bwA
+snippet tw. "timew" bwA
 timew $0
 endsnippet
 
-snippet wsche "timew schedule" bwA
+snippet te[ "timew start" bwA
+timew start $0
+endsnippet
+
+snippet te] "timew stop" bwA
+timew stop $0
+endsnippet
+
+snippet tec "timew continue" bwA
+timew continue $0
+endsnippet
+
+snippet tesum "timew summay" bwA
+timew summary $0
+endsnippet
+
+snippet tet "timew track" bwA
+timew track ${1:9:00-10:00} $0
+endsnippet
+
+snippet ted "timew day" bwA
+timew day$0
+endsnippet
+
+snippet tew "timew week" bwA
+timew week$0
+endsnippet
+
+snippet tem "timew month" bwA
+timew month$0
+endsnippet
+
+snippet teg "timew gaps" bwA
+timew gaps$0
+endsnippet
+
+snippet tesd "timew schedule day" bwA
+timew config exclusions.${1:monday|tuesday|wednesday|thursday|friday|saturday|sunday} ${2:<7:00 12:30-13:00 >23:30} :yes$0
+endsnippet
+
+snippet tesw "timew schedule week" bwA
 timew config exclusions.monday    '<${1:7:30 12:30-13:00 >23:30}' :yes
 timew config exclusions.tuesday   '<$1' :yes
 timew config exclusions.wednesday '<$1' :yes
@@ -164,39 +420,4 @@ timew config exclusions.saturday  '<${2:8:30 12:30-13:00 >23:30}' :yes
 timew config exclusions.sunday    '<$2' :yes
 $0
 endsnippet
-
-snippet w[ "timew start" bwA
-timew start$0
-endsnippet
-
-snippet w] "timew stop" bwA
-timew stop$0
-endsnippet
-
-snippet wc "timew continue" bwA
-timew continue$0
-endsnippet
-
-snippet wtag "timew tag" bwA
-timew start ${1:tagx tagy}$0
-endsnippet
-
-snippet wsum "timew summay" bwA
-timew summary$0
-endsnippet
-
-snippet wm "timew month" bwA
-timew month$0
-endsnippet
-
-snippet wtrack "timew track" bwA
-timew track ${1:9:00-10:00} ${2:'task tracked'}$0
-endsnippet
-
-snippet wd "timew dur:day week month gaps" bwA
-timew ${1:day|week|month|gaps}$0
-endsnippet
-
-
-
 
