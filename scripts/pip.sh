@@ -2,7 +2,7 @@
 
 echo "--- pip -----------"
 rm -rf ~/.pip
-cp -r ~/archlinux.cfg/.pip ~
+cp -rf ~/archlinux.cfg/.pip ~
 
 source ~/.zshrc
 python -m pip install --upgrade pip

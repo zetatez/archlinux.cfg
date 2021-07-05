@@ -49,17 +49,21 @@ ping ${1:www.baidu.com} $0
 endsnippet
 
 snippet get "http get" bwA
-curl -i -s -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1$0
+curl -i -s -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$3$0
 endsnippet
 
 snippet post "http post" bwA
-curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$1$0
+curl -i -s -X POST -H "Content-Type:application/json" ${1:-d '{${2:"key": "value"}}'} https://$3$0
 endsnippet
 
 # cli app
 # -------------------------------
-snippet fzf  "vi $(fzf --preview 'cat {}')" bwA
-vi $(fzf --preview 'cat {}'
+snippet fzf  "fzf --preview 'cat {}'" bwA
+fzf --preview 'cat {}'
+endsnippet
+
+snippet vfzf  "vi $(fzf --preview 'cat {}')" bwA
+vi $(fzf --preview 'cat {}')
 endsnippet
 
 snippet ra  "ranger ." bwA
@@ -92,174 +96,166 @@ snippet smi  "sudo make install" bwA
 sudo make install$0
 endsnippet
 
-snippet smci  "sudo make clean install" bwA
-sudo make clean install$0
-endsnippet
-
 snippet g+  "g++" bwA
-${2:g++ -std=c++11 ${1:main}.c -Wall -o $1 $0
-./$1}
-$0
+g++ -std=c++11 ${1:main}.c -Wall -o $1 $3
+${2:./$1}$0
 endsnippet
 
 # git
 # -------------------------------
-snippet g. "git"
+snippet g. "git" bwA
 git $0
 endsnippet
 
-snippet gitfc "git force: git fetch --all && git reset --hard origin/master && git pull"
-git fetch --all && git reset --hard ${1:origin/master} && git pull$0
-endsnippet
-
-snippet gitg "git add .; git commit -m 'update'; git push"
+snippet gitg "git add .; git commit -m 'update'; git push" bwA
 git add .; git commit -m 'update'; git push$0
 endsnippet
 
-snippet gits "git status"
+snippet gits "git status" bwA
 git status$0
 endsnippet
 
-snippet gitl "git log --oneline --graph"
+snippet gitl "git log --oneline --graph" bwA
 git log --oneline --graph $0
 endsnippet
 
-snippet giti "git init"
+snippet giti "git init" bwA
 git init$0
 endsnippet
 
-snippet gita "git add"
-git add $0 
+snippet gita "git add" bwA
+git add ${1:--all}$0
 endsnippet
 
-snippet gitaa "git add --all"
-git add --all$0
-endsnippet
-
-snippet gitrm "git remote"
+snippet gitrm. "git remote" bwA
 git remote $0
 endsnippet
 
-snippet gitrmv "git remote -v"
+snippet gitrmv "git remote -v" bwA
 git remote -v$0
 endsnippet
 
-snippet gitrma "git remote add"
+snippet gitrma "git remote add" bwA
 git remote add $0
 endsnippet
 
-snippet gitc "git commit -m"
+snippet gitc. "git commit -m" bwA
 git commit -m "${1:update}"$0
 endsnippet
 
-snippet gitca "git commit --amend"
+snippet gitca "git commit --amend" bwA
 git commit --amend $0
 endsnippet
 
-snippet gitf "git fetch"
+snippet gitf. "git fetch" bwA
 git fetch$0
 endsnippet
 
-snippet gitpl "git pull"
+snippet gitfc "git force: git fetch --all && git reset --hard origin/master && git pull" bwA
+git fetch --all && git reset --hard ${1:origin/master} && git pull$0
+endsnippet
+
+snippet gitpl. "git pull" bwA
 git pull$0
 endsnippet
 
-snippet gitplrp "git pull --rebase=preserve"
+snippet gitplrp "git pull --rebase=preserve" bwA
 git pull --rebase=preserve$0
 endsnippet
 
-snippet gitps "git push"
+snippet gitps "git push" bwA
 git push$0
 endsnippet
 
-snippet gitm "git merge"
+snippet gitm. "git merge" bwA
 git merge$0
 endsnippet
 
-snippet gitd "git diff"
+snippet gitd "git diff" bwA
 git diff$0
 endsnippet
 
-snippet gitck "git checkout"
+snippet gitck. "git checkout" bwA
 git chekout ${1:dev}$0
 endsnippet
 
-snippet gitckb "git checkout -b"
+snippet gitckb "git checkout -b" bwA
 git checkout -b ${1:dev}$0 
 endsnippet
 
-snippet gitckf "restore file: git checkout --"
+snippet gitckf "restore file: git checkout --" bwA
 git checkout -- ${1:filename}$0
 endsnippet
 
-snippet gitb "git branch"
+snippet gitb. "git branch" bwA
 git branch$0
 endsnippet
 
-snippet gitba "git branch -a"
+snippet gitba "git branch -a" bwA
 git branch -a$0
 endsnippet
 
-snippet gitbd "delete local branch: git branch --delete"
+snippet gitbd "delete local branch: git branch --delete" bwA
 git branch --delete ${1:dev}
 endsnippet
 
-snippet gitpd "delete remote branch: git push --delete"
-git push --delete ${dev}$0
+snippet gitpd "delete remote branch: git push --delete" bwA
+git push --delete ${1:dev}$0
 endsnippet
 
-snippet gitcp "copy commits to another branch: git cherry-pick -x"
+snippet gitcp "copy commits to another branch: git cherry-pick -x" bwA
 git cherry-pick -x $0
 endsnippet
 
-snippet gitrb "git rebase"
+snippet gitrb. "git rebase" bwA
 git rebase$0
 endsnippet
 
-snippet gitrbc "git rebase --continue"
+snippet gitrbc "git rebase --continue" bwA
 git reset --continue$0
 endsnippet
 
-snippet gtimt "git mergetool"
+snippet gtimt "git mergetool" bwA
 git mergetool$0
 endsnippet
 
-snippet gitrs "git reset"
+snippet gitrs. "git reset" bwA
 git reset$0
 endsnippet
 
-snippet gitrsm "git reset --merge ORIG_HEAD"
+snippet gitrsm "git reset --merge ORIG_HEAD" bwA
 git reset --merge ORIG_HEAD$0
 endsnippet
 
-snippet gitrsh "git reset HEAD"
+snippet gitrsh "git reset HEAD" bwA
 git reset HEAD$0
 endsnippet
 
-snippet gitrshh "git reset --hard HEAD"
+snippet gitrshh "git reset --hard HEAD" bwA
 git reset --hard HEAD$0
 endsnippet
 
-snippet gitt "git tag"
+snippet gitt "git tag" bwA
 git tag $0
 endsnippet
 
-snippet gitrv "git revert"
+snippet gitrv. "git revert" bwA
 git revert$0
 endsnippet
 
-snippet gitrvc "git revert --continue"
+snippet gitrvc "git revert --continue" bwA
 git revert $0 --continue$0
 endsnippet
 
-snippet gitrl "git reflog"
+snippet gitrl "git reflog" bwA
 git reflog $0
 endsnippet
 
-snippet gitcagl "git clear all git log"
-git reflog expire --expire = now all
-git gc --prune = now
-git push origin --force --all --tags$0
+snippet gitclc "git clear all git log" bwA
+${1:git reflog expire --expire = now all$2
+git gc --prune = now$3
+git push origin --force --all --tags$4}
+$5
 endsnippet
 
 # task warrior
@@ -312,7 +308,7 @@ snippet tk] "task stop" bwA
 task stop $0
 endsnippet
 
-snippet tkdo "task done" bwA
+snippet tk\ "task done" bwA
 task done $0
 endsnippet
 

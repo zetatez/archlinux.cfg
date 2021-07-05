@@ -130,6 +130,7 @@ Plug 'mhinz/vim-startify'
 """"""
 """""" calendar
 Plug 'itchyny/calendar.vim'
+let g:calendar_cache_directory='~/archlinux.cfg/.cache/calendar.vim/'
 let g:calendar_views= ['year', 'month', 'day_7', 'day', 'clock', 'agenda']
 let g:calendar_cyclic_view=1
 let g:calendar_skip_event_delete_confirm=1
@@ -192,7 +193,7 @@ let g:UltiSnipsJumpForwardTrigger = '<C-J>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-K>'
 let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsSnippetDirectories = ['/home/lorenzo/archlinux.cfg/.ultisnips/']
-noremap <LEADER>; <ESC>:UltiSnipsEdit<CR><C-W>H
+noremap <LEADER>; <ESC>:UltiSnipsEdit<CR>
 
 """"""
 """""" file manager
@@ -1347,7 +1348,8 @@ cnoremap ;z !zathura $(fzf)<CR>
 """""" for taskwarrior
 " brew install task
 nnoremap <LEADER>y :! clear; task summary; task ghistory; task calendar; task list <CR>
-nnoremap <LEADER>' :set splitright<CR>:vsplit<CR>:term ++curwin ++cols=60<CR>task list<CR>
+nnoremap <LEADER>' :!vit<CR><CR>
+
 cnoremap ;t !task
 
 cnoremap 'a !clear; task add
@@ -1379,6 +1381,10 @@ cnoremap ;i !timew
 " cnoremap 'w !clear; timew week<CR>
 " cnoremap 'm !clear; timew month<CR>
 
+""""""
+"""""" taskell 
+nnoremap <LEADER>a :!taskell ~/archlinux.cfg/.taskell.md <CR><CR>
+ 
 """"""
 """""" my ssh tool:x. git clone x; sudo cp x/x /usr/local/bin/
 nnoremap <LEADER>\ :set splitbelow<CR>:split<CR>:term ++curwin ++rows=25<CR>x<CR>
