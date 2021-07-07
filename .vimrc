@@ -708,9 +708,6 @@ let g:go_highlight_variable_declarations = 0
 let g:go_doc_keywordprg_enabled = 0
 
 cnoremap gg Go
-nnoremap <C-]> :GoDef<CR>
-nnoremap <C-[> :GoDefPop<CR>
-nnoremap <C-\> :GoDefStack<CR>
 
 " go get -u golang.org/x/lint/golint
 Plug 'golang/lint', { 'for': ['go', 'vim-plug'] }
@@ -1188,11 +1185,26 @@ endfunction
 nmap \d :call DiffWithFileFromDisk()<CR>
 
 """"""
-"""""" build ctags for go to definition, you can add your project folder at any time
-set tags=~/tags
-nnoremap \g :!ctags -R . >> /dev/null 2>&1 &<CR><CR>
-" C-]         " go to definition
-" C-T         " back
+"""""" to automatically update the ctags file when a file is written  
+function! DelTagOfFile(file)
+  let fullpath = a:file
+  let cwd = getcwd()
+  let tagfilename = cwd . "/tags"
+  let f = substitute(fullpath, cwd . "/", "", "")
+  let f = escape(f, './')
+  let cmd = 'sed -i "/' . f . '/d" "' . tagfilename . '"'
+  let resp = system(cmd)
+endfunction
+
+function! UpdateTags()
+  let f = expand("%:p")
+  let cwd = getcwd()
+  let tagfilename = cwd . "/tags"
+  let cmd = 'ctags -a -f ' . tagfilename . ' --c++-kinds=+p --fields=+iaS --extra=+q ' . '"' . f . '"'
+  call DelTagOfFile(f)
+  let resp = system(cmd)
+endfunction
+autocmd BufWritePost *.cpp,*.h,*.c call UpdateTags()
 
 """"""
 """""" to cmds
