@@ -1400,12 +1400,7 @@ nnoremap <LEADER>a :!taskell ~/archlinux.cfg/.taskell.md <CR><CR>
 """"""
 """""" my ssh tool:x. git clone x; sudo cp x/x /usr/local/bin/
 nnoremap <LEADER>\ :set splitbelow<CR>:split<CR>:term ++curwin ++rows=25<CR>x<CR>
-cnoremap xx !x
-cnoremap xa !x -a
-cnoremap xd !x -d
-cnoremap xs !x -s
-cnoremap xC !x -C
-cnoremap xh !x -h
+cnoremap xx !x -
 
 "-------------------------------------------------------
 " |   basic end                                        |
