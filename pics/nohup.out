@@ -43,3 +43,18 @@ GUI new func match: generic fallback
 (gimp:543835): GLib-GObject-CRITICAL **: 18:47:38.000: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
 GEGL-Message: 18:47:49.905: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
 GEGL-Message: 18:47:49.942: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 19:18:03.409: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 19:18:03.491: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+/usr/lib/gimp/2.0/plug-ins/file-exr/file-exr: symbol lookup error: /usr/lib/gimp/2.0/plug-ins/file-exr/file-exr: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+gimp: LibGimpBase-WARNING: gimp: gimp_wire_read(): error
+GEGL-Message: 19:18:09.058: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 19:18:09.094: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 19:18:09.465: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 19:18:09.501: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+using gegl copy
+using gegl copy
+GUI new func match: generic fallback
+using gegl copy
+using gegl copy
+GEGL-Message: 19:21:52.644: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 19:21:52.683: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
