@@ -1,0 +1,45 @@
+GEGL-Message: 18:42:39.830: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 18:42:39.868: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+/usr/lib/gimp/2.0/plug-ins/file-exr/file-exr: symbol lookup error: /usr/lib/gimp/2.0/plug-ins/file-exr/file-exr: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+gimp: LibGimpBase-WARNING: gimp: gimp_wire_read(): error
+GEGL-Message: 18:42:45.084: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 18:42:45.121: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 18:42:45.508: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 18:42:45.544: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GeglBuffer* gimp_pickable_contiguous_region_by_seed(GimpPickable*, gboolean, gfloat, gboolean, GimpSelectCriterion, gboolean, gint, gint): foo took 0.0047 seconds
+using gegl copy
+GeglBuffer* gimp_pickable_contiguous_region_by_seed(GimpPickable*, gboolean, gfloat, gboolean, GimpSelectCriterion, gboolean, gint, gint): foo took 0.0002 seconds
+using gegl copy
+GeglBuffer* gimp_pickable_contiguous_region_by_seed(GimpPickable*, gboolean, gfloat, gboolean, GimpSelectCriterion, gboolean, gint, gint): foo took 0.0001 seconds
+GeglBuffer* gimp_pickable_contiguous_region_by_seed(GimpPickable*, gboolean, gfloat, gboolean, GimpSelectCriterion, gboolean, gint, gint): foo took 0.0001 seconds
+GeglBuffer* gimp_pickable_contiguous_region_by_seed(GimpPickable*, gboolean, gfloat, gboolean, GimpSelectCriterion, gboolean, gint, gint): foo took 0.0002 seconds
+
+(gimp:543835): Gdk-CRITICAL **: 18:43:32.835: IA__gdk_window_get_events: assertion 'GDK_IS_WINDOW (window)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:43:32.835: g_object_ref: assertion 'G_IS_OBJECT (object)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:43:32.941: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+
+(gimp:543835): Gdk-CRITICAL **: 18:45:28.470: IA__gdk_window_get_events: assertion 'GDK_IS_WINDOW (window)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:45:28.470: g_object_ref: assertion 'G_IS_OBJECT (object)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:45:28.569: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+using gegl copy
+GUI new func match: GimpColorBalanceConfig
+using gegl copy
+GUI new func match: generic fallback
+using gegl copy
+GUI new func match: generic fallback
+
+(gimp:543835): Gdk-CRITICAL **: 18:47:33.419: IA__gdk_window_get_events: assertion 'GDK_IS_WINDOW (window)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:47:33.419: g_object_ref: assertion 'G_IS_OBJECT (object)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:47:33.552: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+
+(gimp:543835): Gtk-CRITICAL **: 18:47:38.000: IA__gtk_file_chooser_set_current_folder_file: assertion 'G_IS_FILE (file)' failed
+
+(gimp:543835): GLib-GObject-CRITICAL **: 18:47:38.000: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+GEGL-Message: 18:47:49.905: Module '/usr/lib/gegl-0.4/exr-load.so' load error: /usr/lib/gegl-0.4/exr-load.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_
+GEGL-Message: 18:47:49.942: Module '/usr/lib/gegl-0.4/exr-save.so' load error: /usr/lib/gegl-0.4/exr-save.so: undefined symbol: _ZN7Imf_3_014ChromaticitiesC1ERKN9Imath_3_04Vec2IfEES5_S5_S5_

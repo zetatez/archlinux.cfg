@@ -7,8 +7,10 @@
 # feh --bg-fill ~/archlinux.cfg/pics/afternoon.jpg
 # feh --bg-fill ~/archlinux.cfg/pics/thinkdifferent.jpg
 # feh --bg-fill ~/archlinux.cfg/pics/linux.png
+# feh --bg-fill ~/archlinux.cfg/pics/iceland.jpg
 # feh --bg-fill ~/archlinux.cfg/pics/the-evening-star.jpg
-feh --bg-fill ~/archlinux.cfg/pics/dancers-in-blue.jpg
+# feh --bg-fill ~/archlinux.cfg/pics/dancers-in-blue.jpg
+feh --bg-fill ~/archlinux.cfg/pics/dancers-in-dark.jpg
 # feh --bg-fill ~/archlinux.cfg/pics/the-star.jpg
 
 # fcitx

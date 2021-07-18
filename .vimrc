@@ -305,7 +305,7 @@ let g:airline_theme= 'transparent'
 Plug 'ernstwi/vim-secret'
 " :sectet to enter secret mode
 " :Secret  (line | word | char | none)
-" :sectet! to exit secret mode
+" :Sectet! to exit secret mode
 
 """""" !!!
 """""" multi editing :help visual-multi
@@ -443,8 +443,8 @@ nnoremap  <LEADER>/ :Limelight!!<CR>
 Plug 'MattesGroeger/vim-bookmarks'
 highlight BookmarkSign ctermbg=NONE ctermfg=160
 highlight BookmarkLine ctermbg=194 ctermfg=NONE
-let g:bookmark_sign = '♥'
-" let g:bookmark_sign = '*'
+" let g:bookmark_sign = '♥'
+let g:bookmark_sign = '☠'
 let g:bookmark_highlight_lines = 1
 " Add/remove bookmark at current line			mm         :BookmarkToggle
 " Add/edit/remove annotation at current line	mi         :BookmarkAnnotate <TEXT>
@@ -598,7 +598,7 @@ let g:mkdp_page_title = '「${name}」'
 " these filetypes will have MarkdownPreview... commands
 let g:mkdp_filetypes = ['markdown']
 " key map
-nnoremap <C-p> <Plug>MarkdownPreviewToggle
+nnoremap <C-P> <Plug>MarkdownPreviewToggle
 
 Plug 'dkarter/bullets.vim'
 " in markdown or a text file start a bulleted list using - or *. press return to go to the next line, a new list item will be created.
@@ -1125,7 +1125,7 @@ cnoremap <C-w> <S-Right>
 
 """"""
 """""" registers
-nnoremap r :reg<CR>
+nnoremap \\ :reg<CR>
 nnoremap \0 "0p
 nnoremap \1 "1p
 nnoremap \2 "2p

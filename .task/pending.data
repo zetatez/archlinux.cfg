@@ -1,1 +1,3 @@
-[description:"pay rent" entry:"1625472867" modified:"1625472867" status:"pending" uuid:"253454d3-4193-4822-bb17-ca9c0d11d5f3"]
+[description:"pay rent every 5th" due:"1658141634" entry:"1626605634" mask:"-" modified:"1626605720" recur:"monthly" status:"recurring" uuid:"894ae52a-a81d-4d9d-96f8-854ae4fb8984"]
+[description:"pay rent every 5th" due:"1658141634" entry:"1626605720" imask:"0" modified:"1626605718" parent:"894ae52a-a81d-4d9d-96f8-854ae4fb8984" recur:"monthly" status:"pending" uuid:"948eeeec-8f03-4372-959b-a1764bb5658a"]
+[description:"cmdb-sync-das" entry:"1626605737" modified:"1626605737" status:"pending" uuid:"31857704-da04-485b-91a5-4866678c6285"]

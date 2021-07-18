@@ -154,3 +154,9 @@
 {"description":"dentist","end":"20210619T114005Z","entry":"20210613T005307Z","modified":"20210705T075227Z","status":"deleted","uuid":"f239c5fe-70d9-4bc9-a01f-735ba05833c2","annotations":[{"entry":"20210705T075227Z","description":"dentist"}]}
 {"description":"dentist","end":"20210619T114005Z","entry":"20210613T005307Z","modified":"20210705T075227Z","status":"deleted","uuid":"55ea39ba-8221-4f86-a140-241db95b631d","annotations":[{"entry":"20210705T075227Z","description":"dentist"}]}
 {"description":"pay rent","entry":"20210705T081427Z","modified":"20210705T081427Z","status":"pending","uuid":"253454d3-4193-4822-bb17-ca9c0d11d5f3"}
+{"description":"pay rent","end":"20210718T101743Z","entry":"20210705T081427Z","modified":"20210718T101743Z","status":"completed","uuid":"253454d3-4193-4822-bb17-ca9c0d11d5f3"}
+{"description":"pay rent every 5th","entry":"20210718T105354Z","modified":"20210718T105354Z","status":"pending","uuid":"894ae52a-a81d-4d9d-96f8-854ae4fb8984"}
+{"description":"pay rent every 5th","due":"20220718T105354Z","entry":"20210718T105354Z","modified":"20210718T105518Z","recur":"monthly","status":"recurring","uuid":"894ae52a-a81d-4d9d-96f8-854ae4fb8984"}
+{"description":"pay rent every 5th","due":"20220718T105354Z","entry":"20210718T105520Z","imask":0,"modified":"20210718T105518Z","parent":"894ae52a-a81d-4d9d-96f8-854ae4fb8984","recur":"monthly","status":"pending","uuid":"948eeeec-8f03-4372-959b-a1764bb5658a"}
+{"description":"pay rent every 5th","due":"20220718T105354Z","entry":"20210718T105354Z","mask":"-","modified":"20210718T105520Z","recur":"monthly","status":"recurring","uuid":"894ae52a-a81d-4d9d-96f8-854ae4fb8984"}
+{"description":"cmdb-sync-das","entry":"20210718T105537Z","modified":"20210718T105537Z","status":"pending","uuid":"31857704-da04-485b-91a5-4866678c6285"}
