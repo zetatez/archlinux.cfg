@@ -2,7 +2,7 @@
 
 # author: Lorenzo
 #---------------------------------------------------
-alias ss="source ~/.zshrc"
+alias z="source ~/.zshrc"
 alias vz="vim /etc/zshrc"
 alias vs="vim /etc/fish/config.fish"
 alias vv="vim ~/.vimrc"
@@ -27,7 +27,7 @@ promptinit
 # prompt -p
 # prompt walters
 # PS1=$'\n F ☠\n'
-PS1=$'\n%n@%m:%0~+/ '
+PS1=$'\n%n@%m:%0~ # '
 alias 0="PS1=$'\n%n@%m:%0~$ \n'"
 
 # auto complete
@@ -50,6 +50,23 @@ setopt HIST_IGNORE_DUPS
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+
+# fish like
+# ----------------
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# https://github.com/zsh-users/zsh-autosuggestions
+# Key Bindings: This plugin provides a few widgets that you can use with bindkey:
+#   - autosuggest-accept: Accepts the current suggestion.
+#   - autosuggest-execute: Accepts and executes the current suggestion.
+#   - autosuggest-clear: Clears the current suggestion.
+#   - autosuggest-fetch: Fetches a suggestion (works even when suggestions are disabled).
+#   - autosuggest-disable: Disables suggestions.
+#   - autosuggest-enable: Re-enables suggestions.
+#   - autosuggest-toggle: Toggles between enabled/disabled suggestions.
+bindkey '^ ' autosuggest-accept      # ctrl + space, tab also works
+bindkey '^k' autosuggest-clear       # ctrl + \
+# bindkey '^\r' autosuggest-execute    # ctrl + return
 
 # dir stack
 # ----------------
@@ -79,15 +96,15 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 # shell
-# ---------------- alias b="bash"
+# ----------------
+alias b="bash"
 alias f="fish"
-alias z="zsh"
 
 # sys
 # ----------------
 alias p="pwd"
 alias q="exit"
-alias qq="exit; exit"
+alias qq="exit;exit"
 alias c="clear"
 alias cls="clear"
 alias l="ls -l"
@@ -109,8 +126,8 @@ alias ....="cd ../../..; ls -l"
 
 # softwares
 #---------------------------------------------------
-alias sss="startx"
 alias s="screenfetch &"
+alias sx="startx"
 alias si="nohup subl >> /dev/null &"
 alias sl="slock"
 alias sk="nohup screenkey --opacity 0 -s small >>/dev/null &"
@@ -136,7 +153,7 @@ alias screenrecord="nohup simplescreenrecorder &"
 alias sound="alsamixer"
 alias audiocut="nohup shotcut &"
 alias videocut="nohup shotcut &"
-alias photoshop="nohup tgimp &"
+alias photoshop="nohup gimp &"
 alias shot="nohup flameshot launcher &"
 alias google='nohup google --proxy-server="socks5://127.0.0.1:1080" >> /dev/null &'
 alias ts="sudo nohup timeshift-launcher &"
@@ -377,6 +394,25 @@ alias 5="sudo pkill -9 trojan"
 # ----------------
 alias ms="mysql -uroot -proot"
 
+# proxy
+# ----------------
+# export http_proxy="socks5://127.0.0.1:1080"
+# export https_proxy="socks5://127.0.0.1:1080"
+# export ALL_PROXY=socks5://127.0.0.1:1080
+# alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
+# alias unsetproxy="unset ALL_PROXY"
+
+# monitors
+# ----------------
+alias screen-mirror="xrandr --output eDP1 --auto --same-as DP1"
+alias sm="xrandr --output eDP1 --auto --same-as DP1"
+# 
+alias screen-independent-left="xrandr --output eDP1 --auto --left-of DP1"
+alias sil="xrandr --output eDP1 --auto --left-of DP1"
+# 
+alias screen-independent-right="xrandr --output eDP1 --auto --right-of DP1"
+alias sir="xrandr --output eDP1 --auto --right-of DP1"
+
 # key binding
 # ----------------
 bindkey -s '^F' 'vi $(fzf --preview "cat {}")\n'
@@ -389,23 +425,4 @@ bindkey -s '^Y' 'clear; task summary; task ghistory; task calendar; task list\n'
 bindkey -s '^W' 'W\n'
 bindkey -s '^Z' 'vit\n'             # taskwarrior visual tool
 bindkey -s '^A' 'taskell\n'
-
-# proxy
-# export http_proxy="socks5://127.0.0.1:1080"
-# export https_proxy="socks5://127.0.0.1:1080"
-# export ALL_PROXY=socks5://127.0.0.1:1080
-# alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
-# alias unsetproxy="unset ALL_PROXY"
-
-# monitors
-alias screen-mirror="xrandr --output eDP1 --auto --same-as DP1"
-alias sm="xrandr --output eDP1 --auto --same-as DP1"
-
-alias screen-independent-left="xrandr --output eDP1 --auto --left-of DP1"
-alias sil="xrandr --output eDP1 --auto --left-of DP1"
-
-alias screen-independent-right="xrandr --output eDP1 --auto --right-of DP1"
-alias sir="xrandr --output eDP1 --auto --right-of DP1"
-
-
 
